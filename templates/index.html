@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nexfit - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Smooth Global Transitions & Hover Glows */
+        .card, .hero-banner-card, .quick-calc-card, .streak-banner, .daily-tip-card, .bio-tracker-card, .workout-list-item, .mode-btn, .filter-pill, .start-day-btn {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .workout-mode-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .mode-btn {
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        .mode-btn:hover {
+            border-color: var(--accent-red);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .mode-btn.active {
+            background: var(--accent-red);
+            color: white;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
+        }
+        /* Streak Widget Bar */
+        .streak-banner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .streak-banner:hover {
+            border-color: rgba(255, 71, 87, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .streak-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .streak-icon-box {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .streak-icon-box svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--accent-red);
+        }
+        .checkin-btn {
+            background: rgba(46, 213, 115, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(46, 213, 115, 0.3);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .checkin-btn:hover {
+            background: rgba(46, 213, 115, 0.3);
+            transform: translateY(-1px);
+        }
+        .checkin-btn.checked {
+            background: var(--accent-green);
+            color: #0f1016;
+            cursor: default;
+            transform: none;
+        }
+        /* Futuristic Bio-Metrics & Step Tracker Card */
+        .bio-tracker-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .bio-tracker-card:hover {
+            border-color: rgba(255, 71, 87, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .bio-metric-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .bio-icon-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .bio-icon-circle svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--accent-red);
+        }
+        .bio-metric-info span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .bio-metric-info h3 {
+            color: #fff;
+            font-size: 1.25rem;
+            margin: 0;
+        }
+        @keyframes pulseBpm {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pulsing-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            margin-left: 6px;
+            animation: pulseBpm 1.2s infinite;
+        }
+        /* Daily Tip / Quote Card */
+        .daily-tip-card {
+            background: linear-gradient(135deg, #10121b 0%, #171a28 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .daily-tip-card:hover {
+            border-color: rgba(255, 71, 87, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .daily-tip-content h4 {
+            color: var(--accent-red);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .daily-tip-content p {
+            color: #fff;
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .next-tip-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .next-tip-btn:hover {
+            border-color: var(--accent-red);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        /* Quick Calculator Widget Card */
+        .quick-calc-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 35px;
+        }
+        .quick-calc-card:hover {
+            border-color: rgba(255, 71, 87, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .quick-calc-title {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quick-calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) 140px;
+            gap: 12px;
+            align-items: center;
+        }
+        .quick-input {
+            background: #0f1016;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: #fff;
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .quick-input:focus {
+            border-color: var(--accent-red);
+        }
+        .quick-calc-btn {
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            height: 100%;
+        }
+        .quick-calc-btn:hover {
+            background: #ff6b81;
+            transform: translateY(-1px);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+        }
+        #quickResultBox {
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .section-header h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            border-left: 3px solid var(--accent-red);
+            padding-left: 10px;
+        }
+        .see-all {
+            color: var(--accent-red);
+            font-size: 0.9rem;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .see-all:hover {
+            text-decoration: underline;
+        }
+        .hero-banner-card {
+            background: linear-gradient(135deg, #10121b 0%, #1a1d2d 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            margin-bottom: 40px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .hero-banner-card:hover {
+            border-color: rgba(255, 71, 87, 0.5);
+            box-shadow: 0 10px 40px rgba(255, 71, 87, 0.15);
+        }
+        .hero-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .customized-badge {
+            background: rgba(255, 165, 2, 0.15);
+            color: #ffa502;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            width: fit-content;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        .hero-content h2 {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .meta-icon-box {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .meta-icon-box svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--accent-red);
+        }
+        .meta-item strong {
+            color: #fff;
+            display: block;
+            font-size: 0.95rem;
+        }
+        .start-day-btn {
+            background: #fff;
+            color: #0f1016;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: fit-content;
+        }
+        .start-day-btn:hover {
+            background: var(--accent-red);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+        }
+        .hero-image-side {
+            position: relative;
+            min-height: 280px;
+        }
+        .hero-image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .filter-pills-row {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .filter-pill {
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .filter-pill:hover {
+            border-color: var(--accent-red);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        .filter-pill.active {
+            background: var(--accent-red);
+            color: white;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+        }
+        .workout-list-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        .workout-list-item:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(255, 71, 87, 0.15);
+        }
+        .workout-item-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .workout-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .workout-item-left h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .workout-item-left p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .arrow-icon {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            background: rgba(255,255,255,0.05);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Mobile Responsive Media Queries */
+        @media(max-width: 768px) {
+            .hero-banner-card {
+                grid-template-columns: 1fr;
+            }
+            .hero-image-side {
+                min-height: 200px;
+            }
+            .daily-tip-card, .bio-tracker-card {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            header nav {
+                gap: 10px;
+                font-size: 0.85rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nexfit</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/calculator">Calculator</a>
+            <a href="/muscle">Muscle Guide</a>
+            <a href="/challenges">30-Day Challenges</a>
+            <a href="/myths">Fitness Myths</a>
+        </nav>
+    </header>
+    
+    <div class="container" style="max-width: 950px;">
+        <!-- Home / Gym Mode Toggle -->
+        <div class="workout-mode-toggle">
+            <button class="mode-btn active" onclick="switchMode('home', this)">🏠 Home Workout</button>
+            <button class="mode-btn" onclick="switchMode('gym', this)">🏋️‍♂️ Gym Workout</button>
+        </div>
+
+        <!-- Interactive Streak & Check-in Widget -->
+        <div class="streak-banner">
+            <div class="streak-info">
+                <div class="streak-icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+                <span>Active Streak: <strong id="streakCount" style="color: var(--accent-red);">1</strong> Day(s)</span>
+            </div>
+            <button id="checkinBtn" class="checkin-btn" onclick="triggerCheckIn()">✓ Daily Check-In</button>
+        </div>
+
+        <!-- Futuristic Live Bio-Metrics & Step Tracker Card -->
+        <div class="bio-tracker-card">
+            <div class="bio-metric-item">
+                <div class="bio-icon-circle">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="bio-metric-info">
+                    <span>Live Heart Rate <span class="pulsing-dot"></span></span>
+                    <h3 id="liveBpmDisplay">72 BPM</h3>
+                </div>
+            </div>
+            <div class="bio-metric-item">
+                <div class="bio-icon-circle">
+                    <svg viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.2L6 8.3V13h2V9.6l1.8-.7z"/></svg>
+                </div>
+                <div class="bio-metric-info">
+                    <span>Session Step Counter</span>
+                    <h3 id="stepCountDisplay">1,428 Steps</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Fitness Tip / Motivation Generator Card -->
+        <div class="daily-tip-card">
+            <div class="daily-tip-content">
+                <h4>Daily Expert Fitness Tip</h4>
+                <p id="dailyTipText">Loading today's insight...</p>
+            </div>
+            <button class="next-tip-btn" onclick="rotateTip()">Next Tip ➔</button>
+        </div>
+
+        <!-- Quick BMI Calculator Widget -->
+        <div class="quick-calc-card">
+            <div class="quick-calc-title">
+                <span style="color: var(--accent-red);">⚡</span> Quick BMI Checker
+            </div>
+            <div class="quick-calc-grid">
+                <input type="number" id="quickWeight" class="quick-input" placeholder="Weight (kg)" min="20" max="300">
+                <input type="number" id="quickHeight" class="quick-input" placeholder="Height (cm)" min="100" max="250">
+                <button class="quick-calc-btn" onclick="calculateQuickBMI()">Calculate BMI</button>
+            </div>
+            <div id="quickResultBox">Enter your weight and height for an instant BMI calculation.</div>
+        </div>
+
+        <div class="section-header">
+            <h3 id="planTitle">Classic Plan: Home Workout</h3>
+            <a href="/challenges" class="see-all">See All</a>
+        </div>
+
+        <!-- Hero Banner Card -->
+        <div class="hero-banner-card">
+            <div class="hero-content">
+                <span class="customized-badge">CUSTOMIZED FOR YOU</span>
+                <h2 id="heroTitle">TOTAL BODY SHRED</h2>
+                <div class="hero-meta" id="metaGridContainer">
+                    <div class="meta-item">
+                        <div class="meta-icon-box">
+                            <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                        </div>
+                        <div><strong>30 Days Routine</strong>Duration</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-icon-box">
+                            <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                        </div>
+                        <div><strong>All Levels</strong>Level</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-icon-box">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+                        </div>
+                        <div><strong>Overall Body</strong>Target Area</div>
+                    </div>
+                    <div class="meta-item" id="equipmentMeta">
+                        <div class="meta-icon-box">
+                            <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 6.29 3.43 4.86 2 3.43 3.43 4.86 4.86 2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l1.43-1.43L19.14 22l1.43-1.43L19.14 19.14l1.43-1.43z"/></svg>
+                        </div>
+                        <div><strong>No Equipment</strong>Equipment</div>
+                    </div>
+                </div>
+                <button class="start-day-btn" onclick="window.location.href='/challenges'">Start Day 1 ➔</button>
+            </div>
+            <div class="hero-image-side">
+                <img id="heroImage" src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80" alt="Workout Hero">
+            </div>
+        </div>
+
+        <div class="section-header" style="margin-top: 30px;">
+            <h3>Classic Workouts</h3>
+        </div>
+
+        <!-- Filter Pills Bar -->
+        <div class="filter-pills-row" id="filterPills">
+            <button class="filter-pill active" onclick="filterWorkout('Arm', this)">Arm</button>
+            <button class="filter-pill" onclick="filterWorkout('Back', this)">Back</button>
+            <button class="filter-pill" onclick="filterWorkout('Legs', this)">Legs</button>
+            <button class="filter-pill" onclick="filterWorkout('Calisthenics', this)">Calisthenics</button>
+            <button class="filter-pill" onclick="filterWorkout('Full Body', this)">Full Body</button>
+            <button class="filter-pill" onclick="filterWorkout('Abs', this)">Abs</button>
+            <button class="filter-pill" onclick="filterWorkout('Chest', this)">Chest</button>
+            <button class="filter-pill" onclick="filterWorkout('Shoulder', this)">Shoulder</button>
+        </div>
+
+        <!-- Dynamic Workout Preview List -->
+        <div id="workoutPreviewList">
+            <div class="workout-list-item" onclick="window.location.href='/challenges?muscle=Arm'">
+                <div class="workout-item-left">
+                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=150&q=80" class="workout-thumb" alt="Thumb">
+                    <div>
+                        <h4 id="previewTitle">Arm - Beginner</h4>
+                        <p id="previewTime">16 mins</p>
+                    </div>
+                </div>
+                <div class="arrow-icon">➔</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Attribution Footer -->
+    <footer style="margin-top: 80px; padding: 25px 0; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+        <p style="margin: 0;">&copy; 2026 Nexfit. All rights reserved. &bull; Designed & Developed by <span style="color: var(--accent-red); font-weight: 600;">Varad Gurav</span></p>
+    </footer>
+
+    <script>
+        const fitnessTips = [
+            "Consistency beats intensity. Showing up every day for 20 minutes yields better long-term growth than burning out once a week.",
+            "Always prioritize full range of motion over heavier weight to maximize muscle fiber recruitment.",
+            "Hydration is key for muscle recovery—aim for at least 500ml of water before starting your workout session.",
+            "Protein synthesis peaks post-workout; make sure to get quality protein within 2 hours of your training.",
+            "Mind-muscle connection increases muscle activation by up to 20%. Focus entirely on the muscle working during each rep."
+        ];
+        let currentTipIdx = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentStreak = localStorage.getItem('nexfit_streak') || 1;
+            let lastCheckIn = localStorage.getItem('nexfit_last_date') || '';
+            let todayStr = new Date().toDateString();
+
+            document.getElementById('streakCount').innerText = currentStreak;
+
+            if (lastCheckIn === todayStr) {
+                let btn = document.getElementById('checkinBtn');
+                btn.innerText = "Checked In ✔";
+                btn.classList.add('checked');
+            }
+
+            currentTipIdx = Math.floor(Math.random() * fitnessTips.length);
+            document.getElementById('dailyTipText').innerText = fitnessTips[currentTipIdx];
+
+            // Subtle live heartbeat fluctuation simulation
+            setInterval(() => {
+                let baseBpm = 72;
+                let fluctuation = Math.floor(Math.random() * 5) - 2;
+                document.getElementById('liveBpmDisplay').innerText = (baseBpm + fluctuation) + " BPM";
+            }, 3000);
+
+            // Device motion sensor step simulator for mobile viewports
+            let storedSteps = parseInt(localStorage.getItem('nexfit_steps') || 1428);
+            document.getElementById('stepCountDisplay').innerText = storedSteps.toLocaleString() + " Steps";
+
+            if (window.DeviceMotionEvent) {
+                window.addEventListener('devicemotion', (event) => {
+                    let acc = event.accelerationIncludingGravity;
+                    if (acc && acc.z && Math.abs(acc.z) > 12) {
+                        storedSteps++;
+                        localStorage.setItem('nexfit_steps', storedSteps);
+                        document.getElementById('stepCountDisplay').innerText = storedSteps.toLocaleString() + " Steps";
+                    }
+                }, { once: true }); // triggers on first movement grant
+            }
+        });
+
+        function rotateTip() {
+            currentTipIdx = (currentTipIdx + 1) % fitnessTips.length;
+            document.getElementById('dailyTipText').innerText = fitnessTips[currentTipIdx];
+        }
+
+        function triggerCheckIn() {
+            let todayStr = new Date().toDateString();
+            let lastCheckIn = localStorage.getItem('nexfit_last_date') || '';
+
+            if (lastCheckIn === todayStr) return;
+
+            let currentStreak = parseInt(localStorage.getItem('nexfit_streak') || 1);
+            if (lastCheckIn) {
+                let lastDateObj = new Date(lastCheckIn);
+                let todayObj = new Date(todayStr);
+                let diffTime = Math.abs(todayObj - lastDateObj);
+                let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays === 1) {
+                    currentStreak++;
+                } else if (diffDays > 1) {
+                    currentStreak = 1;
+                }
+            }
+
+            localStorage.setItem('nexfit_streak', currentStreak);
+            localStorage.setItem('nexfit_last_date', todayStr);
+
+            document.getElementById('streakCount').innerText = currentStreak;
+            let btn = document.getElementById('checkinBtn');
+            btn.innerText = "Checked In ✔";
+            btn.classList.add('checked');
+        }
+
+        function calculateQuickBMI() {
+            let weight = parseFloat(document.getElementById('quickWeight').value);
+            let height = parseFloat(document.getElementById('quickHeight').value);
+            let resBox = document.getElementById('quickResultBox');
+
+            if (!weight || !height || weight <= 0 || height <= 0) {
+                resBox.innerHTML = "<span style='color: var(--accent-red);'>Please enter valid weight and height numbers.</span>";
+                return;
+            }
+
+            let heightM = height / 100;
+            let bmi = (weight / (heightM * heightM)).toFixed(1);
+            let category = "";
+
+            if (bmi < 18.5) category = "Underweight";
+            else if (bmi >= 18.5 && bmi <= 24.9) category = "Normal weight";
+            else if (bmi >= 25 && bmi <= 29.9) category = "Overweight";
+            else category = "Obese";
+
+            resBox.innerHTML = `Your BMI is <strong style="color: #fff;">${bmi}</strong> (${category}). <a href="/calculator" style="color: var(--accent-red); text-decoration: none; margin-left: 5px;">Detailed Calculator ➔</a>`;
+        }
+
+        function switchMode(mode, btn) {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (mode === 'home') {
+                document.getElementById('planTitle').innerText = "Classic Plan: Home Workout";
+                document.getElementById('heroTitle').innerText = "TOTAL BODY SHRED";
+                document.getElementById('equipmentMeta').innerHTML = `
+                    <div class="meta-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 6.29 3.43 4.86 2 3.43 3.43 4.86 4.86 2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l1.43-1.43L19.14 22l1.43-1.43L19.14 19.14l1.43-1.43z"/></svg>
+                    </div>
+                    <div><strong>No Equipment</strong>Equipment</div>
+                `;
+                document.getElementById('heroImage').src = "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80";
+            } else {
+                document.getElementById('planTitle').innerText = "Classic Plan: Gym Workout";
+                document.getElementById('heroTitle').innerText = "HEAVY HYPERTROPHY";
+                document.getElementById('equipmentMeta').innerHTML = `
+                    <div class="meta-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M6 5h12v2H6V5zm0 12h12v2H6v-2zm10-5H8V9h8v3z"/></svg>
+                    </div>
+                    <div><strong>Barbells & Cables</strong>Equipment</div>
+                `;
+                document.getElementById('heroImage').src = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80";
+            }
+        }
+
+        function filterWorkout(muscle, btn) {
+            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.getElementById('previewTitle').innerText = `${muscle} - Beginner`;
+            let mins = muscle === 'Full Body' ? '25 mins' : (muscle === 'Legs' ? '20 mins' : '16 mins');
+            document.getElementById('previewTime').innerText = mins;
+            
+            document.querySelector('.workout-list-item').onclick = () => {
+                window.location.href = `/challenges?muscle=${muscle}`;
+            };
+        }
+    </script>
+</body>
+</html>

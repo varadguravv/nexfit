@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nexfit - 30-Day Challenges</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .challenge-card, .progress-banner, .start-workout-btn, .tier-filter-btn {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .progress-banner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .progress-banner:hover {
+            border-color: rgba(255, 71, 87, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .progress-info h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .progress-bar-container {
+            width: 250px;
+            height: 10px;
+            background: #0f1016;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--accent-red);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .progress-percentage {
+            color: var(--accent-red);
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        /* Tier Filter Navigation Bar */
+        .tier-filter-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .tier-filter-btn {
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        .tier-filter-btn:hover {
+            border-color: var(--accent-red);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .tier-filter-btn.active {
+            background: var(--accent-red);
+            color: white;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
+        }
+        /* Tier Sections */
+        .tier-section {
+            display: none;
+        }
+        .tier-section.active {
+            display: block;
+        }
+        .tier-header {
+            color: #fff;
+            font-size: 1.3rem;
+            border-left: 3px solid var(--accent-red);
+            padding-left: 10px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        /* Chronological Grid (5 columns per row) */
+        .challenges-grid-chronological {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .challenge-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .challenge-card:hover {
+            border-color: rgba(255, 71, 87, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.15);
+        }
+        .challenge-card h4 {
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .challenge-card p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        .challenge-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+            gap: 5px;
+        }
+        .start-workout-btn {
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.75rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .start-workout-btn:hover {
+            background: #ff6b81;
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+        }
+        /* Interactive Workout Session Modal Overlay */
+        #workoutModal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 16, 22, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .workout-modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        .countdown-number {
+            font-size: 5rem;
+            color: var(--accent-red);
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .exercise-title {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .exercise-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+        .modal-btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        .control-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .control-btn:hover {
+            border-color: var(--accent-red);
+        }
+        .control-btn.primary {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+        @media(max-width: 1200px) {
+            .challenges-grid-chronological {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media(max-width: 768px) {
+            .challenges-grid-chronological {
+                grid-template-columns: 1fr;
+            }
+            .progress-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .progress-bar-container {
+                width: 100%;
+            }
+            header nav {
+                gap: 10px;
+                font-size: 0.85rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .tier-filter-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nexfit</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/calculator">Calculator</a>
+            <a href="/muscle">Muscle Guide</a>
+            <a href="/challenges">30-Day Challenges</a>
+            <a href="/myths">Fitness Myths</a>
+        </nav>
+    </header>
+    
+    <div class="container" style="max-width: 1100px;">
+        <!-- Global Challenge Progress Tracker -->
+        <div class="progress-banner">
+            <div class="progress-info">
+                <h3 id="selectedMuscleHeader">Your 30-Day Progress</h3>
+                <div class="progress-bar-container">
+                    <div id="progressBarFill" class="progress-bar-fill"></div>
+                </div>
+            </div>
+            <div>
+                <span id="progressText" class="progress-percentage">0% Completed</span>
+            </div>
+        </div>
+
+        <!-- Tier Category Filter Navigation -->
+        <div class="tier-filter-row">
+            <button id="btn-beginner" class="tier-filter-btn active" onclick="switchTier('beginner', this)">🌱 Beginner (Days 1-10)</button>
+            <button id="btn-intermediate" class="tier-filter-btn" onclick="switchTier('intermediate', this)">⚡ Intermediate (Days 11-20)</button>
+            <button id="btn-advanced" class="tier-filter-btn" onclick="switchTier('advanced', this)">🔥 Advanced (Days 21-30)</button>
+        </div>
+
+        <!-- BEGINNER TIER (Days 1 - 10) -->
+        <div id="tier-beginner" class="tier-section active">
+            <div class="tier-header" id="headerBeginner">Beginner Foundation Phase (Days 1 - 10)</div>
+            <div class="challenges-grid-chronological">
+                {% for day in range(1, 11) %}
+                <div class="challenge-card" id="card-day-{{ day }}">
+                    <div>
+                        <h4 id="title-day-{{ day }}">Day {{ day }}: Foundations</h4>
+                        <p>Fundamental bodyweight mechanics & form establishment.</p>
+                    </div>
+                    <div class="challenge-footer">
+                        <span id="status-day-{{ day }}" style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600;">25m</span>
+                        <button class="start-workout-btn" onclick="openWorkoutSession({{ day }})">Start ➔</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- INTERMEDIATE TIER (Days 11 - 20) -->
+        <div id="tier-intermediate" class="tier-section">
+            <div class="tier-header" id="headerIntermediate">Intermediate Hypertrophy Phase (Days 11 - 20)</div>
+            <div class="challenges-grid-chronological">
+                {% for day in range(11, 21) %}
+                <div class="challenge-card" id="card-day-{{ day }}">
+                    <div>
+                        <h4 id="title-day-{{ day }}">Day {{ day }}: Hypertrophy</h4>
+                        <p>Compound loading & increased time under tension.</p>
+                    </div>
+                    <div class="challenge-footer">
+                        <span id="status-day-{{ day }}" style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600;">30m</span>
+                        <button class="start-workout-btn" onclick="openWorkoutSession({{ day }})">Start ➔</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ADVANCED TIER (Days 21 - 30) -->
+        <div id="tier-advanced" class="tier-section">
+            <div class="tier-header" id="headerAdvanced">Advanced Peak Conditioning Phase (Days 21 - 30)</div>
+            <div class="challenges-grid-chronological">
+                {% for day in range(21, 31) %}
+                <div class="challenge-card" id="card-day-{{ day }}">
+                    <div>
+                        <h4 id="title-day-{{ day }}">Day {{ day }}: Peak Shred</h4>
+                        <p>High-intensity threshold testing & maximum conditioning.</p>
+                    </div>
+                    <div class="challenge-footer">
+                        <span id="status-day-{{ day }}" style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600;">35m</span>
+                        <button class="start-workout-btn" onclick="openWorkoutSession({{ day }})">Start ➔</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Workout Modal Session -->
+    <div id="workoutModal">
+        <div class="workout-modal-box">
+            <div id="modalContent">
+                <!-- Injected dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Attribution Footer -->
+    <footer style="margin-top: 80px; padding: 25px 0; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+        <p style="margin: 0;">&copy; 2026 Nexfit. All rights reserved. &bull; Designed & Developed by <span style="color: var(--accent-red); font-weight: 600;">Varad Gurav</span></p>
+    </footer>
+
+    <script>
+        const provenWorkouts = [
+            { name: "1. Barbell or Bodyweight Squats", desc: "Target quads, glutes, and core strength." },
+            { name: "2. Push-Ups or Bench Press", desc: "Builds absolute pressing power across chest and triceps." },
+            { name: "3. Pull-Ups or Inverted Rows", desc: "Ultimate upper-body pull for lat width." },
+            { name: "4. Romanian Deadlifts", desc: "Builds powerful hamstrings and glutes." },
+            { name: "5. Overhead Shoulder Press", desc: "Develops shoulder stability and core strength." },
+            { name: "6. Walking Lunges", desc: "Unilateral leg movement correcting imbalances." },
+            { name: "7. Bent-Over Rows", desc: "Crucial compound lift for mid-back hypertrophy." },
+            { name: "8. Plank Shoulder Taps", desc: "Anti-rotation core stability exercise." },
+            { name: "9. Bulgarian Split Squats", desc: "Single-leg hypertrophy builder for quads." },
+            { name: "10. Tricep Dips", desc: "Effective movement for tricep mass." },
+            { name: "11. Bicep Hammer Curls", desc: "Builds brachialis and forearm thickness." },
+            { name: "12. High-Intensity Burpees", desc: "Metabolic conditioning to maximize fat burn." }
+        ];
+
+        let activeDay = 1;
+        let currentExIdx = 0;
+        let countdownTimer = null;
+        let isPaused = false;
+        let currentMuscleGroup = "Full Body";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for URL parameters (e.g. /challenges?muscle=Arm&level=beginner)
+            const urlParams = new URLSearchParams(window.location.search);
+            const muscleParam = urlParams.get('muscle');
+            const levelParam = urlParams.get('level');
+
+            if (muscleParam) {
+                currentMuscleGroup = muscleParam;
+                document.getElementById('selectedMuscleHeader').innerText = `${muscleParam} Challenge Progress`;
+                
+                // Update card text titles to reflect selected muscle group
+                for (let i = 1; i <= 30; i++) {
+                    let titleEl = document.getElementById('title-day-' + i);
+                    if(titleEl) {
+                        let phaseName = i <= 10 ? "Foundations" : (i <= 20 ? "Hypertrophy" : "Peak Conditioning");
+                        titleEl.innerText = `Day ${i}: ${muscleParam} ${phaseName}`;
+                    }
+                }
+            }
+
+            if (levelParam) {
+                let targetTier = levelParam.toLowerCase();
+                if (['beginner', 'intermediate', 'advanced'].includes(targetTier)) {
+                    let btnElem = document.getElementById('btn-' + targetTier);
+                    if (btnElem) {
+                        switchTier(targetTier, btnElem);
+                    }
+                }
+            }
+
+            for (let i = 1; i <= 30; i++) {
+                if (localStorage.getItem('nexfit_challenge_day_' + i) === 'true') {
+                    markDayCompletedUI(i, true);
+                }
+            }
+            updateProgress();
+        });
+
+        function switchTier(tierName, btn) {
+            document.querySelectorAll('.tier-filter-btn').forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+
+            document.querySelectorAll('.tier-section').forEach(s => s.classList.remove('active'));
+            let targetSec = document.getElementById('tier-' + tierName);
+            if(targetSec) targetSec.classList.add('active');
+        }
+
+        function openWorkoutSession(day) {
+            activeDay = day;
+            currentExIdx = 0;
+            isPaused = false;
+            document.getElementById('workoutModal').style.display = 'flex';
+            runCountdown(5);
+        }
+
+        function runCountdown(sec) {
+            let box = document.getElementById('modalContent');
+            if (sec > 0) {
+                box.innerHTML = `
+                    <h3 style="color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Day ${activeDay} &bull; ${currentMuscleGroup} Routine</h3>
+                    <div class="countdown-number">${sec}</div>
+                    <p class="exercise-desc">Prepare your station. Session starting shortly...</p>
+                    <button class="control-btn" onclick="quitWorkout()">Quit</button>
+                `;
+                countdownTimer = setTimeout(() => runCountdown(sec - 1), 1000);
+            } else {
+                renderActiveExercise();
+            }
+        }
+
+        function renderActiveExercise() {
+            let ex = provenWorkouts[currentExIdx];
+            let box = document.getElementById('modalContent');
+            box.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <span style="color: var(--accent-red); font-weight: bold; font-size: 0.85rem;">Day ${activeDay} &bull; Exercise ${currentExIdx + 1} of ${provenWorkouts.length}</span>
+                    <button class="control-btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="quitWorkout()">Quit</button>
+                </div>
+                <h2 class="exercise-title">${ex.name}</h2>
+                <p class="exercise-desc">${ex.desc}</p>
+                <div class="modal-btn-row">
+                    <button class="control-btn" id="pauseResumeBtn" onclick="togglePause()">Pause</button>
+                    <button class="control-btn primary" onclick="nextExercise()">Next Exercise ➔</button>
+                </div>
+            `;
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            let btn = document.getElementById('pauseResumeBtn');
+            btn.innerText = isPaused ? "Resume" : "Pause";
+        }
+
+        function nextExercise() {
+            if (isPaused) return;
+            currentExIdx++;
+            if (currentExIdx < provenWorkouts.length) {
+                renderActiveExercise();
+            } else {
+                completeWorkoutSession();
+            }
+        }
+
+        function completeWorkoutSession() {
+            localStorage.setItem('nexfit_challenge_day_' + activeDay, 'true');
+            markDayCompletedUI(activeDay, true);
+            updateProgress();
+
+            let box = document.getElementById('modalContent');
+            box.innerHTML = `
+                <h2 class="exercise-title" style="color: var(--accent-green);">🎉 Day ${activeDay} Completed!</h2>
+                <p class="exercise-desc">Outstanding work! You completed today's ${currentMuscleGroup} session successfully.</p>
+                <button class="control-btn primary" onclick="closeModal()">Finish & Return</button>
+            `;
+        }
+
+        function quitWorkout() {
+            clearTimeout(countdownTimer);
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('workoutModal').style.display = 'none';
+        }
+
+        function markDayCompletedUI(day, isDone) {
+            let statusSpan = document.getElementById('status-day-' + day);
+            let btn = document.querySelector(`#card-day-${day} .start-workout-btn`);
+            if (isDone && statusSpan && btn) {
+                statusSpan.innerHTML = "Done ✔";
+                statusSpan.style.color = "var(--accent-green)";
+                btn.innerText = "Retake";
+            }
+        }
+
+        function updateProgress() {
+            let completed = 0;
+            for (let i = 1; i <= 30; i++) {
+                if (localStorage.getItem('nexfit_challenge_day_' + i) === 'true') {
+                    completed++;
+                }
+            }
+            let percentage = Math.round((completed / 30) * 100);
+            document.getElementById('progressBarFill').style.width = percentage + '%';
+            document.getElementById('progressText').innerText = percentage + '% Completed';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nexfit - Ultimate Muscle Guide</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .muscle-banner {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0 30px 0;
+            border: 1px solid var(--border-color);
+        }
+        .muscle-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .section-card {
+            background: #12131c;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+        .section-card h3 {
+            color: var(--accent-red);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-card h3 img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--accent-red);
+        }
+        .section-card p, .section-card ul {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+        .section-card ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 15px;
+        }
+        .section-card li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .section-card li::before {
+            content: "▪";
+            color: var(--accent-red);
+            position: absolute;
+            left: 0;
+        }
+        .muscle-grid-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin: 15px 0;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nexfit</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/calculator">Calculator</a>
+            <a href="/muscle">Muscle Guide</a>
+            <a href="/challenges">30-Day Challenges</a>
+            <a href="/myths">Fitness Myths</a>
+        </nav>
+    </header>
+    
+    <div class="container" style="max-width: 950px;">
+        <h2>The Ultimate Muscle Building & Anatomy Guide</h2>
+        <p>Explore how individual muscle groups grow, their optimal recovery timelines, the best hypertrophy movements, and a complete breakdown of injury prevention.</p>
+        
+        <div class="muscle-banner">
+            <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=80" alt="Advanced Muscle Building & Anatomy">
+        </div>
+
+        <div class="section-card">
+            <h3>
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=100&q=80" alt="Hypertrophy icon">
+                How Muscle Growth (Hypertrophy) Works
+            </h3>
+            <p><strong>Type I (Slow-Twitch):</strong> Highly fatigue-resistant, dense in mitochondria. Best stimulated via high-repetition endurance work and constant tension.</p>
+            <p style="margin-top: 15px;"><strong>Type II (Fast-Twitch):</strong> High force output, grows rapidly under mechanical tension. Responds best to heavy weights, progressive overload, and explosive lifts.</p>
+            <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80" alt="Hypertrophy training" class="muscle-grid-img">
+        </div>
+
+        <div class="section-card">
+            <h3>
+                <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=100&q=80" alt="Anatomy icon">
+                Major Muscle Groups: Growth, Recovery & Best Workouts
+            </h3>
+            
+            <div style="margin-top: 20px;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">1. Chest (Pectoralis Major & Minor)</h4>
+                <ul>
+                    <li><strong>How it Grows:</strong> Requires horizontal adduction of the arm and arm flexion. Responds exceptionally well to deep stretches under load (the bottom of a press).</li>
+                    <li><strong>Recovery Time:</strong> 48 to 72 hours.</li>
+                    <li><strong>Best Workouts:</strong> Barbell/Dumbbell Bench Press, Incline Press, Chest Dips, Cable Flyes.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">2. Back (Latissimus Dorsi, Rhomboids, Traps)</h4>
+                <ul>
+                    <li><strong>How it Grows:</strong> Requires vertical pulling (latissimus width) and horizontal rowing (mid-back thickness and scapular retraction).</li>
+                    <li><strong>Recovery Time:</strong> 48 to 72 hours.</li>
+                    <li><strong>Best Workouts:</strong> Pull-ups, Barbell Rows, Lat Pulldowns, T-Bar Rows, Seated Cable Rows.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">3. Shoulders (Deltoids - Anterior, Lateral, Rear)</h4>
+                <ul>
+                    <li><strong>How it Grows:</strong> Requires overhead pressing for front delts, lateral raises for side delt width, and reverse flyes for rear delts.</li>
+                    <li><strong>Recovery Time:</strong> 48 hours.</li>
+                    <li><strong>Best Workouts:</strong> Overhead Press, Dumbbell Lateral Raises, Face Pulls, Arnold Press.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">4. Arms (Biceps, Triceps & Forearms)</h4>
+                <ul>
+                    <li><strong>How it Grows:</strong> Triceps make up roughly two-thirds of upper arm mass and respond to heavy pressing and extension. Biceps grow via elbow flexion with supination.</li>
+                    <li><strong>Recovery Time:</strong> 48 hours.</li>
+                    <li><strong>Best Workouts:</strong> Barbell Curls, Hammer Curls, Tricep Pushdowns, Skull Crushers, Close-Grip Bench Press.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">5. Abs (Rectus Abdominis & Obliques)</h4>
+                <ul>
+                    <li><strong>How it Grows:</strong> Spinal flexion and core bracing against resistance. High density of slow-twitch fibers that respond well to constant tension and weighted resistance.</li>
+                    <li><strong>Recovery Time:</strong> 24 to 48 hours.</li>
+                    <li><strong>Best Workouts:</strong> Cable Crunches, Hanging Leg Raises, Russian Twists, Ab Wheel Rollouts.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">6. Neck (Cervical Flexors & Extensors)</h4>
+                <ul>
+                    <li><strong>How it Grows:</strong> Direct resistance training of the neck flexors and traps using controlled flexion, extension, and isometric resistance.</li>
+                    <li><strong>Recovery Time:</strong> 48 hours.</li>
+                    <li><strong>Best Workouts:</strong> Neck Harness Extensions, Plate-Resisted Flexion, Isometric Neck Holds.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">7. Legs (Quadriceps, Hamstrings, Glutes, Calves)</h4>
+                <ul>
+                    <li><strong>How it Grows:</strong> Massive hormonal response driven by heavy compound movements, deep knee flexion, and hip hinging under progressive overload.</li>
+                    <li><strong>Recovery Time:</strong> 72 hours (due to large muscle mass and systemic fatigue).</li>
+                    <li><strong>Best Workouts:</strong> Barbell Back Squats, Romanian Deadlifts, Leg Press, Bulgarian Split Squats.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Comprehensive Injury Guide Section -->
+        <div class="section-card">
+            <h3>
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=100&q=80" alt="Injury Prevention icon">
+                Comprehensive Injury Guide: Common Injuries, Root Causes & Solutions
+            </h3>
+            <p>Weight training and physical conditioning can sometimes lead to common injuries if proper precautions are neglected. Below is a breakdown of the most frequent injuries, their root causes, actionable solutions, and habits to avoid.</p>
+            
+            <div style="margin-top: 20px;">
+                <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 6px;">1. Rotator Cuff Tendonitis / Impingement</h4>
+                <p><strong>Root Causes:</strong> Overuse of pressing movements without adequate rear delt/upper back work, poor scapular stability, and internal rotation dominance.</p>
+                <p><strong>Solutions:</strong> Incorporate face pulls, band pull-aparts, and rotator cuff external rotations. Ensure proper shoulder blade depression and retraction during benches and pull-ups.</p>
+                <p><strong>Things to Avoid:</strong> Avoid heavy behind-the-neck press variations and dropping weight too fast without control.</p>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 6px;">2. Lower Back Strain (Lumbar Hyperflexion / Shear Stress)</h4>
+                <p><strong>Root Causes:</strong> Rounding the lower back during heavy deadlifts or squats (ego lifting), weak core bracing, or tight hip flexors.</p>
+                <p><strong>Solutions:</strong> Master the hip hinge pattern with lighter loads, strengthen the transverse abdominis and erector spinae, and stretch tight hip flexors daily.</p>
+                <p><strong>Things to Avoid:</strong> Never lift with a rounded spine or bounce weight off the floor during deadlifts or rows.</p>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 6px;">3. Patellar Tendonitis ("Jumper's Knee")</h4>
+                <p><strong>Root Causes:</strong> High-impact repetitive jumping, rapid volume increases in squats or lunges, and poor ankle mobility forcing excessive knee forward travel.</p>
+                <p><strong>Solutions:</strong> Incorporate eccentric knee extensions, improve ankle dorsiflexion mobility, and allow adequate 72-hour recovery between intense leg sessions.</p>
+                <p><strong>Things to Avoid:</strong> Avoid skipping warm-ups and pushing through sharp, acute pain located directly beneath the kneecap.</p>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 6px;">4. Tennis Elbow / Golfer's Elbow (Epicondylitis)</h4>
+                <p><strong>Root Causes:</strong> Overuse of grip strength, excessive wrist flexion/extension under heavy loads, or lack of forearm conditioning.</p>
+                <p><strong>Solutions:</strong> Perform wrist curls and reverse wrist curls with light weights, use neutral grips when possible, and massage forearm tissue.</p>
+                <p><strong>Things to Avoid:</strong> Avoid white-knuckling bars excessively and ignoring persistent nagging elbow soreness.</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h3>
+                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=100&q=80" alt="Diet and Nutrition icon">
+                Effective Nutrition & Things to Avoid
+            </h3>
+            <p>Maximizing muscle recovery and preventing injury requires optimal macronutrient fueling and avoiding counterproductive habits:</p>
+            <ul>
+                <li><strong>Optimal Diet Focus:</strong> Prioritize complete protein sources (1.6g to 2.2g per kg of body weight), complex carbohydrates for glycogen replenishment, and healthy fats (omega-3s) to reduce joint inflammation.</li>
+                <li><strong>Things to Avoid:</strong> Avoid crash diets with extreme caloric deficits, excessive alcohol consumption (which halts muscle protein synthesis), trans fats, and chronic dehydration during heavy lifting sessions.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
