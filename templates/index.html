@@ -5,44 +5,7 @@
     <title>Nexfit - Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-       <style>
-    /* Your existing CSS code is here... */
-
-    /* Paste the new layout and text-wrapping code right here */
-    .main-container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      box-sizing: border-box;
-      overflow-x: hidden;
-    }
-
-    p, span, h1, h2, h3 {
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      max-width: 100%;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      align-items: stretch;
-    }
-</style>
-        /* Smooth Global Transitions & Hover Glows */
-        .card, .hero-banner-card, .quick-calc-card, .streak-banner, .daily-tip-card, .bio-tracker-card, .workout-list-item, .mode-btn, .filter-pill, .start-day-btn {
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .workout-mode-toggle {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-        .mode-btn {
+    .mode-btn {
             background: var(--bg-card);
             color: var(--text-muted);
             border: 1px solid var(--border-color);
