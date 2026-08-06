@@ -488,3 +488,14 @@ nav a:hover {
     font-weight: 500 !important;
   }
 }
+/* ==========================================
+   Nexfit Universal Navbar Size Match Fix
+   ================================---------- */
+@media screen and (max-width: 768px) {
+  /* Force all links inside any header or nav across all pages to match home page size */
+  header a, .navbar a, nav a, .nav-links a, .menu-links a {
+    font-size: 1.05rem !important;
+    padding: 8px 12px !important;
+    line-height: 1.4 !important;
+  }
+}
