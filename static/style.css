@@ -242,10 +242,41 @@ nav a:hover {
     margin: 0;
     padding: 0;
   }
- @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   body {
     overflow-x: hidden;
   }
+
+  /* Keep logo on one single line */
+  .logo, h1.logo, .navbar-brand {
+    white-space: nowrap !important;
+    font-size: 1.5rem !important;
+  }
+
+  /* Fix navigation items to wrap nicely */
+  header nav, .nav-links, .menu-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* Make Home Workout and Gym Workout buttons side-by-side */
+  .workout-toggle-container, .mode-selector, .hero-buttons, .workout-btns {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .workout-toggle-container a, .workout-toggle-container button, 
+  .mode-selector button, .mode-selector a {
+    flex: 1 !important;
+    text-align: center !important;
+    padding: 10px 5px !important;
+    font-size: 0.9rem !important;
+  }
+
   .dashboard-grid, .container, .main-container {
     width: 100% !important;
     max-width: 100% !important;
@@ -253,10 +284,12 @@ nav a:hover {
     padding-left: 12px !important;
     padding-right: 12px !important;
   }
+
   p, span, h1, h2, h3, h4, a {
     word-break: break-word;
     overflow-wrap: break-word;
   }
+
   img {
     max-width: 100%;
     height: auto;
