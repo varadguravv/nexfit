@@ -390,3 +390,44 @@ nav a:hover {
     height: auto;
   }
 }
+/* ==========================================
+   Nexfit Mobile Navbar Stack Update
+   ================================---------- */
+@media screen and (max-width: 768px) {
+  /* Force the header container to arrange items vertically */
+  header, .navbar, .header-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 12px !important;
+    padding: 10px !important;
+  }
+
+  /* Keep the logo on its own line */
+  header h1, .logo, [class*="logo"] {
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  /* Stack and style the navigation links neatly below the logo */
+  header nav, nav ul, .nav-links, .menu-links {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px 15px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Ensure every link is easily clickable and tappable */
+  header nav a, nav ul li a, .nav-links a, .menu-links a {
+    display: inline-block !important;
+    padding: 6px 10px !important;
+    font-size: 0.95rem !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+  }
+}
