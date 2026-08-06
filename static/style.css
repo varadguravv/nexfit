@@ -499,3 +499,26 @@ nav a:hover {
     line-height: 1.4 !important;
   }
 }
+/* ==========================================
+   Nexfit Professional Clickable Header Buttons
+   ================================---------- */
+@media screen and (max-width: 768px) {
+  header nav a, nav ul li a, .nav-links a, .menu-links a, 
+  [class*="nav"] a, [class*="menu"] a {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 8px !important;
+    padding: 8px 14px !important;
+    margin: 4px !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.2s ease !important;
+  }
+
+  /* Interactive active/hover touch state for mobile */
+  header nav a:active, nav ul li a:active, .nav-links a:active {
+    background-color: rgba(255, 59, 48, 0.2) !important;
+    border-color: #ff3b30 !important;
+  }
+}
