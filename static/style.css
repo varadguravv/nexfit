@@ -477,3 +477,14 @@ nav a:hover {
     box-sizing: border-box !important;
   }
 }
+/* ==========================================
+   Nexfit Inner Page Mobile Font Size Fix
+   ================================---------- */
+@media screen and (max-width: 768px) {
+  /* Force a uniform, readable font size for all navbar links on mobile */
+  header nav a, nav ul li a, .nav-links a, .menu-links a, 
+  header a, .navbar a {
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+  }
+}
