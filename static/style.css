@@ -208,4 +208,57 @@ nav a:hover {
     background: #12131c !important;
     border: 1px solid var(--border-color);
     box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+} 
+/* --- Professional Mobile Responsiveness & Text Safe-Guard --- */
+@media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  /* --- Professional Mobile Responsiveness & Text Safe-Guard --- */
+@media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+ /* --- Professional Mobile Responsiveness & Text Safe-Guard --- */
+@media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+ /* --- Professional Mobile Responsiveness & Text Safe-Guard --- */
+@media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+ @media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+  .dashboard-grid, .container, .main-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  p, span, h1, h2, h3, h4, a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
