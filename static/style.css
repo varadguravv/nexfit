@@ -431,3 +431,49 @@ nav a:hover {
     box-sizing: border-box !important;
   }
 }
+/* ==========================================
+   Nexfit Global Mobile Header Stack Fix
+   ================================---------- */
+@media screen and (max-width: 768px) {
+  /* Target any header container across all pages */
+  header, .navbar, .header-container, div:has(> .logo), div:has(> h1) {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 12px !important;
+    padding: 12px 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Force logo/brand name to its own clear row */
+  header h1, .logo, [class*="logo"], .navbar-brand {
+    display: block !important;
+    margin: 0 auto !important;
+    font-size: 1.8rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* Force all navigation menus across all pages to stack neatly and wrap */
+  header nav, nav ul, .nav-links, .menu-links, div:has(> a[href*="calculator"]) {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px 12px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Make individual navigation links large, tappable, and clean */
+  header nav a, nav ul li a, .nav-links a, .menu-links a, header a {
+    display: inline-block !important;
+    padding: 6px 10px !important;
+    font-size: 0.95rem !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+  }
+}
