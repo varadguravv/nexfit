@@ -244,39 +244,134 @@ nav a:hover {
   }
 @media screen and (max-width: 768px) {
   body {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
   }
 
-  /* Keep logo on one single line */
-  .logo, h1.logo, .navbar-brand {
+  /* Force any logo or brand header text onto one single line */
+  header h1, header h2, .logo, [class*="logo"], .navbar-brand {
+    display: inline-block !important;
     white-space: nowrap !important;
     font-size: 1.5rem !important;
   }
 
-  /* Fix navigation items to wrap nicely */
-  header nav, .nav-links, .menu-links {
+  /* Force top navigation links to wrap nicely */
+  header nav, nav ul, .nav-links, .menu-links {
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 8px !important;
-    font-size: 0.85rem !important;
+    justify-content: center !important;
+    gap: 6px 10px !important;
   }
 
-  /* Make Home Workout and Gym Workout buttons side-by-side */
-  .workout-toggle-container, .mode-selector, .hero-buttons, .workout-btns {
+  /* Force Home Workout and Gym Workout buttons side-by-side */
+  .workout-toggle-container, .mode-selector, .hero-buttons, .workout-btns, 
+  div[style*="flex"], div[class*="workout"], div[class*="toggle"] {
     display: flex !important;
     flex-direction: row !important;
+    flex-wrap: nowrap !important;
     gap: 10px !important;
     width: 100% !important;
+    box-sizing: border-box !important;
   }
 
+  /* Make each button share the row evenly */
   .workout-toggle-container a, .workout-toggle-container button, 
-  .mode-selector button, .mode-selector a {
-    flex: 1 !important;
-    text-align: center !important;
-    padding: 10px 5px !important;
-    font-size: 0.9rem !important;
+  @media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden !important;
   }
 
+  /* Force logo and headers onto a single line */
+  header h1, header h2, .logo, [class*="logo"], .navbar-brand {
+    display: inline-block !important;
+    white-space: nowrap !important;
+    font-size: 1.5rem !important;
+  }
+
+  /* Force top navigation links to wrap nicely */
+  header nav, nav ul, .nav-links, .menu-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 6px 10px !important;
+  }
+
+  /* Force Home Workout and Gym Workout buttons side-by-side */
+  .workout-toggle-container, .mode-selector, .hero-buttons, .workout-btns, 
+  div[style*="flex"], div[class*="workout"], div[class*="toggle"] {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Make each button share the row evenly */
+  .workout-toggle-container a, .workout-toggle-container button, 
+  .mode-selector button, .mode-selector a, 
+  .workout-btns a, .workout-btns button {
+    flex: 1 1 50% !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    padding: 12px 8px !important;
+    font-size: 0.85rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .dashboard-grid, .container, .main-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  p, span, h1, h2, h3, h4, a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+/* ==========================================
+   Nexfit Safe Add-on Mobile Responsive Styles
+   ================================---------- */
+
+@media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden !important;
+  }
+
+  /* Force logo onto a single line cleanly */
+  header h1, .logo, [class*="logo"] {
+    display: inline-block !important;
+    white-space: nowrap !important;
+    font-size: 1.5rem !important;
+  }
+
+  /* Force Home Workout and Gym Workout buttons to align side-by-side */
+  .workout-toggle, .mode-select, .buttons-container, div[class*="toggle"], div[class*="workout"] {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .workout-toggle a, .workout-toggle button, 
+  .mode-select a, .mode-select button,
+  div[class*="toggle"] a, div[class*="toggle"] button {
+    flex: 1 1 50% !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Prevent elements from overflowing the mobile screen */
   .dashboard-grid, .container, .main-container {
     width: 100% !important;
     max-width: 100% !important;
