@@ -534,3 +534,21 @@ nav a:hover {
     box-shadow: none !important;
   }
 }
+/* ==========================================
+   Nexfit Ultimate 10/10 Mobile App Touch Feedback
+   ================================---------- */
+@media screen and (max-width: 768px) {
+  header nav a, nav ul li a, .nav-links a, .menu-links a, 
+  [class*="nav"] a, [class*="menu"] a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Smooth tactile animation when user presses a button on mobile */
+  header nav a:active, nav ul li a:active, .nav-links a:active, 
+  [class*="nav"] a:active, [class*="menu"] a:active {
+    transform: scale(0.96) !important;
+    background-color: rgba(255, 59, 48, 0.25) !important;
+    border-color: #ff3b30 !important;
+    color: #ffffff !important;
+  }
+}
