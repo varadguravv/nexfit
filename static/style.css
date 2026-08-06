@@ -522,3 +522,15 @@ nav a:hover {
     border-color: #ff3b30 !important;
   }
 }
+/* ==========================================
+   Nexfit Static Header / Unstick Navigation
+   ================================---------- */
+@media screen and (max-width: 768px) {
+  /* Release the header and navbar from being stuck/fixed so they scroll away normally */
+  header, nav, .navbar, .header-container {
+    position: static !important;
+    position: relative !important;
+    top: auto !important;
+    box-shadow: none !important;
+  }
+}
