@@ -7,1132 +7,991 @@
 ```
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Nexfit — Smart Fitness Calculator</title>
 
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}"
->
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
 
-<link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
->
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
->
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
 
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-    rel="stylesheet"
->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet">
+```
 
 <style>
 
-    :root {
-        --nx-bg: #070707;
-        --nx-surface: #0e0e0e;
-        --nx-card: #121212;
-        --nx-card-hover: #171717;
-        --nx-border: rgba(255,255,255,.085);
-        --nx-border-strong: rgba(255,255,255,.16);
-        --nx-text: #f5f5f5;
-        --nx-muted: #777;
-        --nx-dim: #444;
-        --nx-accent: #c8ff00;
+:root {
+    --nx-bg:#060606;
+    --nx-card:#0d0d0d;
+    --nx-card2:#111;
+    --nx-border:rgba(255,255,255,.08);
+    --nx-text:#f3f3f3;
+    --nx-muted:#777;
+    --nx-accent:#c8ff00;
+}
+
+
+* {
+    box-sizing:border-box;
+}
+
+
+html {
+    scroll-behavior:smooth;
+}
+
+
+body {
+
+    margin:0;
+
+    background:
+        radial-gradient(
+            circle at 85% 0%,
+            rgba(200,255,0,.055),
+            transparent 30%
+        ),
+        var(--nx-bg);
+
+    color:var(--nx-text);
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+}
+
+
+a {
+    text-decoration:none;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.nx-nav {
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    min-height:76px;
+
+    padding:0 max(5vw,22px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:30px;
+
+    background:rgba(6,6,6,.91);
+
+    border-bottom:1px solid var(--nx-border);
+
+    backdrop-filter:blur(18px);
+}
+
+
+.nx-logo {
+
+    color:#fff;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:1.45rem;
+
+    font-weight:900;
+
+    letter-spacing:-1.5px;
+}
+
+
+.nx-logo span {
+    color:var(--nx-accent);
+}
+
+
+.nx-links {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:27px;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+}
+
+
+.nx-links::-webkit-scrollbar {
+    display:none;
+}
+
+
+.nx-links a {
+
+    white-space:nowrap;
+
+    color:#626262;
+
+    font-size:.67rem;
+
+    font-weight:800;
+
+    transition:color .2s ease;
+}
+
+
+.nx-links a:hover,
+.nx-links a.active {
+    color:#fff;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.nx-container {
+
+    width:min(1120px,90%);
+
+    margin:auto;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.calc-hero {
+
+    position:relative;
+
+    min-height:430px;
+
+    margin-top:25px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    border:1px solid var(--nx-border);
+
+    border-radius:18px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.97),
+            rgba(0,0,0,.74) 55%,
+            rgba(0,0,0,.2)
+        ),
+
+        url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=90")
+        center/cover;
+}
+
+
+.calc-hero-content {
+
+    max-width:760px;
+
+    padding:
+        clamp(32px,6vw,65px);
+}
+
+
+.calc-eyebrow {
+
+    color:var(--nx-accent);
+
+    font-size:.48rem;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+}
+
+
+.calc-hero h1 {
+
+    margin:14px 0 18px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(3rem,7vw,6.2rem);
+
+    line-height:.86;
+
+    letter-spacing:-5px;
+}
+
+
+.calc-hero h1 span {
+    color:var(--nx-accent);
+}
+
+
+.calc-hero p {
+
+    max-width:630px;
+
+    margin:0;
+
+    color:#888;
+
+    font-size:.65rem;
+
+    line-height:1.8;
+}
+
+
+/* =====================================================
+   CALCULATOR SECTION
+===================================================== */
+
+.calculator-shell {
+
+    margin:
+        30px 0 70px;
+
+    padding:
+        clamp(22px,4vw,38px);
+
+    background:
+        linear-gradient(
+            145deg,
+            #101010,
+            #0b0b0b
+        );
+
+    border:
+        1px solid var(--nx-border);
+
+    border-radius:16px;
+}
+
+
+.calc-heading {
+
+    margin-bottom:28px;
+}
+
+
+.calc-kicker {
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:var(--nx-accent);
+
+    font-size:.45rem;
+
+    font-weight:900;
+
+    letter-spacing:1.7px;
+}
+
+
+.calc-heading h2 {
+
+    margin:0;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(1.5rem,3vw,2.2rem);
+
+    letter-spacing:-1px;
+}
+
+
+.calc-heading p {
+
+    max-width:700px;
+
+    margin:8px 0 0;
+
+    color:#666;
+
+    font-size:.57rem;
+
+    line-height:1.7;
+}
+
+
+/* =====================================================
+   INPUT GRID
+===================================================== */
+
+.calc-grid {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:12px;
+}
+
+
+.input-group {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+}
+
+
+.input-group label {
+
+    color:#858585;
+
+    font-size:.5rem;
+
+    font-weight:800;
+
+    letter-spacing:.3px;
+}
+
+
+.input-group input,
+.input-group select {
+
+    width:100%;
+
+    padding:
+        14px 14px;
+
+    color:#eee;
+
+    background:#080808;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius:8px;
+
+    outline:none;
+
+    font-family:inherit;
+
+    font-size:.62rem;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.input-group input::placeholder {
+    color:#444;
+}
+
+
+.input-group input:focus,
+.input-group select:focus {
+
+    border-color:
+        rgba(200,255,0,.55);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(200,255,0,.055);
+}
+
+
+.input-group select option {
+    background:#111;
+    color:#fff;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.calc-submit {
+
+    width:100%;
+
+    margin-top:18px;
+
+    padding:15px;
+
+    color:#050505;
+
+    background:var(--nx-accent);
+
+    border:none;
+
+    border-radius:8px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:.64rem;
+
+    font-weight:900;
+
+    letter-spacing:.4px;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        filter .2s ease;
+}
+
+
+.calc-submit:hover {
+
+    transform:
+        translateY(-2px);
+
+    filter:
+        brightness(1.08);
+}
+
+
+.calc-submit:active {
+    transform:translateY(0);
+}
+
+
+/* =====================================================
+   RESULT DASHBOARD
+===================================================== */
+
+.result-dashboard {
+
+    display:none;
+
+    margin-top:30px;
+
+    padding-top:30px;
+
+    border-top:
+        1px solid
+        var(--nx-border);
+
+    animation:
+        resultIn .45s ease;
+}
+
+
+@keyframes resultIn {
+
+    from {
+        opacity:0;
+        transform:translateY(15px);
     }
 
-
-    * {
-        box-sizing: border-box;
+    to {
+        opacity:1;
+        transform:translateY(0);
     }
 
-
-    html {
-        scroll-behavior: smooth;
-    }
+}
 
 
-    body {
-        margin: 0;
-        min-height: 100vh;
+.result-header {
 
-        background:
-            radial-gradient(
-                circle at 85% 5%,
-                rgba(200,255,0,.055),
-                transparent 28%
-            ),
-            radial-gradient(
-                circle at 10% 70%,
-                rgba(255,255,255,.025),
-                transparent 30%
-            ),
-            var(--nx-bg);
+    display:flex;
 
-        color: var(--nx-text);
+    align-items:flex-end;
 
-        font-family: Inter, Arial, sans-serif;
+    justify-content:space-between;
 
-        overflow-x: hidden;
-    }
+    gap:20px;
+
+    margin-bottom:18px;
+}
 
 
-    a {
-        text-decoration: none;
-    }
+.result-header h3 {
+
+    margin:0;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:1.25rem;
+}
 
 
-    button,
-    input,
-    select {
-        font-family: inherit;
-    }
+.result-header span {
+
+    color:var(--nx-accent);
+
+    font-size:.45rem;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+}
 
 
-    /* ================================================
-       NAVIGATION
-    ================================================ */
+/* =====================================================
+   RESULT CARDS
+===================================================== */
+
+.result-stats-grid {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+    margin-bottom:10px;
+}
+
+
+.stat-card {
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:22px;
+
+    min-height:145px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #121212,
+            #0c0c0c
+        );
+
+    border:
+        1px solid
+        var(--nx-border);
+
+    border-radius:10px;
+}
+
+
+.stat-card::after {
+
+    content:"";
+
+    position:absolute;
+
+    width:80px;
+
+    height:80px;
+
+    right:-30px;
+
+    bottom:-30px;
+
+    background:
+        var(--nx-accent);
+
+    opacity:.035;
+
+    border-radius:50%;
+}
+
+
+.stat-card h4 {
+
+    margin:
+        0 0 13px;
+
+    color:#666;
+
+    font-size:.44rem;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+
+.stat-card .value {
+
+    margin:0;
+
+    color:var(--nx-accent);
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(1.7rem,4vw,2.4rem);
+
+    font-weight:900;
+
+    letter-spacing:-1px;
+}
+
+
+.stat-card small {
+
+    display:block;
+
+    margin-top:7px;
+
+    color:#555;
+
+    font-size:.44rem;
+
+    font-weight:600;
+}
+
+
+/* =====================================================
+   BMI SCALE
+===================================================== */
+
+.bmi-panel {
+
+    margin-top:10px;
+
+    padding:22px;
+
+    background:#0d0d0d;
+
+    border:
+        1px solid
+        var(--nx-border);
+
+    border-radius:10px;
+}
+
+
+.bmi-panel-top {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:13px;
+}
+
+
+.bmi-panel-top h4 {
+
+    margin:0;
+
+    color:#ddd;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:.8rem;
+}
+
+
+#bmiCategory {
+
+    color:var(--nx-accent);
+
+    font-size:.47rem;
+
+    font-weight:900;
+}
+
+
+.bmi-scale {
+
+    position:relative;
+
+    height:7px;
+
+    display:flex;
+
+    overflow:hidden;
+
+    border-radius:20px;
+}
+
+
+.bmi-zone {
+    flex:1;
+}
+
+
+.bmi-zone:nth-child(1) {
+    background:#526;
+}
+
+
+.bmi-zone:nth-child(2) {
+    background:#667;
+}
+
+
+.bmi-zone:nth-child(3) {
+    background:#777;
+}
+
+
+.bmi-zone:nth-child(4) {
+    background:#555;
+}
+
+
+.bmi-marker {
+
+    position:absolute;
+
+    top:-5px;
+
+    width:4px;
+
+    height:17px;
+
+    background:#fff;
+
+    border-radius:3px;
+
+    transform:
+        translateX(-50%);
+}
+
+
+/* =====================================================
+   PLAN
+===================================================== */
+
+.plan-breakdown {
+
+    margin-top:10px;
+
+    padding:25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(200,255,0,.045),
+            rgba(255,255,255,.015)
+        );
+
+    border:
+        1px solid
+        rgba(200,255,0,.11);
+
+    border-radius:10px;
+}
+
+
+.plan-label {
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:var(--nx-accent);
+
+    font-size:.43rem;
+
+    font-weight:900;
+
+    letter-spacing:1.4px;
+}
+
+
+.plan-breakdown h4 {
+
+    margin:
+        0 0 10px;
+
+    color:#eee;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:1rem;
+}
+
+
+.plan-breakdown p {
+
+    margin:0;
+
+    color:#777;
+
+    font-size:.55rem;
+
+    line-height:1.8;
+}
+
+
+/* =====================================================
+   DISCLAIMER
+===================================================== */
+
+.calc-note {
+
+    margin-top:16px;
+
+    padding:14px 16px;
+
+    color:#555;
+
+    background:
+        rgba(255,255,255,.015);
+
+    border:
+        1px solid
+        var(--nx-border);
+
+    border-radius:7px;
+
+    font-size:.44rem;
+
+    line-height:1.7;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.nx-footer {
+
+    padding:
+        28px 20px;
+
+    color:#3d3d3d;
+
+    border-top:
+        1px solid
+        var(--nx-border);
+
+    text-align:center;
+
+    font-size:.46rem;
+}
+
+
+.nx-footer strong {
+    color:var(--nx-accent);
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:760px) {
 
     .nx-nav {
 
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-
-        min-height: 76px;
-
         padding:
-            0
-            max(5vw, 22px);
+            15px 18px;
 
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        gap: 30px;
-
-        background:
-            rgba(7,7,7,.88);
-
-        border-bottom:
-            1px solid var(--nx-border);
-
-        backdrop-filter: blur(18px);
-    }
-
-
-    .nx-logo {
-
-        color: #fff;
-
-        font-family:
-            "Space Grotesk",
-            sans-serif;
-
-        font-size: 1.45rem;
-
-        font-weight: 800;
-
-        letter-spacing: -1px;
-    }
-
-
-    .nx-logo span {
-        color: var(--nx-accent);
+        flex-wrap:wrap;
     }
 
 
     .nx-links {
 
-        display: flex;
-        align-items: center;
+        width:100%;
 
-        gap: 27px;
+        gap:18px;
     }
 
 
-    .nx-links a {
+    .calc-grid,
+    .result-stats-grid {
 
-        position: relative;
-
-        color: #666;
-
-        font-size: .72rem;
-
-        font-weight: 700;
-
-        transition: color .2s ease;
+        grid-template-columns:1fr;
     }
 
 
-    .nx-links a:hover,
-    .nx-links a.active {
-        color: #fff;
+    .calc-hero {
+
+        min-height:450px;
     }
 
 
-    .nx-links a.active::after {
+    .calc-hero h1 {
 
-        content: "";
+        font-size:3.5rem;
 
-        position: absolute;
-
-        left: 0;
-        right: 0;
-
-        bottom: -12px;
-
-        height: 2px;
-
-        background: var(--nx-accent);
+        letter-spacing:-3px;
     }
 
 
-    /* ================================================
-       HERO
-    ================================================ */
+    .result-header {
 
-    .calculator-hero {
+        align-items:flex-start;
 
-        position: relative;
-
-        min-height: 420px;
-
-        display: flex;
-        align-items: flex-end;
-
-        overflow: hidden;
-
-        background:
-
-            linear-gradient(
-                90deg,
-                rgba(0,0,0,.98),
-                rgba(0,0,0,.76) 48%,
-                rgba(0,0,0,.2)
-            ),
-
-            linear-gradient(
-                0deg,
-                var(--nx-bg),
-                transparent 60%
-            ),
-
-            url("https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=2200&q=90")
-            center/cover;
+        flex-direction:column;
     }
 
+}
 
-    .hero-inner {
 
-        width: min(1150px, 90%);
+@media(max-width:500px) {
 
-        margin: auto;
+    .nx-container {
 
-        padding:
-            85px
-            0
-            65px;
+        width:
+            calc(100% - 28px);
     }
 
-
-    .eyebrow {
-
-        color: var(--nx-accent);
-
-        font-size: .52rem;
-
-        font-weight: 900;
-
-        letter-spacing: 2px;
-    }
-
-
-    .calculator-hero h1 {
-
-        max-width: 850px;
-
-        margin: 15px 0 0;
-
-        font-family:
-            "Space Grotesk",
-            sans-serif;
-
-        font-size:
-            clamp(3.7rem, 8vw, 6.8rem);
-
-        line-height: .84;
-
-        letter-spacing: -5px;
-    }
-
-
-    .calculator-hero h1 span {
-        display: block;
-        color: var(--nx-accent);
-    }
-
-
-    .calculator-hero p {
-
-        max-width: 590px;
-
-        margin: 25px 0 0;
-
-        color: #858585;
-
-        font-size: .67rem;
-
-        line-height: 1.8;
-    }
-
-
-    /* ================================================
-       MAIN
-    ================================================ */
-
-    .nx-main {
-
-        width: min(1000px, 90%);
-
-        margin: auto;
-    }
-
-
-    /* ================================================
-       CALCULATOR SHELL
-    ================================================ */
 
     .calculator-shell {
 
-        position: relative;
-
-        z-index: 3;
-
-        margin-top: -35px;
-
-        padding: clamp(25px, 5vw, 42px);
-
-        background:
-            linear-gradient(
-                145deg,
-                #151515,
-                #0c0c0c
-            );
-
-        border:
-            1px solid var(--nx-border);
-
-        border-radius: 15px;
-
-        box-shadow:
-            0 30px 90px rgba(0,0,0,.45);
+        padding:20px 16px;
     }
 
 
-    .calculator-header {
+    .calc-hero-content {
 
-        margin-bottom: 32px;
+        padding:
+            28px 22px;
     }
 
-
-    .calculator-header .eyebrow {
-        margin-bottom: 9px;
-    }
-
-
-    .calculator-header h2 {
-
-        margin: 0;
-
-        font-family:
-            "Space Grotesk",
-            sans-serif;
-
-        font-size:
-            clamp(1.8rem, 4vw, 2.8rem);
-
-        line-height: .95;
-
-        letter-spacing: -2px;
-    }
-
-
-    .calculator-header p {
-
-        max-width: 620px;
-
-        margin: 13px 0 0;
-
-        color: var(--nx-muted);
-
-        font-size: .63rem;
-
-        line-height: 1.8;
-    }
-
-
-    /* ================================================
-       FORM
-    ================================================ */
-
-    #fitnessCalcForm {
-
-        margin: 0;
-
-        padding: 0;
-
-        background: transparent;
-
-        border: 0;
-
-        box-shadow: none;
-    }
-
-
-    .form-label {
-
-        display: block;
-
-        margin-bottom: 8px;
-
-        color: #696969;
-
-        font-size: .48rem;
-
-        font-weight: 900;
-
-        letter-spacing: .9px;
-
-        text-transform: uppercase;
-    }
-
-
-    .calc-grid {
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(2, minmax(0,1fr));
-
-        gap: 12px;
-    }
-
-
-    .input-group {
-
-        padding: 17px;
-
-        background:
-            rgba(255,255,255,.018);
-
-        border:
-            1px solid var(--nx-border);
-
-        border-radius: 9px;
-
-        transition:
-            border-color .2s ease,
-            transform .2s ease,
-            background .2s ease;
-    }
-
-
-    .input-group:hover {
-
-        border-color:
-            rgba(255,255,255,.15);
-
-        background:
-            rgba(255,255,255,.025);
-
-        transform: translateY(-1px);
-    }
-
-
-    .input-group input,
-    .input-group select {
-
-        width: 100%;
-
-        height: 48px;
-
-        padding: 0 13px;
-
-        color: #f4f4f4;
-
-        background: #090909;
-
-        border:
-            1px solid rgba(255,255,255,.08);
-
-        border-radius: 7px;
-
-        outline: none;
-
-        font-size: .62rem;
-
-        transition:
-            border-color .2s ease,
-            box-shadow .2s ease,
-            background .2s ease;
-    }
-
-
-    .input-group input:focus,
-    .input-group select:focus {
-
-        border-color:
-            rgba(200,255,0,.55);
-
-        background: #0e0e0e;
-
-        box-shadow:
-            0 0 0 3px
-            rgba(200,255,0,.055);
-    }
-
-
-    .input-group input::placeholder {
-        color: #3e3e3e;
-    }
-
-
-    .input-group select option {
-
-        color: #fff;
-
-        background: #101010;
-    }
-
-
-    /* ================================================
-       BUTTON
-    ================================================ */
-
-    .generate-btn {
-
-        position: relative;
-
-        width: 100%;
-
-        min-height: 58px;
-
-        margin-top: 13px;
-
-        overflow: hidden;
-
-        border: 0;
-
-        border-radius: 8px;
-
-        background:
-            var(--nx-accent);
-
-        color: #050505;
-
-        cursor: pointer;
-
-        font-size: .58rem;
-
-        font-weight: 900;
-
-        letter-spacing: .7px;
-
-        transition:
-            transform .2s ease,
-            box-shadow .2s ease;
-    }
-
-
-    .generate-btn::after {
-
-        content: "";
-
-        position: absolute;
-
-        top: 0;
-        left: -100%;
-
-        width: 65%;
-        height: 100%;
-
-        background:
-            linear-gradient(
-                90deg,
-                transparent,
-                rgba(255,255,255,.5),
-                transparent
-            );
-
-        transform: skewX(-20deg);
-
-        transition: left .55s ease;
-    }
-
-
-    .generate-btn:hover {
-
-        transform: translateY(-3px);
-
-        box-shadow:
-            0 15px 35px
-            rgba(200,255,0,.14);
-    }
-
-
-    .generate-btn:hover::after {
-        left: 140%;
-    }
-
-
-    .generate-btn:active {
-        transform: translateY(-1px);
-    }
-
-
-    /* ================================================
-       RESULT DASHBOARD
-    ================================================ */
-
-    .result-dashboard {
-
-        display: none;
-
-        margin-top: 30px;
-
-        padding-top: 30px;
-
-        border-top:
-            1px solid var(--nx-border);
-
-        animation:
-            resultReveal .45s ease both;
-    }
-
-
-    @keyframes resultReveal {
-
-        from {
-            opacity: 0;
-            transform: translateY(15px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-    }
-
-
-    .result-heading {
-
-        display: flex;
-
-        align-items: flex-end;
-
-        justify-content: space-between;
-
-        gap: 20px;
-
-        margin-bottom: 17px;
-    }
-
-
-    .result-heading h3 {
-
-        margin: 0;
-
-        font-family:
-            "Space Grotesk",
-            sans-serif;
-
-        font-size: 1.25rem;
-
-        letter-spacing: -.5px;
-    }
-
-
-    .result-heading span {
-
-        color: var(--nx-accent);
-
-        font-size: .45rem;
-
-        font-weight: 900;
-
-        letter-spacing: 1.3px;
-    }
-
-
-    /* ================================================
-       RESULT CARDS
-    ================================================ */
-
-    .result-stats-grid {
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(3, minmax(0,1fr));
-
-        gap: 9px;
-    }
-
-
-    .stat-card {
-
-        position: relative;
-
-        min-height: 160px;
-
-        padding: 22px;
-
-        display: flex;
-
-        flex-direction: column;
-
-        justify-content: space-between;
-
-        overflow: hidden;
-
-        background:
-            linear-gradient(
-                145deg,
-                #171717,
-                #0f0f0f
-            );
-
-        border:
-            1px solid var(--nx-border);
-
-        border-radius: 10px;
-
-        transition:
-            transform .25s ease,
-            border-color .25s ease;
-    }
-
-
-    .stat-card::before {
-
-        content: "";
-
-        position: absolute;
-
-        left: 0;
-        top: 0;
-
-        width: 100%;
-        height: 2px;
-
-        background:
-            var(--nx-accent);
-
-        opacity: .45;
-    }
-
-
-    .stat-card:hover {
-
-        transform: translateY(-4px);
-
-        border-color:
-            rgba(200,255,0,.2);
-    }
-
-
-    .stat-card h4 {
-
-        margin: 0;
-
-        color: #5f5f5f;
-
-        font-size: .46rem;
-
-        font-weight: 900;
-
-        letter-spacing: .8px;
-
-        text-transform: uppercase;
-    }
-
-
-    .stat-card .value {
-
-        margin: 13px 0 5px;
-
-        color: var(--nx-accent);
-
-        font-family:
-            "Space Grotesk",
-            sans-serif;
-
-        font-size:
-            clamp(1.65rem, 4vw, 2.45rem);
-
-        font-weight: 700;
-
-        line-height: 1;
-    }
-
-
-    .stat-card span {
-
-        color: #4c4c4c;
-
-        font-size: .46rem;
-    }
-
-
-    /* ================================================
-       BMI CATEGORY
-    ================================================ */
-
-    #bmiCategory {
-
-        display: inline-flex;
-
-        width: fit-content;
-
-        padding: 5px 8px;
-
-        background:
-            rgba(200,255,0,.06);
-
-        border:
-            1px solid
-            rgba(200,255,0,.12);
-
-        border-radius: 4px;
-
-        color:
-            #9fc900 !important;
-
-        font-size: .44rem !important;
-
-        font-weight: 800;
-    }
-
-
-    /* ================================================
-       PLAN
-    ================================================ */
-
-    .plan-breakdown {
-
-        position: relative;
-
-        margin-top: 9px;
-
-        padding: 25px;
-
-        background:
-            linear-gradient(
-                135deg,
-                rgba(200,255,0,.07),
-                rgba(200,255,0,.012)
-            );
-
-        border:
-            1px solid
-            rgba(200,255,0,.13);
-
-        border-radius: 10px;
-    }
-
-
-    .plan-breakdown::before {
-
-        content:
-            "NEXFIT RECOMMENDATION";
-
-        display: block;
-
-        margin-bottom: 10px;
-
-        color: var(--nx-accent);
-
-        font-size: .42rem;
-
-        font-weight: 900;
-
-        letter-spacing: 1.5px;
-    }
-
-
-    .plan-breakdown h4 {
-
-        margin: 0 0 9px;
-
-        color: #fff;
-
-        font-family:
-            "Space Grotesk",
-            sans-serif;
-
-        font-size: 1rem;
-    }
-
-
-    .plan-breakdown p {
-
-        margin: 0;
-
-        color: #747474;
-
-        font-size: .58rem;
-
-        line-height: 1.8;
-    }
-
-
-    /* ================================================
-       INFO STRIP
-    ================================================ */
-
-    .calculator-info {
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(3,1fr);
-
-        gap: 9px;
-
-        margin-top: 10px;
-    }
-
-
-    .info-card {
-
-        padding: 20px;
-
-        background:
-            rgba(255,255,255,.018);
-
-        border:
-            1px solid var(--nx-border);
-
-        border-radius: 9px;
-    }
-
-
-    .info-card strong {
-
-        display: block;
-
-        margin-bottom: 7px;
-
-        color: #ddd;
-
-        font-family:
-            "Space Grotesk",
-            sans-serif;
-
-        font-size: .7rem;
-    }
-
-
-    .info-card p {
-
-        margin: 0;
-
-        color: #515151;
-
-        font-size: .48rem;
-
-        line-height: 1.7;
-    }
-
-
-    /* ================================================
-       FOOTER
-    ================================================ */
-
-    .nx-footer {
-
-        margin-top: 90px;
-
-        padding: 30px 20px;
-
-        text-align: center;
-
-        color: #3d3d3d;
-
-        font-size: .48rem;
-
-        border-top:
-            1px solid var(--nx-border);
-    }
-
-
-    .nx-footer strong {
-        color: var(--nx-accent);
-    }
-
-
-    /* ================================================
-       MOBILE
-    ================================================ */
-
-    @media(max-width: 800px) {
-
-        .nx-nav {
-
-            padding:
-                16px 18px;
-
-            flex-wrap: wrap;
-        }
-
-
-        .nx-links {
-
-            width: 100%;
-
-            overflow-x: auto;
-
-            gap: 18px;
-
-            scrollbar-width: none;
-        }
-
-
-        .nx-links::-webkit-scrollbar {
-            display: none;
-        }
-
-
-        .nx-links a {
-            white-space: nowrap;
-        }
-
-
-        .calculator-hero {
-
-            min-height: 480px;
-        }
-
-
-        .hero-inner {
-
-            width: calc(100% - 36px);
-
-            padding-bottom: 55px;
-        }
-
-
-        .calc-grid {
-
-            grid-template-columns: 1fr;
-        }
-
-
-        .result-stats-grid {
-
-            grid-template-columns: 1fr;
-        }
-
-
-        .calculator-info {
-
-            grid-template-columns: 1fr;
-        }
-
-    }
-
-
-    @media(max-width: 520px) {
-
-        .calculator-hero h1 {
-
-            font-size:
-                clamp(3.2rem, 15vw, 5rem);
-
-            letter-spacing: -4px;
-        }
-
-
-        .nx-main {
-
-            width:
-                calc(100% - 30px);
-        }
-
-
-        .calculator-shell {
-
-            padding: 21px;
-        }
-
-
-        .calculator-header h2 {
-
-            font-size: 2rem;
-        }
-
-
-        .stat-card {
-
-            min-height: 135px;
-        }
-
-
-        .result-heading {
-
-            align-items: flex-start;
-
-            flex-direction: column;
-        }
-
-    }
-
-
-    /* ================================================
-       ACCESSIBILITY
-    ================================================ */
-
-    button:focus-visible,
-    input:focus-visible,
-    select:focus-visible,
-    a:focus-visible {
-
-        outline:
-            2px solid
-            var(--nx-accent);
-
-        outline-offset: 3px;
-    }
-
-
-    @media(prefers-reduced-motion: reduce) {
-
-        *,
-        *::before,
-        *::after {
-
-            animation-duration:
-                .01ms !important;
-
-            transition-duration:
-                .01ms !important;
-        }
-
-    }
+}
 
 </style>
-```
 
 </head>
 
@@ -1156,10 +1015,7 @@
         Home
     </a>
 
-    <a
-        href="/calculator"
-        class="active"
-    >
+    <a href="/calculator" class="active">
         Calculator
     </a>
 
@@ -1180,18 +1036,20 @@
 
 </header>
 
+<main class="nx-container">
+
 <!-- =====================================================
      HERO
 ===================================================== -->
 
-<section class="calculator-hero">
+<section class="calc-hero">
 
 ```
-<div class="hero-inner">
+<div class="calc-hero-content">
 
-    <div class="eyebrow">
-        NEXFIT PERFORMANCE SYSTEM
-    </div>
+    <span class="calc-eyebrow">
+        NEXFIT SMART ANALYSIS
+    </span>
 
 
     <h1>
@@ -1201,9 +1059,9 @@
 
 
     <p>
-        Turn your body metrics into a practical starting point
-        for training, calories and protein. Enter your details
-        and let Nexfit build your baseline.
+        Turn your body metrics into a practical starting point.
+        Calculate BMI, estimated daily calories and protein
+        requirements based on your selected goal.
     </p>
 
 </div>
@@ -1212,437 +1070,390 @@
 </section>
 
 <!-- =====================================================
-     MAIN
+     CALCULATOR
 ===================================================== -->
 
-<main class="nx-main">
-
-```
 <section class="calculator-shell">
 
+```
+<div class="calc-heading">
 
-    <!-- HEADER -->
+    <span class="calc-kicker">
+        PERSONAL PROFILE
+    </span>
 
-    <div class="calculator-header">
+    <h2>
+        Build Your Fitness Baseline
+    </h2>
 
-        <div class="eyebrow">
-            SMART FITNESS ANALYSIS
+    <p>
+        Enter your details below. Nexfit will calculate your
+        BMI, estimated daily calorie target and protein target.
+    </p>
+
+</div>
+
+
+<form onsubmit="calculatePlan(event)">
+
+
+    <div class="calc-grid">
+
+
+        <!-- WEIGHT -->
+
+        <div class="input-group">
+
+            <label for="weightInput">
+                BODY WEIGHT · KG
+            </label>
+
+            <input
+                type="number"
+                id="weightInput"
+                placeholder="e.g. 70"
+                min="20"
+                max="300"
+                step="0.1"
+                required
+            >
+
         </div>
 
-        <h2>
-            Build Your Baseline
-        </h2>
 
-        <p>
-            Enter your biometric information, choose your
-            primary objective and select your preferred diet.
-            Nexfit will calculate your estimated BMI, daily
-            calorie target and protein requirement.
-        </p>
+        <!-- HEIGHT -->
+
+        <div class="input-group">
+
+            <label for="heightInput">
+                HEIGHT · CM
+            </label>
+
+            <input
+                type="number"
+                id="heightInput"
+                placeholder="e.g. 175"
+                min="100"
+                max="250"
+                step="0.1"
+                required
+            >
+
+        </div>
+
+
+        <!-- AGE -->
+
+        <div class="input-group">
+
+            <label for="ageInput">
+                AGE
+            </label>
+
+            <input
+                type="number"
+                id="ageInput"
+                placeholder="e.g. 20"
+                min="13"
+                max="100"
+                required
+            >
+
+        </div>
+
+
+        <!-- GENDER -->
+
+        <div class="input-group">
+
+            <label for="genderInput">
+                GENDER
+            </label>
+
+            <select
+                id="genderInput"
+                required
+            >
+
+                <option value="">
+                    Select gender
+                </option>
+
+                <option value="male">
+                    Male
+                </option>
+
+                <option value="female">
+                    Female
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- GOAL -->
+
+        <div class="input-group">
+
+            <label for="goalInput">
+                PRIMARY GOAL
+            </label>
+
+            <select
+                id="goalInput"
+                required
+            >
+
+                <option value="">
+                    Select goal
+                </option>
+
+                <option value="fatloss">
+                    Fat Loss
+                </option>
+
+                <option value="maintenance">
+                    Maintain Weight
+                </option>
+
+                <option value="hypertrophy">
+                    Muscle Growth
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- DIET -->
+
+        <div class="input-group">
+
+            <label for="dietInput">
+                DIET PREFERENCE
+            </label>
+
+            <select
+                id="dietInput"
+                required
+            >
+
+                <option value="">
+                    Select diet
+                </option>
+
+                <option value="vegprotein">
+                    Vegetarian · High Protein
+                </option>
+
+                <option value="vegan">
+                    Vegan · Clean
+                </option>
+
+                <option value="keto">
+                    Keto · Performance
+                </option>
+
+            </select>
+
+        </div>
+
 
     </div>
 
 
-    <!-- =================================================
-         CALCULATOR FORM
-    ================================================= -->
-
-    <form
-        id="fitnessCalcForm"
-        onsubmit="calculatePlan(event)"
+    <button
+        type="submit"
+        class="calc-submit"
     >
-
-        <div class="calc-grid">
-
-
-            <!-- WEIGHT -->
-
-            <div class="input-group">
-
-                <label
-                    class="form-label"
-                    for="weightInput"
-                >
-                    Weight · KG
-                </label>
-
-                <input
-                    type="number"
-                    id="weightInput"
-                    placeholder="e.g. 70"
-                    step="0.1"
-                    min="20"
-                    max="300"
-                    required
-                >
-
-            </div>
+        GENERATE MY FITNESS ANALYSIS
+    </button>
 
 
-            <!-- HEIGHT -->
-
-            <div class="input-group">
-
-                <label
-                    class="form-label"
-                    for="heightInput"
-                >
-                    Height · CM
-                </label>
-
-                <input
-                    type="number"
-                    id="heightInput"
-                    placeholder="e.g. 175"
-                    min="100"
-                    max="250"
-                    required
-                >
-
-            </div>
+</form>
 
 
-            <!-- AGE -->
+<!-- =================================================
+     RESULTS
+================================================= -->
 
-            <div class="input-group">
-
-                <label
-                    class="form-label"
-                    for="ageInput"
-                >
-                    Age · YEARS
-                </label>
-
-                <input
-                    type="number"
-                    id="ageInput"
-                    placeholder="e.g. 21"
-                    min="13"
-                    max="100"
-                    required
-                >
-
-            </div>
+<div
+    class="result-dashboard"
+    id="resultDashboard"
+>
 
 
-            <!-- GENDER -->
+    <div class="result-header">
 
-            <div class="input-group">
+        <div>
 
-                <label
-                    class="form-label"
-                    for="genderInput"
-                >
-                    Biological Sex
-                </label>
+            <span class="calc-kicker">
+                YOUR RESULTS
+            </span>
 
-                <select id="genderInput">
+            <h3>
+                Personalized Fitness Analysis
+            </h3>
 
-                    <option value="male">
-                        Male
-                    </option>
+        </div>
 
-                    <option value="female">
-                        Female
-                    </option>
+        <span>
+            NEXFIT ANALYSIS
+        </span>
 
-                </select>
-
-            </div>
+    </div>
 
 
-            <!-- GOAL -->
-
-            <div class="input-group">
-
-                <label
-                    class="form-label"
-                    for="goalInput"
-                >
-                    Primary Fitness Goal
-                </label>
-
-                <select id="goalInput">
-
-                    <option value="hypertrophy">
-                        Body Building / Hypertrophy
-                    </option>
-
-                    <option value="fatloss">
-                        Weight / Fat Loss
-                    </option>
-
-                    <option value="endurance">
-                        Stamina & Endurance
-                    </option>
-
-                    <option value="strength">
-                        Raw Strength
-                    </option>
-
-                </select>
-
-            </div>
+    <div class="result-stats-grid">
 
 
-            <!-- DIET -->
+        <!-- BMI -->
 
-            <div class="input-group">
+        <div class="stat-card">
 
-                <label
-                    class="form-label"
-                    for="dietInput"
-                >
-                    Diet Preference
-                </label>
+            <h4>
+                BODY MASS INDEX
+            </h4>
 
-                <select id="dietInput">
+            <p
+                class="value"
+                id="bmiVal"
+            >
+                —
+            </p>
 
-                    <option value="highprotein">
-                        Non-Vegetarian · High Protein
-                    </option>
-
-                    <option value="vegprotein">
-                        Vegetarian · High Protein
-                    </option>
-
-                    <option value="vegan">
-                        Vegan Clean
-                    </option>
-
-                    <option value="keto">
-                        Keto Performance
-                    </option>
-
-                </select>
-
-            </div>
+            <small>
+                BMI estimate
+            </small>
 
         </div>
 
 
-        <!-- GENERATE -->
+        <!-- TDEE -->
 
-        <button
-            type="submit"
-            class="generate-btn"
-        >
-            GENERATE MY CUSTOM PLAN →
-        </button>
+        <div class="stat-card">
 
-    </form>
+            <h4>
+                DAILY CALORIES
+            </h4>
+
+            <p
+                class="value"
+                id="tdeeVal"
+            >
+                —
+            </p>
+
+            <small>
+                Estimated target
+            </small>
+
+        </div>
 
 
-    <!-- =================================================
-         RESULTS
-    ================================================= -->
+        <!-- PROTEIN -->
 
-    <div
-        class="result-dashboard"
-        id="resultDashboard"
-    >
+        <div class="stat-card">
+
+            <h4>
+                DAILY PROTEIN
+            </h4>
+
+            <p
+                class="value"
+                id="proteinVal"
+            >
+                —
+            </p>
+
+            <small>
+                Target intake
+            </small>
+
+        </div>
 
 
-        <div class="result-heading">
+    </div>
 
-            <div>
 
-                <div class="eyebrow">
-                    PERSONALIZED ANALYSIS
-                </div>
+    <!-- BMI SCALE -->
 
-                <h3>
-                    Your Numbers
-                </h3>
+    <div class="bmi-panel">
 
-            </div>
+        <div class="bmi-panel-top">
 
-            <span>
-                NEXFIT ANALYSIS COMPLETE
+            <h4>
+                BMI Classification
+            </h4>
+
+            <span id="bmiCategory">
+                —
             </span>
 
         </div>
 
 
-        <!-- RESULT CARDS -->
+        <div class="bmi-scale">
 
-        <div class="result-stats-grid">
+            <div class="bmi-zone"></div>
 
+            <div class="bmi-zone"></div>
 
-            <!-- BMI -->
+            <div class="bmi-zone"></div>
 
-            <div class="stat-card">
+            <div class="bmi-zone"></div>
 
-                <div>
-
-                    <h4>
-                        Body Mass Index
-                    </h4>
-
-                    <p
-                        class="value"
-                        id="bmiVal"
-                    >
-                        22.5
-                    </p>
-
-                </div>
-
-                <span
-                    id="bmiCategory"
-                >
-                    Normal Weight
-                </span>
-
-            </div>
-
-
-            <!-- TDEE -->
-
-            <div class="stat-card">
-
-                <div>
-
-                    <h4>
-                        Daily Calories
-                    </h4>
-
-                    <p
-                        class="value"
-                        id="tdeeVal"
-                    >
-                        2,450
-                    </p>
-
-                </div>
-
-                <span>
-                    Estimated Target
-                </span>
-
-            </div>
-
-
-            <!-- PROTEIN -->
-
-            <div class="stat-card">
-
-                <div>
-
-                    <h4>
-                        Target Protein
-                    </h4>
-
-                    <p
-                        class="value"
-                        id="proteinVal"
-                    >
-                        140g
-                    </p>
-
-                </div>
-
-                <span>
-                    Daily Requirement
-                </span>
-
-            </div>
+            <div
+                class="bmi-marker"
+                id="bmiMarker"
+            ></div>
 
         </div>
-
-
-        <!-- PLAN -->
-
-        <div class="plan-breakdown">
-
-            <h4
-                id="planTitleHeader"
-            >
-                Recommended Routine Strategy
-            </h4>
-
-            <p
-                id="planDescText"
-            >
-                Based on your metrics, your personalized regimen
-                focuses on progressive overload combined with
-                tailored nutrition to support your selected goal.
-            </p>
-
-        </div>
-
 
     </div>
 
 
-    <!-- =================================================
-         INFORMATION STRIP
-    ================================================= -->
+    <!-- PLAN -->
 
-    <div class="calculator-info">
+    <div class="plan-breakdown">
 
+        <span class="plan-label">
+            RECOMMENDED STRATEGY
+        </span>
 
-        <div class="info-card">
+        <h4 id="planTitleHeader">
+            Your Nexfit Plan
+        </h4>
 
-            <strong>
-                BMI
-            </strong>
-
-            <p>
-                A simple weight-to-height screening measure.
-                Use it as one data point rather than a complete
-                assessment of body composition.
-            </p>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <strong>
-                TDEE
-            </strong>
-
-            <p>
-                An estimate of the calories your body may use
-                each day based on the calculation model used
-                by this planner.
-            </p>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <strong>
-                PROTEIN
-            </strong>
-
-            <p>
-                A practical high-protein target intended to
-                support training and recovery alongside a
-                balanced diet.
-            </p>
-
-        </div>
-
+        <p id="planDescText">
+            Your personalized recommendation will appear here.
+        </p>
 
     </div>
 
 
-</section>
+    <div class="calc-note">
+
+        Nexfit calculations are estimates intended for
+        educational fitness planning. Individual energy
+        requirements can vary based on activity, body
+        composition, training volume and other factors.
+
+    </div>
+
+
+</div>
 ```
 
-</main>
+</section>
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+</main>
 
 <footer class="nx-footer">
 
 ```
-© 2026 NEXFIT · Train. Track. Transform.
+© 2026 NEXFIT · TRAIN. TRACK. TRANSFORM.
 
 <br><br>
 
@@ -1652,95 +1463,65 @@ Designed & Developed by
 
 </footer>
 
-<!-- =====================================================
-     CALCULATOR LOGIC
-     Existing calculation system preserved
-===================================================== -->
-
 <script>
+
 
 function calculatePlan(e) {
 
     e.preventDefault();
 
 
-    let weight =
+    /* ==============================================
+       GET INPUTS
+    ============================================== */
+
+    const weight =
         parseFloat(
-            document.getElementById(
-                'weightInput'
-            ).value
+            document.getElementById("weightInput").value
         );
 
 
-    let height =
+    const height =
         parseFloat(
-            document.getElementById(
-                'heightInput'
-            ).value
+            document.getElementById("heightInput").value
         );
 
 
-    let age =
+    const age =
         parseInt(
-            document.getElementById(
-                'ageInput'
-            ).value
+            document.getElementById("ageInput").value
         );
 
 
-    let gender =
-        document.getElementById(
-            'genderInput'
-        ).value;
+    const gender =
+        document.getElementById("genderInput").value;
 
 
-    let goal =
-        document.getElementById(
-            'goalInput'
-        ).value;
+    const goal =
+        document.getElementById("goalInput").value;
 
 
-    let diet =
-        document.getElementById(
-            'dietInput'
-        ).value;
+    const diet =
+        document.getElementById("dietInput").value;
 
 
-    /* ============================================
-       BASIC VALIDATION
-    ============================================ */
-
-    if (
-        !weight ||
-        !height ||
-        !age ||
-        weight <= 0 ||
-        height <= 0 ||
-        age <= 0
-    ) {
-
-        return;
-
-    }
-
-
-    /* ============================================
+    /* ==============================================
        BMI
-    ============================================ */
+    ============================================== */
 
-    let heightM =
+    const heightM =
         height / 100;
 
 
-    let bmi =
+    const bmi =
         weight /
         (heightM * heightM);
 
 
-    /* ============================================
+    /* ==============================================
        BMR
        Mifflin-St Jeor
-    ============================================ */
+    ============================================== */
 
     let bmr =
         (10 * weight) +
@@ -1748,7 +1529,7 @@ function calculatePlan(e) {
         (5 * age);
 
 
-    if (gender === 'male') {
+    if (gender === "male") {
 
         bmr += 5;
 
@@ -1759,9 +1540,9 @@ function calculatePlan(e) {
     }
 
 
-    /* ============================================
+    /* ==============================================
        TDEE
-    ============================================ */
+    ============================================== */
 
     let tdee =
         Math.round(
@@ -1769,244 +1550,225 @@ function calculatePlan(e) {
         );
 
 
-    if (goal === 'fatloss') {
+    if (goal === "fatloss") {
 
         tdee -= 400;
 
     }
 
 
-    if (goal === 'hypertrophy') {
+    if (goal === "hypertrophy") {
 
         tdee += 300;
 
     }
 
 
-    /* ============================================
+    /* ==============================================
        PROTEIN
-    ============================================ */
+    ============================================== */
 
-    let protein =
+    const protein =
         Math.round(
-            weight * 2.0
+            weight * 2
         );
 
 
-    /* ============================================
+    /* ==============================================
        BMI CATEGORY
-    ============================================ */
+    ============================================== */
 
-    let cat =
+    let category =
         "Normal Weight";
 
 
     if (bmi < 18.5) {
 
-        cat =
+        category =
             "Underweight";
 
-    } else if (
-        bmi >= 25 &&
-        bmi < 30
-    ) {
+    }
 
-        cat =
+    else if (bmi >= 25 && bmi < 30) {
+
+        category =
             "Overweight";
 
-    } else if (
-        bmi >= 30
-    ) {
+    }
 
-        cat =
+    else if (bmi >= 30) {
+
+        category =
             "Obese";
 
     }
 
 
-    /* ============================================
-       RENDER RESULTS
-    ============================================ */
+    /* ==============================================
+       DISPLAY RESULTS
+    ============================================== */
 
-    document
-        .getElementById(
-            'bmiVal'
-        )
+    document.getElementById("bmiVal")
         .innerText =
         bmi.toFixed(1);
 
 
-    document
-        .getElementById(
-            'bmiCategory'
-        )
+    document.getElementById("bmiCategory")
         .innerText =
-        cat;
+        category;
 
 
-    document
-        .getElementById(
-            'tdeeVal'
-        )
+    document.getElementById("tdeeVal")
         .innerText =
-        `${tdee} kcal`;
+        `${tdee.toLocaleString()} kcal`;
 
 
-    document
-        .getElementById(
-            'proteinVal'
-        )
+    document.getElementById("proteinVal")
         .innerText =
         `${protein}g`;
 
 
-    /* ============================================
-       GOAL LABEL
-    ============================================ */
+    /* ==============================================
+       BMI MARKER
+    ============================================== */
 
-    let goalLabel =
-        "FITNESS";
+    let marker =
+        ((bmi - 15) / 25) * 100;
 
 
-    if (
-        goal ===
-        "hypertrophy"
-    ) {
+    marker =
+        Math.max(
+            2,
+            Math.min(98, marker)
+        );
 
-        goalLabel =
-            "HYPERTROPHY";
 
-    } else if (
-        goal ===
-        "fatloss"
-    ) {
+    document.getElementById("bmiMarker")
+        .style.left =
+        `${marker}%`;
 
-        goalLabel =
-            "FAT LOSS";
 
-    } else if (
-        goal ===
-        "endurance"
-    ) {
+    /* ==============================================
+       PLAN TITLE
+    ============================================== */
 
-        goalLabel =
-            "ENDURANCE";
+    let planTitle =
+        "Balanced Fitness Strategy";
 
-    } else if (
-        goal ===
-        "strength"
-    ) {
 
-        goalLabel =
-            "STRENGTH";
+    if (goal === "fatloss") {
+
+        planTitle =
+            "Fat Loss Strategy";
+
+    }
+
+    else if (goal === "hypertrophy") {
+
+        planTitle =
+            "Muscle Growth Strategy";
+
+    }
+
+    else if (goal === "maintenance") {
+
+        planTitle =
+            "Maintenance Strategy";
 
     }
 
 
-    /* ============================================
+    document.getElementById("planTitleHeader")
+        .innerText =
+        planTitle;
+
+
+    /* ==============================================
        DIET LABEL
-    ============================================ */
+    ============================================== */
 
     let dietLabel =
-        "BALANCED";
+        "your selected diet preference";
 
 
-    if (
-        diet ===
-        "highprotein"
-    ) {
+    if (diet === "vegprotein") {
 
         dietLabel =
-            "HIGH PROTEIN";
+            "a high-protein vegetarian approach";
 
-    } else if (
-        diet ===
-        "vegprotein"
-    ) {
+    }
 
-        dietLabel =
-            "VEGETARIAN HIGH PROTEIN";
-
-    } else if (
-        diet ===
-        "vegan"
-    ) {
+    else if (diet === "vegan") {
 
         dietLabel =
-            "VEGAN";
+            "a clean vegan approach";
 
-    } else if (
-        diet ===
-        "keto"
-    ) {
+    }
+
+    else if (diet === "keto") {
 
         dietLabel =
-            "KETO";
+            "a keto performance approach";
 
     }
 
 
-    /* ============================================
-       STRATEGY TITLE
-    ============================================ */
-
-    let strategyTitle =
-        `${goalLabel} · ${dietLabel}`;
-
-
-    document
-        .getElementById(
-            'planTitleHeader'
-        )
-        .innerText =
-        strategyTitle;
-
-
-    /* ============================================
+    /* ==============================================
        SUMMARY
-    ============================================ */
+    ============================================== */
 
-    let summary =
-        `Your custom ${goalLabel.toLowerCase()} program is ready. `
-        +
-        `Use approximately ${tdee} kcal per day as your current `
-        +
-        `planning target and aim for around ${protein}g of protein `
-        +
-        `daily while following a structured training routine `
-        +
-        `aligned with your goal. `
-        +
-        `Your selected diet preference is ${dietLabel.toLowerCase()}.`;
+    let summary = "";
 
 
-    document
-        .getElementById(
-            'planDescText'
-        )
+    if (goal === "fatloss") {
+
+        summary =
+            `Your estimated daily target is approximately ${tdee.toLocaleString()} kcal with ${protein}g of protein. Focus on consistent resistance training, sufficient protein and a sustainable calorie deficit while following ${dietLabel}.`;
+
+    }
+
+    else if (goal === "hypertrophy") {
+
+        summary =
+            `Your estimated daily target is approximately ${tdee.toLocaleString()} kcal with ${protein}g of protein. Prioritize progressive overload, recovery and consistent nutrition while following ${dietLabel}.`;
+
+    }
+
+    else {
+
+        summary =
+            `Your estimated daily target is approximately ${tdee.toLocaleString()} kcal with ${protein}g of protein. Focus on maintaining consistent training, recovery and nutrition while following ${dietLabel}.`;
+
+    }
+
+
+    document.getElementById("planDescText")
         .innerText =
         summary;
 
 
-    /* ============================================
-       SHOW DASHBOARD
-    ============================================ */
+    /* ==============================================
+       SHOW RESULTS
+    ============================================== */
 
     const dashboard =
         document.getElementById(
-            'resultDashboard'
+            "resultDashboard"
         );
 
 
     dashboard.style.display =
-        'block';
+        "block";
 
 
-    dashboard
-        .scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+    setTimeout(() => {
+
+        dashboard.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
         });
+
+    }, 80);
 
 }
 
