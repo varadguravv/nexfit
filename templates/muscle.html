@@ -1,224 +1,2154 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexfit - Ultimate Muscle Guide</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        .muscle-banner {
-            width: 100%;
-            height: 220px;
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 20px 0 30px 0;
-            border: 1px solid var(--border-color);
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>Nexfit — Muscle Intelligence</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+
+    /* =====================================================
+       NEXFIT MUSCLE INTELLIGENCE
+       ===================================================== */
+
+    :root {
+        --bg: #070707;
+        --card: #101010;
+        --card2: #141414;
+        --border: rgba(255,255,255,.09);
+        --muted: #777;
+        --dim: #454545;
+        --white: #f5f5f5;
+        --accent: #c8ff00;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--white);
+        font-family: "Inter", sans-serif;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    /* =====================================================
+       NAV
+       ===================================================== */
+
+    .muscle-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+
+        min-height: 76px;
+
+        padding: 0 max(5vw, 22px);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        background: rgba(7,7,7,.88);
+        backdrop-filter: blur(18px);
+
+        border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+        color: white;
+
+        font-family: "Space Grotesk";
+        font-size: 1.45rem;
+        font-weight: 800;
+
+        letter-spacing: -1px;
+    }
+
+    .brand span {
+        color: var(--accent);
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+    }
+
+    .nav-links a {
+        position: relative;
+
+        color: #777;
+
+        font-size: .74rem;
+        font-weight: 700;
+
+        transition: .2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: white;
+    }
+
+    .nav-links a.active::after {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: -11px;
+
+        height: 2px;
+
+        background: var(--accent);
+    }
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    .muscle-hero {
+        min-height: 570px;
+
+        display: flex;
+        align-items: flex-end;
+
+        padding:
+            100px max(7vw, 25px) 80px;
+
+        position: relative;
+        overflow: hidden;
+
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0,0,0,.96),
+                rgba(0,0,0,.68),
+                rgba(0,0,0,.25)
+            ),
+            url("https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=2000&q=90")
+            center / cover no-repeat;
+    }
+
+    .muscle-hero::after {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        background:
+            linear-gradient(
+                0deg,
+                var(--bg),
+                transparent 38%
+            );
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+
+        width: min(1180px,100%);
+        margin: auto;
+    }
+
+    .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        color: var(--accent);
+
+        font-size: .62rem;
+        font-weight: 800;
+
+        letter-spacing: 2px;
+    }
+
+    .eyebrow::before {
+        content: "";
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--accent);
+
+        box-shadow:
+            0 0 16px
+            rgba(200,255,0,.7);
+    }
+
+    .hero-content h1 {
+        max-width: 900px;
+
+        margin: 20px 0 0;
+
+        font-family: "Space Grotesk";
+
+        font-size:
+            clamp(4rem,9vw,8.5rem);
+
+        line-height: .83;
+
+        letter-spacing: -6px;
+    }
+
+    .hero-content h1 span {
+        display: block;
+        color: var(--accent);
+    }
+
+    .hero-content p {
+        max-width: 560px;
+
+        margin-top: 30px;
+
+        color: #aaa;
+
+        font-size: .92rem;
+        line-height: 1.75;
+    }
+
+    .hero-stats {
+        display: flex;
+
+        gap: 38px;
+
+        margin-top: 35px;
+    }
+
+    .hero-stat strong {
+        display: block;
+
+        font-family: "Space Grotesk";
+
+        font-size: 1.45rem;
+    }
+
+    .hero-stat span {
+        display: block;
+
+        margin-top: 4px;
+
+        color: #555;
+
+        font-size: .54rem;
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+    }
+
+    /* =====================================================
+       MAIN
+       ===================================================== */
+
+    .page {
+        width: min(1180px, calc(100% - 10vw));
+
+        margin: auto;
+    }
+
+    /* =====================================================
+       MUSCLE SELECTOR
+       ===================================================== */
+
+    .selector-section {
+        padding-top: 45px;
+    }
+
+    .section-label {
+        color: var(--accent);
+
+        font-size: .58rem;
+
+        font-weight: 800;
+
+        letter-spacing: 2px;
+    }
+
+    .section-title {
+        margin: 9px 0 25px;
+
+        font-family: "Space Grotesk";
+
+        font-size:
+            clamp(2rem,4vw,3.5rem);
+
+        line-height: 1;
+
+        letter-spacing: -2px;
+    }
+
+    .section-title span {
+        color: #555;
+    }
+
+    .muscle-selector {
+        display: grid;
+
+        grid-template-columns:
+            repeat(7,1fr);
+
+        gap: 8px;
+    }
+
+    .muscle-button {
+        min-height: 82px;
+
+        padding: 15px;
+
+        text-align: left;
+
+        color: #777;
+
+        background: #0e0e0e;
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius: 10px;
+
+        cursor: pointer;
+
+        transition:
+            transform .2s ease,
+            color .2s ease,
+            border-color .2s ease,
+            background .2s ease;
+    }
+
+    .muscle-button:hover {
+        transform: translateY(-3px);
+
+        color: white;
+
+        border-color:
+            rgba(200,255,0,.28);
+    }
+
+    .muscle-button.active {
+        color: var(--accent);
+
+        background:
+            rgba(200,255,0,.06);
+
+        border-color:
+            rgba(200,255,0,.42);
+    }
+
+    .muscle-button strong {
+        display: block;
+
+        font-family: "Space Grotesk";
+
+        font-size: .78rem;
+    }
+
+    .muscle-button small {
+        display: block;
+
+        margin-top: 6px;
+
+        color: #4d4d4d;
+
+        font-size: .5rem;
+
+        font-weight: 800;
+
+        letter-spacing: .8px;
+    }
+
+    /* =====================================================
+       SELECTED MUSCLE PANEL
+       ===================================================== */
+
+    .muscle-panel {
+        display: grid;
+
+        grid-template-columns:
+            1.15fr .85fr;
+
+        gap: 12px;
+
+        margin-top: 18px;
+
+        min-height: 430px;
+    }
+
+    .muscle-main-card {
+        position: relative;
+
+        min-height: 430px;
+
+        padding: 45px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        overflow: hidden;
+
+        border-radius: 16px;
+
+        background:
+            linear-gradient(
+                0deg,
+                rgba(0,0,0,.96),
+                rgba(0,0,0,.18)
+            ),
+            url("https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1400&q=90")
+            center / cover;
+    }
+
+    .muscle-main-card::before {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        border:
+            1px solid
+            rgba(255,255,255,.1);
+
+        border-radius: 16px;
+
+        pointer-events: none;
+    }
+
+    .selected-number {
+        position: absolute;
+
+        top: 25px;
+        right: 28px;
+
+        color: rgba(255,255,255,.18);
+
+        font-family: "Space Grotesk";
+
+        font-size: 5rem;
+
+        line-height: 1;
+    }
+
+    .selected-tag {
+        color: var(--accent);
+
+        font-size: .58rem;
+
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+    }
+
+    .muscle-main-card h2 {
+        margin: 9px 0;
+
+        font-family: "Space Grotesk";
+
+        font-size:
+            clamp(2.2rem,5vw,4rem);
+
+        line-height: .9;
+
+        letter-spacing: -2px;
+    }
+
+    .muscle-main-card p {
+        max-width: 600px;
+
+        color: #aaa;
+
+        font-size: .76rem;
+
+        line-height: 1.7;
+    }
+
+    .muscle-side {
+        display: grid;
+
+        grid-template-rows:
+            1fr 1fr;
+
+        gap: 12px;
+    }
+
+    .info-card {
+        padding: 28px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #131313,
+                #0d0d0d
+            );
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius: 16px;
+    }
+
+    .info-card-label {
+        color: #555;
+
+        font-size: .54rem;
+
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+    }
+
+    .info-card strong {
+        display: block;
+
+        margin-top: 12px;
+
+        color: white;
+
+        font-family: "Space Grotesk";
+
+        font-size: 1.45rem;
+    }
+
+    .info-card p {
+        color: #777;
+
+        font-size: .68rem;
+
+        line-height: 1.65;
+    }
+
+    .recovery-value {
+        color: var(--accent) !important;
+    }
+
+    /* =====================================================
+       CONTENT GRID
+       ===================================================== */
+
+    .content-section {
+        margin-top: 75px;
+    }
+
+    .content-grid {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 12px;
+    }
+
+    .content-card {
+        padding: 32px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #121212,
+                #0d0d0d
+            );
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius: 15px;
+    }
+
+    .content-card.full {
+        grid-column: 1 / -1;
+    }
+
+    .content-card h3 {
+        margin: 0 0 18px;
+
+        font-family: "Space Grotesk";
+
+        font-size: 1.25rem;
+
+        letter-spacing: -.5px;
+    }
+
+    .content-card h3 span {
+        color: var(--accent);
+    }
+
+    .content-card p {
+        color: #777;
+
+        font-size: .78rem;
+
+        line-height: 1.8;
+    }
+
+    .content-card ul {
+        list-style: none;
+
+        padding: 0;
+        margin: 0;
+    }
+
+    .content-card li {
+        position: relative;
+
+        padding:
+            13px 0 13px 20px;
+
+        color: #888;
+
+        font-size: .72rem;
+
+        line-height: 1.65;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,.05);
+    }
+
+    .content-card li:last-child {
+        border-bottom: none;
+    }
+
+    .content-card li::before {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        top: 22px;
+
+        width: 5px;
+        height: 5px;
+
+        background:
+            var(--accent);
+
+        border-radius: 50%;
+    }
+
+    .content-card strong {
+        color: #ddd;
+    }
+
+    /* =====================================================
+       WORKOUT MOVEMENTS
+       ===================================================== */
+
+    .exercise-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4,1fr);
+
+        gap: 8px;
+
+        margin-top: 20px;
+    }
+
+    .exercise-card {
+        padding: 20px;
+
+        min-height: 145px;
+
+        background: #0c0c0c;
+
+        border:
+            1px solid
+            rgba(255,255,255,.07);
+
+        border-radius: 10px;
+
+        transition: .2s ease;
+    }
+
+    .exercise-card:hover {
+        transform:
+            translateY(-3px);
+
+        border-color:
+            rgba(200,255,0,.25);
+    }
+
+    .exercise-index {
+        color: #444;
+
+        font-size: .52rem;
+
+        font-weight: 800;
+
+        letter-spacing: 1px;
+    }
+
+    .exercise-card strong {
+        display: block;
+
+        margin-top: 14px;
+
+        color: white;
+
+        font-family: "Space Grotesk";
+
+        font-size: .84rem;
+    }
+
+    .exercise-card span {
+        display: block;
+
+        margin-top: 8px;
+
+        color: #666;
+
+        font-size: .62rem;
+
+        line-height: 1.5;
+    }
+
+    /* =====================================================
+       HYPERTROPHY
+       ===================================================== */
+
+    .growth-banner {
+        position: relative;
+
+        min-height: 340px;
+
+        margin-top: 75px;
+
+        padding: 45px;
+
+        display: flex;
+        align-items: flex-end;
+
+        overflow: hidden;
+
+        border-radius: 16px;
+
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0,0,0,.96),
+                rgba(0,0,0,.45)
+            ),
+            url("https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1600&q=90")
+            center / cover;
+    }
+
+    .growth-banner-content {
+        max-width: 620px;
+    }
+
+    .growth-banner h2 {
+        margin: 10px 0;
+
+        font-family: "Space Grotesk";
+
+        font-size:
+            clamp(2.2rem,5vw,4rem);
+
+        line-height: .9;
+
+        letter-spacing: -2px;
+    }
+
+    .growth-banner h2 span {
+        color: var(--accent);
+    }
+
+    .growth-banner p {
+        color: #999;
+
+        font-size: .76rem;
+
+        line-height: 1.75;
+    }
+
+    /* =====================================================
+       INJURY
+       ===================================================== */
+
+    .injury-section {
+        margin-top: 75px;
+    }
+
+    .injury-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap: 10px;
+    }
+
+    .injury-card {
+        padding: 28px;
+
+        background:
+            #101010;
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius: 13px;
+    }
+
+    .injury-number {
+        color: var(--accent);
+
+        font-family: "Space Grotesk";
+
+        font-size: .72rem;
+
+        font-weight: 700;
+    }
+
+    .injury-card h3 {
+        margin: 10px 0 15px;
+
+        font-family: "Space Grotesk";
+
+        font-size: 1.05rem;
+    }
+
+    .injury-card p {
+        color: #707070;
+
+        font-size: .7rem;
+
+        line-height: 1.7;
+
+        margin: 9px 0;
+    }
+
+    .injury-card strong {
+        color: #ccc;
+    }
+
+    /* =====================================================
+       NUTRITION
+       ===================================================== */
+
+    .nutrition {
+        margin-top: 75px;
+
+        padding: 38px;
+
+        background:
+            rgba(200,255,0,.045);
+
+        border:
+            1px solid
+            rgba(200,255,0,.15);
+
+        border-radius: 15px;
+    }
+
+    .nutrition h2 {
+        margin: 0 0 15px;
+
+        font-family: "Space Grotesk";
+
+        font-size: 1.5rem;
+    }
+
+    .nutrition p {
+        color: #777;
+
+        font-size: .74rem;
+
+        line-height: 1.75;
+    }
+
+    .nutrition strong {
+        color: var(--accent);
+    }
+
+    /* =====================================================
+       CTA
+       ===================================================== */
+
+    .final-cta {
+        margin-top: 75px;
+
+        padding: 65px 35px;
+
+        text-align: center;
+
+        border-top:
+            1px solid
+            var(--border);
+
+        border-bottom:
+            1px solid
+            var(--border);
+    }
+
+    .final-cta span {
+        color: var(--accent);
+
+        font-size: .58rem;
+
+        font-weight: 800;
+
+        letter-spacing: 2px;
+    }
+
+    .final-cta h2 {
+        max-width: 720px;
+
+        margin: 15px auto;
+
+        font-family: "Space Grotesk";
+
+        font-size:
+            clamp(2.4rem,5vw,4.5rem);
+
+        line-height: .9;
+
+        letter-spacing: -3px;
+    }
+
+    .final-cta p {
+        max-width: 480px;
+
+        margin: 0 auto 25px;
+
+        color: #666;
+
+        font-size: .72rem;
+
+        line-height: 1.7;
+    }
+
+    .cta-button {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        min-width: 190px;
+
+        padding: 14px 22px;
+
+        background:
+            var(--accent);
+
+        color: #000;
+
+        border-radius: 7px;
+
+        font-size: .65rem;
+
+        font-weight: 900;
+
+        letter-spacing: .5px;
+
+        transition: .2s ease;
+    }
+
+    .cta-button:hover {
+        transform:
+            translateY(-2px);
+
+        box-shadow:
+            0 10px 35px
+            rgba(200,255,0,.18);
+    }
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .site-footer {
+        padding: 35px 20px;
+
+        text-align: center;
+
+        color: #3f3f3f;
+
+        font-size: .6rem;
+    }
+
+    .site-footer strong {
+        color: var(--accent);
+    }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media(max-width: 1050px) {
+
+        .muscle-selector {
+            grid-template-columns:
+                repeat(4,1fr);
         }
-        .muscle-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+
+        .exercise-grid {
+            grid-template-columns:
+                repeat(2,1fr);
         }
-        .section-card {
-            background: #12131c;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+
+    }
+
+    @media(max-width: 800px) {
+
+        .nav-links {
+            gap: 14px;
+        }
+
+        .nav-links a {
+            font-size: .62rem;
+        }
+
+        .muscle-panel {
+            grid-template-columns: 1fr;
+        }
+
+        .muscle-side {
+            grid-template-columns:
+                1fr 1fr;
+
+            grid-template-rows: 1fr;
+        }
+
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .content-card.full {
+            grid-column: auto;
+        }
+
+        .injury-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+    @media(max-width: 600px) {
+
+        .muscle-nav {
+            min-height: auto;
+
+            padding: 16px 18px;
+
+            flex-wrap: wrap;
+
+            gap: 14px;
+        }
+
+        .nav-links {
+            width: 100%;
+
+            overflow-x: auto;
+
+            padding-bottom: 2px;
+
+            scrollbar-width: none;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .muscle-hero {
+            min-height: 610px;
+
+            padding:
+                75px 22px 55px;
+        }
+
+        .hero-content h1 {
+            font-size:
+                clamp(3.5rem,17vw,6rem);
+
+            letter-spacing: -4px;
+        }
+
+        .hero-stats {
+            gap: 22px;
+        }
+
+        .page {
+            width:
+                calc(100% - 32px);
+        }
+
+        .muscle-selector {
+            grid-template-columns:
+                repeat(2,1fr);
+        }
+
+        .muscle-main-card {
+            min-height: 390px;
+
+            padding: 28px;
+        }
+
+        .muscle-side {
+            grid-template-columns: 1fr;
+
+            grid-template-rows:
+                1fr 1fr;
+        }
+
+        .exercise-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .growth-banner {
+            min-height: 390px;
+
             padding: 30px;
-            margin-bottom: 25px;
         }
-        .section-card h3 {
-            color: var(--accent-red);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+
+        .nutrition {
+            padding: 28px;
         }
-        .section-card h3 img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid var(--accent-red);
-        }
-        .section-card p, .section-card ul {
-            color: var(--text-muted);
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-        .section-card ul {
-            list-style-type: none;
-            padding-left: 0;
-            margin-top: 15px;
-        }
-        .section-card li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-        .section-card li::before {
-            content: "▪";
-            color: var(--accent-red);
-            position: absolute;
-            left: 0;
-        }
-        .muscle-grid-img {
-            width: 100%;
-            height: 180px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin: 15px 0;
-            border: 1px solid var(--border-color);
-        }
-    </style>
+
+    }
+
+</style>
+```
+
 </head>
+
 <body>
-    <header>
-        <h1>Nexfit</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/calculator">Calculator</a>
-            <a href="/muscle">Muscle Guide</a>
-            <a href="/challenges">30-Day Challenges</a>
-            <a href="/myths">Fitness Myths</a>
-        </nav>
-    </header>
-    
-    <div class="container" style="max-width: 950px;">
-        <h2>The Ultimate Muscle Building & Anatomy Guide</h2>
-        <p>Explore how individual muscle groups grow, their optimal recovery timelines, the best hypertrophy movements, and a complete breakdown of injury prevention.</p>
-        
-        <div class="muscle-banner">
-            <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=80" alt="Advanced Muscle Building & Anatomy">
-        </div>
 
-        <div class="section-card">
-            <h3>
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=100&q=80" alt="Hypertrophy icon">
-                How Muscle Growth (Hypertrophy) Works
-            </h3>
-            <p><strong>Type I (Slow-Twitch):</strong> Highly fatigue-resistant, dense in mitochondria. Best stimulated via high-repetition endurance work and constant tension.</p>
-            <p style="margin-top: 15px;"><strong>Type II (Fast-Twitch):</strong> High force output, grows rapidly under mechanical tension. Responds best to heavy weights, progressive overload, and explosive lifts.</p>
-            <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80" alt="Hypertrophy training" class="muscle-grid-img">
-        </div>
+<!-- =====================================================
+     NAVIGATION
+     ===================================================== -->
 
-        <div class="section-card">
-            <h3>
-                <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=100&q=80" alt="Anatomy icon">
-                Major Muscle Groups: Growth, Recovery & Best Workouts
-            </h3>
-            
-            <div style="margin-top: 20px;">
-                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">1. Chest (Pectoralis Major & Minor)</h4>
-                <ul>
-                    <li><strong>How it Grows:</strong> Requires horizontal adduction of the arm and arm flexion. Responds exceptionally well to deep stretches under load (the bottom of a press).</li>
-                    <li><strong>Recovery Time:</strong> 48 to 72 hours.</li>
-                    <li><strong>Best Workouts:</strong> Barbell/Dumbbell Bench Press, Incline Press, Chest Dips, Cable Flyes.</li>
-                </ul>
-            </div>
+<header class="muscle-nav">
 
-            <div style="margin-top: 25px;">
-                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">2. Back (Latissimus Dorsi, Rhomboids, Traps)</h4>
-                <ul>
-                    <li><strong>How it Grows:</strong> Requires vertical pulling (latissimus width) and horizontal rowing (mid-back thickness and scapular retraction).</li>
-                    <li><strong>Recovery Time:</strong> 48 to 72 hours.</li>
-                    <li><strong>Best Workouts:</strong> Pull-ups, Barbell Rows, Lat Pulldowns, T-Bar Rows, Seated Cable Rows.</li>
-                </ul>
-            </div>
+```
+<a href="/" class="brand">
+    NEX<span>FIT</span>
+</a>
 
-            <div style="margin-top: 25px;">
-                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">3. Shoulders (Deltoids - Anterior, Lateral, Rear)</h4>
-                <ul>
-                    <li><strong>How it Grows:</strong> Requires overhead pressing for front delts, lateral raises for side delt width, and reverse flyes for rear delts.</li>
-                    <li><strong>Recovery Time:</strong> 48 hours.</li>
-                    <li><strong>Best Workouts:</strong> Overhead Press, Dumbbell Lateral Raises, Face Pulls, Arnold Press.</li>
-                </ul>
-            </div>
+<nav class="nav-links">
 
-            <div style="margin-top: 25px;">
-                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">4. Arms (Biceps, Triceps & Forearms)</h4>
-                <ul>
-                    <li><strong>How it Grows:</strong> Triceps make up roughly two-thirds of upper arm mass and respond to heavy pressing and extension. Biceps grow via elbow flexion with supination.</li>
-                    <li><strong>Recovery Time:</strong> 48 hours.</li>
-                    <li><strong>Best Workouts:</strong> Barbell Curls, Hammer Curls, Tricep Pushdowns, Skull Crushers, Close-Grip Bench Press.</li>
-                </ul>
-            </div>
+    <a href="/">
+        Home
+    </a>
 
-            <div style="margin-top: 25px;">
-                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">5. Abs (Rectus Abdominis & Obliques)</h4>
-                <ul>
-                    <li><strong>How it Grows:</strong> Spinal flexion and core bracing against resistance. High density of slow-twitch fibers that respond well to constant tension and weighted resistance.</li>
-                    <li><strong>Recovery Time:</strong> 24 to 48 hours.</li>
-                    <li><strong>Best Workouts:</strong> Cable Crunches, Hanging Leg Raises, Russian Twists, Ab Wheel Rollouts.</li>
-                </ul>
-            </div>
+    <a href="/calculator">
+        Calculator
+    </a>
 
-            <div style="margin-top: 25px;">
-                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">6. Neck (Cervical Flexors & Extensors)</h4>
-                <ul>
-                    <li><strong>How it Grows:</strong> Direct resistance training of the neck flexors and traps using controlled flexion, extension, and isometric resistance.</li>
-                    <li><strong>Recovery Time:</strong> 48 hours.</li>
-                    <li><strong>Best Workouts:</strong> Neck Harness Extensions, Plate-Resisted Flexion, Isometric Neck Holds.</li>
-                </ul>
-            </div>
+    <a
+        href="/muscle"
+        class="active">
+        Muscle Guide
+    </a>
 
-            <div style="margin-top: 25px;">
-                <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 8px;">7. Legs (Quadriceps, Hamstrings, Glutes, Calves)</h4>
-                <ul>
-                    <li><strong>How it Grows:</strong> Massive hormonal response driven by heavy compound movements, deep knee flexion, and hip hinging under progressive overload.</li>
-                    <li><strong>Recovery Time:</strong> 72 hours (due to large muscle mass and systemic fatigue).</li>
-                    <li><strong>Best Workouts:</strong> Barbell Back Squats, Romanian Deadlifts, Leg Press, Bulgarian Split Squats.</li>
-                </ul>
-            </div>
-        </div>
+    <a href="/challenges">
+        30-Day Challenges
+    </a>
 
-        <!-- Comprehensive Injury Guide Section -->
-        <div class="section-card">
-            <h3>
-                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=100&q=80" alt="Injury Prevention icon">
-                Comprehensive Injury Guide: Common Injuries, Root Causes & Solutions
-            </h3>
-            <p>Weight training and physical conditioning can sometimes lead to common injuries if proper precautions are neglected. Below is a breakdown of the most frequent injuries, their root causes, actionable solutions, and habits to avoid.</p>
-            
-            <div style="margin-top: 20px;">
-                <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 6px;">1. Rotator Cuff Tendonitis / Impingement</h4>
-                <p><strong>Root Causes:</strong> Overuse of pressing movements without adequate rear delt/upper back work, poor scapular stability, and internal rotation dominance.</p>
-                <p><strong>Solutions:</strong> Incorporate face pulls, band pull-aparts, and rotator cuff external rotations. Ensure proper shoulder blade depression and retraction during benches and pull-ups.</p>
-                <p><strong>Things to Avoid:</strong> Avoid heavy behind-the-neck press variations and dropping weight too fast without control.</p>
-            </div>
+    <a href="/myths">
+        Fitness Myths
+    </a>
 
-            <div style="margin-top: 20px;">
-                <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 6px;">2. Lower Back Strain (Lumbar Hyperflexion / Shear Stress)</h4>
-                <p><strong>Root Causes:</strong> Rounding the lower back during heavy deadlifts or squats (ego lifting), weak core bracing, or tight hip flexors.</p>
-                <p><strong>Solutions:</strong> Master the hip hinge pattern with lighter loads, strengthen the transverse abdominis and erector spinae, and stretch tight hip flexors daily.</p>
-                <p><strong>Things to Avoid:</strong> Never lift with a rounded spine or bounce weight off the floor during deadlifts or rows.</p>
-            </div>
+</nav>
+```
 
-            <div style="margin-top: 20px;">
-                <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 6px;">3. Patellar Tendonitis ("Jumper's Knee")</h4>
-                <p><strong>Root Causes:</strong> High-impact repetitive jumping, rapid volume increases in squats or lunges, and poor ankle mobility forcing excessive knee forward travel.</p>
-                <p><strong>Solutions:</strong> Incorporate eccentric knee extensions, improve ankle dorsiflexion mobility, and allow adequate 72-hour recovery between intense leg sessions.</p>
-                <p><strong>Things to Avoid:</strong> Avoid skipping warm-ups and pushing through sharp, acute pain located directly beneath the kneecap.</p>
-            </div>
+</header>
 
-            <div style="margin-top: 20px;">
-                <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 6px;">4. Tennis Elbow / Golfer's Elbow (Epicondylitis)</h4>
-                <p><strong>Root Causes:</strong> Overuse of grip strength, excessive wrist flexion/extension under heavy loads, or lack of forearm conditioning.</p>
-                <p><strong>Solutions:</strong> Perform wrist curls and reverse wrist curls with light weights, use neutral grips when possible, and massage forearm tissue.</p>
-                <p><strong>Things to Avoid:</strong> Avoid white-knuckling bars excessively and ignoring persistent nagging elbow soreness.</p>
-            </div>
-        </div>
+<!-- =====================================================
+     HERO
+     ===================================================== -->
 
-        <div class="section-card">
-            <h3>
-                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=100&q=80" alt="Diet and Nutrition icon">
-                Effective Nutrition & Things to Avoid
-            </h3>
-            <p>Maximizing muscle recovery and preventing injury requires optimal macronutrient fueling and avoiding counterproductive habits:</p>
-            <ul>
-                <li><strong>Optimal Diet Focus:</strong> Prioritize complete protein sources (1.6g to 2.2g per kg of body weight), complex carbohydrates for glycogen replenishment, and healthy fats (omega-3s) to reduce joint inflammation.</li>
-                <li><strong>Things to Avoid:</strong> Avoid crash diets with extreme caloric deficits, excessive alcohol consumption (which halts muscle protein synthesis), trans fats, and chronic dehydration during heavy lifting sessions.</li>
-            </ul>
-        </div>
+<section class="muscle-hero">
+
+```
+<div class="hero-content">
+
+    <div class="eyebrow">
+        NEXFIT MUSCLE INTELLIGENCE
     </div>
+
+    <h1>
+        KNOW YOUR
+        <span>MUSCLES.</span>
+    </h1>
+
+    <p>
+        Understand how your body works, how each muscle
+        grows, how long it needs to recover and which
+        movements actually deserve a place in your program.
+    </p>
+
+    <div class="hero-stats">
+
+        <div class="hero-stat">
+            <strong>07</strong>
+            <span>MUSCLE GROUPS</span>
+        </div>
+
+        <div class="hero-stat">
+            <strong>48–72H</strong>
+            <span>AVG RECOVERY</span>
+        </div>
+
+        <div class="hero-stat">
+            <strong>01</strong>
+            <span>COMPLETE GUIDE</span>
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<main class="page">
+
+<!-- =====================================================
+     SELECTOR
+     ===================================================== -->
+
+<section class="selector-section">
+
+```
+<div class="section-label">
+    EXPLORE THE BODY
+</div>
+
+<h2 class="section-title">
+    SELECT A
+    <span>MUSCLE GROUP.</span>
+</h2>
+
+
+<div class="muscle-selector">
+
+    <button
+        class="muscle-button active"
+        onclick="selectMuscle('chest',this)">
+
+        <strong>CHEST</strong>
+        <small>PECTORALS</small>
+
+    </button>
+
+    <button
+        class="muscle-button"
+        onclick="selectMuscle('back',this)">
+
+        <strong>BACK</strong>
+        <small>LATS + TRAPS</small>
+
+    </button>
+
+    <button
+        class="muscle-button"
+        onclick="selectMuscle('shoulders',this)">
+
+        <strong>SHOULDERS</strong>
+        <small>DELTOIDS</small>
+
+    </button>
+
+    <button
+        class="muscle-button"
+        onclick="selectMuscle('arms',this)">
+
+        <strong>ARMS</strong>
+        <small>BICEPS + TRICEPS</small>
+
+    </button>
+
+    <button
+        class="muscle-button"
+        onclick="selectMuscle('abs',this)">
+
+        <strong>ABS</strong>
+        <small>CORE</small>
+
+    </button>
+
+    <button
+        class="muscle-button"
+        onclick="selectMuscle('neck',this)">
+
+        <strong>NECK</strong>
+        <small>CERVICAL</small>
+
+    </button>
+
+    <button
+        class="muscle-button"
+        onclick="selectMuscle('legs',this)">
+
+        <strong>LEGS</strong>
+        <small>LOWER BODY</small>
+
+    </button>
+
+</div>
+```
+
+<!-- =====================================================
+     SELECTED MUSCLE
+     ===================================================== -->
+
+<div class="muscle-panel">
+
+```
+<div class="muscle-main-card">
+
+    <div
+        class="selected-number"
+        id="muscleNumber">
+        01
+    </div>
+
+    <div class="selected-tag">
+        SELECTED MUSCLE
+    </div>
+
+    <h2 id="muscleName">
+        CHEST
+    </h2>
+
+    <p id="muscleDescription">
+        The chest is primarily made up of the pectoralis
+        major and minor. Effective training combines
+        pressing and fly-based movements through a
+        controlled range of motion.
+    </p>
+
+</div>
+
+
+<div class="muscle-side">
+
+    <div class="info-card">
+
+        <div class="info-card-label">
+            RECOVERY WINDOW
+        </div>
+
+        <strong
+            id="recoveryValue"
+            class="recovery-value">
+            48–72 HOURS
+        </strong>
+
+        <p>
+            Allow adequate recovery before repeatedly
+            training the same muscle intensely.
+        </p>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-card-label">
+            PRIMARY FOCUS
+        </div>
+
+        <strong id="focusValue">
+            PRESS + FLY
+        </strong>
+
+        <p id="focusDescription">
+            Horizontal pressing and controlled adduction
+            are the foundation of chest development.
+        </p>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     MUSCLE DETAILS
+     ===================================================== -->
+
+<section class="content-section">
+
+```
+<div class="section-label">
+    TRAINING INTELLIGENCE
+</div>
+
+<h2 class="section-title">
+    BUILD IT.
+    <span>DON'T JUST MOVE IT.</span>
+</h2>
+
+
+<div class="content-grid">
+
+
+    <div class="content-card">
+
+        <h3>
+            How It <span>Grows</span>
+        </h3>
+
+        <p id="growthText">
+            Effective chest development requires horizontal
+            adduction of the arm and arm flexion. The muscle
+            responds well to progressive overload and
+            controlled range of motion.
+        </p>
+
+    </div>
+
+
+    <div class="content-card">
+
+        <h3>
+            Best <span>Movements</span>
+        </h3>
+
+        <ul id="movementList">
+
+            <li>
+                <strong>Barbell / Dumbbell Bench Press</strong>
+                — primary pressing movement.
+            </li>
+
+            <li>
+                <strong>Incline Press</strong>
+                — emphasizes upper chest.
+            </li>
+
+            <li>
+                <strong>Chest Dips</strong>
+                — compound pressing movement.
+            </li>
+
+            <li>
+                <strong>Cable Flyes</strong>
+                — controlled adduction and tension.
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="content-card full">
+
+        <h3>
+            Recommended <span>Exercise Library</span>
+        </h3>
+
+        <div
+            class="exercise-grid"
+            id="exerciseGrid">
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     HYPERTROPHY
+     ===================================================== -->
+
+<section class="growth-banner">
+
+```
+<div class="growth-banner-content">
+
+    <div class="section-label">
+        THE SCIENCE
+    </div>
+
+    <h2>
+        MUSCLE GROWTH IS
+        <span>MECHANICAL.</span>
+    </h2>
+
+    <p>
+        Type I muscle fibers are highly fatigue resistant
+        and respond well to higher repetitions and sustained
+        tension. Type II fibers produce greater force and
+        respond strongly to mechanical tension, progressive
+        overload and explosive work.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     INJURY PREVENTION
+     ===================================================== -->
+
+<section class="injury-section">
+
+```
+<div class="section-label">
+    TRAIN SMART
+</div>
+
+<h2 class="section-title">
+    INJURY
+    <span>INTELLIGENCE.</span>
+</h2>
+
+
+<div class="injury-grid">
+
+
+    <div class="injury-card">
+
+        <div class="injury-number">
+            01
+        </div>
+
+        <h3>
+            Rotator Cuff Tendonitis / Impingement
+        </h3>
+
+        <p>
+            <strong>ROOT CAUSE:</strong>
+            Overuse of pressing movements, poor scapular
+            stability and insufficient rear-delt / upper-back
+            work.
+        </p>
+
+        <p>
+            <strong>APPROACH:</strong>
+            Include face pulls, band pull-aparts and controlled
+            external rotation work.
+        </p>
+
+        <p>
+            <strong>AVOID:</strong>
+            Heavy behind-the-neck pressing and uncontrolled
+            repetitions.
+        </p>
+
+    </div>
+
+
+    <div class="injury-card">
+
+        <div class="injury-number">
+            02
+        </div>
+
+        <h3>
+            Lower Back Strain
+        </h3>
+
+        <p>
+            <strong>ROOT CAUSE:</strong>
+            Poor bracing, spinal rounding under load and
+            attempting loads beyond current technique.
+        </p>
+
+        <p>
+            <strong>APPROACH:</strong>
+            Master the hip hinge with manageable loads and
+            develop core control.
+        </p>
+
+        <p>
+            <strong>AVOID:</strong>
+            Lifting with a rounded spine or sacrificing
+            technique for heavier weight.
+        </p>
+
+    </div>
+
+
+    <div class="injury-card">
+
+        <div class="injury-number">
+            03
+        </div>
+
+        <h3>
+            Patellar Tendonitis
+        </h3>
+
+        <p>
+            <strong>ROOT CAUSE:</strong>
+            Rapid training-volume increases, repetitive
+            jumping and poor movement mechanics.
+        </p>
+
+        <p>
+            <strong>APPROACH:</strong>
+            Progress gradually and maintain appropriate
+            recovery between demanding leg sessions.
+        </p>
+
+        <p>
+            <strong>AVOID:</strong>
+            Ignoring sharp pain around the kneecap.
+        </p>
+
+    </div>
+
+
+    <div class="injury-card">
+
+        <div class="injury-number">
+            04
+        </div>
+
+        <h3>
+            Tennis / Golfer's Elbow
+        </h3>
+
+        <p>
+            <strong>ROOT CAUSE:</strong>
+            Repetitive gripping and excessive wrist loading.
+        </p>
+
+        <p>
+            <strong>APPROACH:</strong>
+            Gradual forearm conditioning and neutral grips
+            where appropriate.
+        </p>
+
+        <p>
+            <strong>AVOID:</strong>
+            Ignoring persistent elbow discomfort.
+        </p>
+
+    </div>
+
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     NUTRITION
+     ===================================================== -->
+
+<section class="nutrition">
+
+```
+<h2>
+    RECOVERY STARTS
+    <span style="color:var(--accent)">
+        OUTSIDE THE GYM.
+    </span>
+</h2>
+
+<p>
+    Muscle development depends on more than training.
+    Prioritize adequate protein, carbohydrates for training
+    performance, healthy fats and hydration. The original
+    Nexfit guide recommends approximately
+    <strong>1.6–2.2 g of protein per kg of body weight</strong>
+    as a general muscle-building target.
+</p>
+```
+
+</section>
+
+<!-- =====================================================
+     CTA
+     ===================================================== -->
+
+<section class="final-cta">
+
+```
+<span>
+    READY TO PUT THE KNOWLEDGE TO WORK?
+</span>
+
+<h2>
+    TRAIN WITH
+    <span style="color:var(--accent)">
+        PURPOSE.
+    </span>
+</h2>
+
+<p>
+    Take what you've learned and turn it into a structured
+    30-day training routine.
+</p>
+
+<a
+    href="/challenges"
+    class="cta-button">
+
+    START 30-DAY CHALLENGE →
+
+</a>
+```
+
+</section>
+
+</main>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer class="site-footer">
+
+```
+© 2026 NEXFIT ·
+Train. Track. Transform.
+
+<br><br>
+
+Designed & Developed by
+<strong>Varad Gurav</strong>
+```
+
+</footer>
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+
+const muscleData = {
+
+    chest: {
+
+        number: "01",
+
+        name: "CHEST",
+
+        recovery: "48–72 HOURS",
+
+        focus: "PRESS + FLY",
+
+        focusDescription:
+            "Horizontal pressing and controlled adduction are the foundation of chest development.",
+
+        description:
+            "The chest is primarily made up of the pectoralis major and minor. Effective training combines pressing and fly-based movements through a controlled range of motion.",
+
+        growth:
+            "Chest development requires horizontal adduction of the arm and arm flexion. Progressive overload, adequate range of motion and controlled repetitions are central to productive training.",
+
+        exercises: [
+
+            ["01","Barbell Bench Press","Compound chest press for overall strength."],
+
+            ["02","Incline Dumbbell Press","Strong upper-chest pressing movement."],
+
+            ["03","Chest Dips","Bodyweight compound pressing movement."],
+
+            ["04","Cable Flyes","Controlled chest adduction and constant tension."]
+
+        ]
+
+    },
+
+
+    back: {
+
+        number: "02",
+
+        name: "BACK",
+
+        recovery: "48–72 HOURS",
+
+        focus: "PULL + ROW",
+
+        focusDescription:
+            "Vertical pulling develops width while horizontal rowing builds mid-back thickness.",
+
+        description:
+            "The back includes the latissimus dorsi, rhomboids and trapezius. A complete back program uses both vertical pulling and horizontal rowing patterns.",
+
+        growth:
+            "Back development combines vertical pulling for lat width with horizontal rowing for mid-back thickness and scapular retraction.",
+
+        exercises: [
+
+            ["01","Pull-Ups","Build upper-body pulling strength and lat width."],
+
+            ["02","Barbell Rows","Compound movement for back thickness."],
+
+            ["03","Lat Pulldowns","Accessible vertical pulling movement."],
+
+            ["04","Seated Cable Rows","Controlled horizontal pulling pattern."]
+
+        ]
+
+    },
+
+
+    shoulders: {
+
+        number: "03",
+
+        name: "SHOULDERS",
+
+        recovery: "48 HOURS",
+
+        focus: "PRESS + RAISE",
+
+        focusDescription:
+            "Pressing develops anterior delts while lateral and rear-delt work builds complete shoulder development.",
+
+        description:
+            "The deltoids consist of anterior, lateral and rear portions. Balanced shoulder training should address all three.",
+
+        growth:
+            "Overhead pressing emphasizes the front delts while lateral raises and rear-delt movements help develop width and balance.",
+
+        exercises: [
+
+            ["01","Overhead Press","Primary compound shoulder press."],
+
+            ["02","Lateral Raises","Direct movement for lateral delts."],
+
+            ["03","Face Pulls","Rear-delt and upper-back focused movement."],
+
+            ["04","Arnold Press","Shoulder pressing through a larger movement path."]
+
+        ]
+
+    },
+
+
+    arms: {
+
+        number: "04",
+
+        name: "ARMS",
+
+        recovery: "48 HOURS",
+
+        focus: "CURL + EXTEND",
+
+        focusDescription:
+            "Biceps perform elbow flexion while triceps contribute heavily to pressing and elbow extension.",
+
+        description:
+            "The arms include the biceps, triceps and forearms. Triceps contribute substantial upper-arm mass while the biceps perform elbow flexion and supination.",
+
+        growth:
+            "Arm development benefits from both compound pressing and pulling plus direct elbow-flexion and extension work.",
+
+        exercises: [
+
+            ["01","Barbell Curls","Classic biceps strength movement."],
+
+            ["02","Hammer Curls","Targets biceps, brachialis and forearms."],
+
+            ["03","Tricep Pushdowns","Direct triceps extension movement."],
+
+            ["04","Close-Grip Bench Press","Compound movement with strong triceps involvement."]
+
+        ]
+
+    },
+
+
+    abs: {
+
+        number: "05",
+
+        name: "ABS",
+
+        recovery: "24–48 HOURS",
+
+        focus: "FLEX + BRACE",
+
+        focusDescription:
+            "The core works through spinal movement and bracing against external resistance.",
+
+        description:
+            "The abdominal region includes the rectus abdominis and obliques. Training can combine controlled spinal flexion with anti-movement and bracing work.",
+
+        growth:
+            "Abs can be trained through controlled spinal flexion and resistance-based bracing. Progressive overload can be applied just as with other muscles.",
+
+        exercises: [
+
+            ["01","Cable Crunches","Loaded spinal-flexion movement."],
+
+            ["02","Hanging Leg Raises","Challenging core movement."],
+
+            ["03","Russian Twists","Rotational core exercise."],
+
+            ["04","Ab Wheel Rollouts","High-demand anti-extension movement."]
+
+        ]
+
+    },
+
+
+    neck: {
+
+        number: "06",
+
+        name: "NECK",
+
+        recovery: "48 HOURS",
+
+        focus: "CONTROL + RESIST",
+
+        focusDescription:
+            "Neck training should prioritize controlled resistance and gradual progression.",
+
+        description:
+            "The neck involves cervical flexors and extensors. Training should be conservative, controlled and progressed gradually.",
+
+        growth:
+            "Direct resistance can be applied through controlled flexion, extension and isometric work while prioritizing technique.",
+
+        exercises: [
+
+            ["01","Neck Harness Extensions","Controlled extension resistance."],
+
+            ["02","Plate-Resisted Flexion","Light resistance for cervical flexion."],
+
+            ["03","Isometric Holds","Static resistance and control."],
+
+            ["04","Trap Raises","Upper-trap development supporting the neck region."]
+
+        ]
+
+    },
+
+
+    legs: {
+
+        number: "07",
+
+        name: "LEGS",
+
+        recovery: "72 HOURS",
+
+        focus: "SQUAT + HINGE",
+
+        focusDescription:
+            "Complete leg training combines knee-dominant and hip-dominant movements.",
+
+        description:
+            "The legs include the quadriceps, hamstrings, glutes and calves. A balanced program uses squatting, hinging, unilateral work and calf training.",
+
+        growth:
+            "Lower-body development benefits from progressive overload through knee-dominant squats and presses alongside hip hinges and unilateral movements.",
+
+        exercises: [
+
+            ["01","Back Squats","Primary compound lower-body movement."],
+
+            ["02","Romanian Deadlifts","Hamstring and glute focused hip hinge."],
+
+            ["03","Leg Press","Stable compound quad movement."],
+
+            ["04","Bulgarian Split Squats","Unilateral lower-body hypertrophy movement."]
+
+        ]
+
+    }
+
+};
+
+
+/* =====================================================
+   MUSCLE SELECTOR
+   ===================================================== */
+
+function selectMuscle(
+    muscle,
+    button
+) {
+
+    document
+        .querySelectorAll(".muscle-button")
+        .forEach(
+            btn =>
+                btn.classList.remove("active")
+        );
+
+
+    if (button) {
+
+        button.classList.add("active");
+
+    }
+
+
+    const data =
+        muscleData[muscle];
+
+
+    if (!data) return;
+
+
+    document
+        .getElementById("muscleNumber")
+        .innerText =
+        data.number;
+
+
+    document
+        .getElementById("muscleName")
+        .innerText =
+        data.name;
+
+
+    document
+        .getElementById("muscleDescription")
+        .innerText =
+        data.description;
+
+
+    document
+        .getElementById("recoveryValue")
+        .innerText =
+        data.recovery;
+
+
+    document
+        .getElementById("focusValue")
+        .innerText =
+        data.focus;
+
+
+    document
+        .getElementById("focusDescription")
+        .innerText =
+        data.focusDescription;
+
+
+    document
+        .getElementById("growthText")
+        .innerText =
+        data.growth;
+
+
+    const list =
+        document.getElementById(
+            "movementList"
+        );
+
+
+    list.innerHTML =
+        data.exercises
+            .map(
+                exercise => `
+                    <li>
+                        <strong>
+                            ${exercise[1]}
+                        </strong>
+                        — ${exercise[2]}
+                    </li>
+                `
+            )
+            .join("");
+
+
+    const grid =
+        document.getElementById(
+            "exerciseGrid"
+        );
+
+
+    grid.innerHTML =
+        data.exercises
+            .map(
+                exercise => `
+                    <div class="exercise-card">
+
+                        <div class="exercise-index">
+                            EXERCISE ${exercise[0]}
+                        </div>
+
+                        <strong>
+                            ${exercise[1]}
+                        </strong>
+
+                        <span>
+                            ${exercise[2]}
+                        </span>
+
+                    </div>
+                `
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+   ===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const firstButton =
+            document.querySelector(
+                ".muscle-button.active"
+            );
+
+        selectMuscle(
+            "chest",
+            firstButton
+        );
+
+    }
+);
+
+</script>
+
 </body>
+
 </html>
