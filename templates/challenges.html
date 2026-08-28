@@ -1,512 +1,2357 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexfit - 30-Day Challenges</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        .challenge-card, .progress-banner, .start-workout-btn, .tier-filter-btn {
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nexfit — 30 Day Challenge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+
+    /* =====================================================
+       NEXFIT CHALLENGE PAGE
+       ===================================================== */
+
+    :root {
+        --challenge-bg: #070707;
+        --challenge-card: #101010;
+        --challenge-card-2: #141414;
+        --challenge-border: rgba(255,255,255,.09);
+        --challenge-muted: #777;
+        --challenge-accent: #c8ff00;
+        --challenge-white: #f5f5f5;
+    }
+
+    body {
+        background: var(--challenge-bg);
+        color: var(--challenge-white);
+        font-family: "Inter", sans-serif;
+    }
+
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
+
+    .challenge-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+
+        min-height: 76px;
+
+        padding: 0 max(5vw, 25px);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        background: rgba(7,7,7,.86);
+        backdrop-filter: blur(18px);
+
+        border-bottom: 1px solid var(--challenge-border);
+    }
+
+    .challenge-brand {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.45rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    .challenge-brand span {
+        color: var(--challenge-accent);
+    }
+
+    .challenge-nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+    }
+
+    .challenge-nav-links a {
+        color: #777;
+        text-decoration: none;
+        font-size: .76rem;
+        font-weight: 600;
+        transition: color .2s ease;
+    }
+
+    .challenge-nav-links a:hover,
+    .challenge-nav-links a.active {
+        color: white;
+    }
+
+    .challenge-nav-links a.active {
+        position: relative;
+    }
+
+    .challenge-nav-links a.active::after {
+        content: "";
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: -10px;
+
+        height: 2px;
+
+        background: var(--challenge-accent);
+    }
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    .challenge-hero {
+        position: relative;
+
+        min-height: 560px;
+
+        display: flex;
+        align-items: flex-end;
+
+        padding:
+            90px max(7vw, 30px) 75px;
+
+        overflow: hidden;
+
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0,0,0,.96),
+                rgba(0,0,0,.70),
+                rgba(0,0,0,.25)
+            ),
+            url("https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=2000&q=90")
+            center / cover no-repeat;
+    }
+
+    .challenge-hero::after {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        background:
+            linear-gradient(
+                0deg,
+                var(--challenge-bg),
+                transparent 35%
+            );
+
+        pointer-events: none;
+    }
+
+    .hero-inner {
+        position: relative;
+        z-index: 2;
+
+        width: min(1180px, 100%);
+        margin: auto;
+    }
+
+    .hero-kicker {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        color: var(--challenge-accent);
+
+        font-size: .65rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+    }
+
+    .hero-kicker span {
+        width: 7px;
+        height: 7px;
+
+        background: var(--challenge-accent);
+
+        border-radius: 50%;
+
+        box-shadow:
+            0 0 18px rgba(200,255,0,.7);
+    }
+
+    .hero-inner h1 {
+        margin-top: 20px;
+
+        max-width: 850px;
+
+        font-family: "Space Grotesk", sans-serif;
+
+        font-size:
+            clamp(4rem, 9vw, 8.5rem);
+
+        line-height: .82;
+
+        letter-spacing: -6px;
+
+        font-weight: 700;
+    }
+
+    .hero-inner h1 span {
+        display: block;
+        color: var(--challenge-accent);
+    }
+
+    .hero-inner p {
+        max-width: 520px;
+
+        margin-top: 28px;
+
+        color: #aaa;
+
+        font-size: .95rem;
+        line-height: 1.75;
+    }
+
+    .hero-meta {
+        display: flex;
+        gap: 35px;
+
+        margin-top: 35px;
+    }
+
+    .hero-meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .hero-meta-item strong {
+        font-family: "Space Grotesk";
+        font-size: 1.45rem;
+    }
+
+    .hero-meta-item span {
+        color: #666;
+
+        font-size: .55rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+    }
+
+    /* =====================================================
+       MAIN CONTAINER
+       ===================================================== */
+
+    .challenge-container {
+        width: min(1180px, calc(100% - 10vw));
+
+        margin: auto;
+    }
+
+    /* =====================================================
+       PROGRESS
+       ===================================================== */
+
+    .progress-banner {
+        position: relative;
+
+        margin-top: 30px;
+
+        padding: 25px 28px;
+
+        display: grid;
+
+        grid-template-columns: 1fr auto;
+
+        align-items: center;
+
+        gap: 30px;
+
+        background:
+            linear-gradient(
+                120deg,
+                #131313,
+                #0d0d0d
+            );
+
+        border: 1px solid var(--challenge-border);
+
+        border-radius: 16px;
+
+        overflow: hidden;
+    }
+
+    .progress-banner::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 2px;
+
+        background:
+            linear-gradient(
+                90deg,
+                var(--challenge-accent),
+                transparent
+            );
+    }
+
+    .progress-info h3 {
+        margin-bottom: 13px;
+
+        font-family: "Space Grotesk";
+
+        font-size: 1rem;
+    }
+
+    .progress-subtitle {
+        color: #555;
+
+        font-size: .63rem;
+
+        margin-bottom: 13px;
+    }
+
+    .progress-bar-container {
+        width: 100%;
+        max-width: 650px;
+
+        height: 8px;
+
+        background: #1c1c1c;
+
+        border-radius: 20px;
+
+        overflow: hidden;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+
+        width: 0%;
+
+        background: var(--challenge-accent);
+
+        box-shadow:
+            0 0 18px rgba(200,255,0,.35);
+
+        transition:
+            width .5s cubic-bezier(.25,.8,.25,1);
+    }
+
+    .progress-percentage {
+        color: var(--challenge-accent);
+
+        font-family: "Space Grotesk";
+
+        font-size: 1.6rem;
+
+        font-weight: 700;
+    }
+
+    .progress-label {
+        display: block;
+
+        margin-top: 4px;
+
+        color: #555;
+
+        text-align: right;
+
+        font-size: .55rem;
+
+        font-weight: 800;
+
+        letter-spacing: 1px;
+    }
+
+    /* =====================================================
+       TIER SELECTOR
+       ===================================================== */
+
+    .tier-section-wrapper {
+        padding-top: 55px;
+    }
+
+    .section-intro {
+        margin-bottom: 22px;
+    }
+
+    .section-intro span {
+        color: var(--challenge-accent);
+
+        font-size: .6rem;
+
+        font-weight: 800;
+
+        letter-spacing: 2px;
+    }
+
+    .section-intro h2 {
+        margin-top: 10px;
+
+        font-family: "Space Grotesk";
+
+        font-size:
+            clamp(2.2rem, 4vw, 3.7rem);
+
+        line-height: .95;
+
+        letter-spacing: -2px;
+    }
+
+    .section-intro h2 em {
+        color: #555;
+        font-style: normal;
+    }
+
+    .tier-filter-row {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 10px;
+
+        margin-bottom: 35px;
+    }
+
+    .tier-filter-btn {
+        position: relative;
+
+        min-height: 90px;
+
+        padding: 18px 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        text-align: left;
+
+        background: #0f0f0f;
+
+        color: #777;
+
+        border:
+            1px solid
+            var(--challenge-border);
+
+        border-radius: 12px;
+
+        cursor: pointer;
+
+        transition:
+            .25s ease;
+    }
+
+    .tier-filter-btn strong {
+        color: inherit;
+
+        font-family: "Space Grotesk";
+
+        font-size: 1rem;
+    }
+
+    .tier-filter-btn small {
+        margin-top: 5px;
+
+        color: #555;
+
+        font-size: .58rem;
+        font-weight: 700;
+    }
+
+    .tier-filter-btn:hover {
+        transform: translateY(-2px);
+
+        color: white;
+
+        border-color:
+            rgba(200,255,0,.3);
+    }
+
+    .tier-filter-btn.active {
+        background:
+            rgba(200,255,0,.07);
+
+        color: var(--challenge-accent);
+
+        border-color:
+            rgba(200,255,0,.45);
+
+        box-shadow:
+            0 10px 35px
+            rgba(0,0,0,.25);
+    }
+
+    .tier-filter-btn.active small {
+        color: #888;
+    }
+
+    /* =====================================================
+       TIER CONTENT
+       ===================================================== */
+
+    .tier-section {
+        display: none;
+    }
+
+    .tier-section.active {
+        display: block;
+
+        animation:
+            fadeIn .35s ease;
+    }
+
+    @keyframes fadeIn {
+
+        from {
+            opacity: 0;
+            transform: translateY(8px);
         }
-        .progress-banner {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px 25px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .progress-banner:hover {
-            border-color: rgba(255, 71, 87, 0.4);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-        .progress-info h3 {
-            color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-        .progress-bar-container {
-            width: 250px;
-            height: 10px;
-            background: #0f1016;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--accent-red);
-            width: 0%;
-            transition: width 0.4s ease;
-        }
-        .progress-percentage {
-            color: var(--accent-red);
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-        /* Tier Filter Navigation Bar */
-        .tier-filter-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            justify-content: center;
-        }
-        .tier-filter-btn {
-            background: var(--bg-card);
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 10px 25px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
-        }
-        .tier-filter-btn:hover {
-            border-color: var(--accent-red);
-            color: #fff;
-            transform: translateY(-2px);
-        }
-        .tier-filter-btn.active {
-            background: var(--accent-red);
-            color: white;
-            border-color: var(--accent-red);
-            box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
-        }
-        /* Tier Sections */
-        .tier-section {
-            display: none;
-        }
-        .tier-section.active {
-            display: block;
-        }
-        .tier-header {
-            color: #fff;
-            font-size: 1.3rem;
-            border-left: 3px solid var(--accent-red);
-            padding-left: 10px;
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
-        /* Chronological Grid (5 columns per row) */
+
+    }
+
+    .tier-header {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 18px;
+
+        padding-bottom: 14px;
+
+        border-bottom:
+            1px solid
+            var(--challenge-border);
+
+        color: white;
+
+        font-family: "Space Grotesk";
+
+        font-size: 1.15rem;
+    }
+
+    .tier-header::before {
+        content: "";
+
+        width: 4px;
+        height: 25px;
+
+        margin-right: 12px;
+
+        background:
+            var(--challenge-accent);
+
+        display: inline-block;
+    }
+
+    /* =====================================================
+       DAY GRID
+       ===================================================== */
+
+    .challenges-grid-chronological {
+        display: grid;
+
+        grid-template-columns:
+            repeat(5, 1fr);
+
+        gap: 10px;
+
+        margin-bottom: 45px;
+    }
+
+    .challenge-card {
+        position: relative;
+
+        min-height: 190px;
+
+        padding: 19px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        background:
+            linear-gradient(
+                145deg,
+                #121212,
+                #0d0d0d
+            );
+
+        border:
+            1px solid
+            var(--challenge-border);
+
+        border-radius: 13px;
+
+        overflow: hidden;
+
+        transition:
+            transform .25s ease,
+            border-color .25s ease,
+            background .25s ease;
+    }
+
+    .challenge-card::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 2px;
+
+        background:
+            #252525;
+    }
+
+    .challenge-card:hover {
+        transform:
+            translateY(-5px);
+
+        border-color:
+            rgba(200,255,0,.32);
+
+        background:
+            #151515;
+    }
+
+    .challenge-card h4 {
+        color: #eee;
+
+        font-family:
+            "Space Grotesk";
+
+        font-size: .9rem;
+
+        line-height: 1.2;
+
+        margin-bottom: 9px;
+    }
+
+    .challenge-card p {
+        color: #666;
+
+        font-size: .68rem;
+
+        line-height: 1.55;
+    }
+
+    .day-number {
+        color: #444;
+
+        font-size: .55rem;
+
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+
+        margin-bottom: 13px;
+    }
+
+    .challenge-footer {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 8px;
+
+        margin-top: 20px;
+
+        padding-top: 13px;
+
+        border-top:
+            1px solid
+            var(--challenge-border);
+    }
+
+    .day-duration {
+        color: #555;
+
+        font-size: .55rem;
+
+        font-weight: 800;
+
+        letter-spacing: .8px;
+    }
+
+    .day-duration.completed {
+        color:
+            var(--challenge-accent);
+    }
+
+    .start-workout-btn {
+        border: none;
+
+        background:
+            rgba(200,255,0,.09);
+
+        color:
+            var(--challenge-accent);
+
+        border:
+            1px solid
+            rgba(200,255,0,.25);
+
+        padding:
+            8px 11px;
+
+        border-radius: 6px;
+
+        font-size: .6rem;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        transition: .2s ease;
+    }
+
+    .start-workout-btn:hover {
+        background:
+            var(--challenge-accent);
+
+        color: #000;
+
+        transform:
+            translateY(-1px);
+    }
+
+    /* =====================================================
+       WORKOUT MODAL
+       ===================================================== */
+
+    #workoutModal {
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 2000;
+
+        display: none;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 20px;
+
+        background:
+            rgba(0,0,0,.88);
+
+        backdrop-filter:
+            blur(16px);
+    }
+
+    .workout-modal-box {
+        position: relative;
+
+        width: min(560px, 100%);
+
+        padding:
+            clamp(28px,5vw,50px);
+
+        background:
+            linear-gradient(
+                145deg,
+                #161616,
+                #0d0d0d
+            );
+
+        border:
+            1px solid
+            rgba(255,255,255,.12);
+
+        border-radius:
+            22px;
+
+        box-shadow:
+            0 35px 100px
+            rgba(0,0,0,.7);
+
+        text-align: center;
+    }
+
+    .modal-top-line {
+        width: 45px;
+        height: 3px;
+
+        margin:
+            0 auto 25px;
+
+        background:
+            var(--challenge-accent);
+    }
+
+    .modal-day-label {
+        color:
+            var(--challenge-accent);
+
+        font-size: .62rem;
+
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+    }
+
+    .countdown-number {
+        margin:
+            25px 0;
+
+        color:
+            var(--challenge-accent);
+
+        font-family:
+            "Space Grotesk";
+
+        font-size:
+            clamp(5rem,15vw,8rem);
+
+        line-height: .8;
+
+        font-weight: 700;
+
+        text-shadow:
+            0 0 40px
+            rgba(200,255,0,.18);
+    }
+
+    .exercise-title {
+        color: white;
+
+        font-family:
+            "Space Grotesk";
+
+        font-size:
+            clamp(1.7rem,5vw,2.4rem);
+
+        line-height: 1;
+
+        margin-bottom: 12px;
+    }
+
+    .exercise-desc {
+        color: #777;
+
+        font-size: .82rem;
+
+        line-height: 1.7;
+
+        margin-bottom: 25px;
+    }
+
+    .modal-progress {
+        height: 4px;
+
+        margin:
+            20px 0 25px;
+
+        background: #222;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+    }
+
+    .modal-progress span {
+        display: block;
+
+        height: 100%;
+
+        background:
+            var(--challenge-accent);
+
+        transition:
+            width .3s ease;
+    }
+
+    .modal-btn-row {
+        display: flex;
+
+        gap: 10px;
+
+        justify-content: center;
+    }
+
+    .control-btn {
+        border:
+            1px solid
+            rgba(255,255,255,.12);
+
+        background:
+            rgba(255,255,255,.04);
+
+        color: white;
+
+        padding:
+            11px 18px;
+
+        border-radius: 7px;
+
+        font-size: .68rem;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        transition: .2s ease;
+    }
+
+    .control-btn:hover {
+        border-color:
+            rgba(200,255,0,.35);
+    }
+
+    .control-btn.primary {
+        background:
+            var(--challenge-accent);
+
+        color: #000;
+
+        border-color:
+            var(--challenge-accent);
+    }
+
+    .control-btn.primary:hover {
+        box-shadow:
+            0 8px 25px
+            rgba(200,255,0,.2);
+    }
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .challenge-footer {
+        /* Existing challenge footer styling is intentionally
+           scoped through .site-challenge-footer below. */
+    }
+
+    .site-challenge-footer {
+        width:
+            min(
+                1180px,
+                calc(100% - 10vw)
+            );
+
+        margin:
+            50px auto 0;
+
+        padding:
+            30px 0;
+
+        border-top:
+            1px solid
+            var(--challenge-border);
+
+        color: #444;
+
+        text-align: center;
+
+        font-size: .62rem;
+    }
+
+    .site-challenge-footer strong {
+        color:
+            var(--challenge-accent);
+    }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media(max-width: 1100px) {
+
         .challenges-grid-chronological {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-bottom: 40px;
+            grid-template-columns:
+                repeat(4,1fr);
         }
-        .challenge-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+
+    }
+
+    @media(max-width: 850px) {
+
+        .challenge-nav-links {
+            gap: 14px;
         }
-        .challenge-card:hover {
-            border-color: rgba(255, 71, 87, 0.5);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.15);
+
+        .challenge-nav-links a {
+            font-size: .65rem;
         }
-        .challenge-card h4 {
-            color: #fff;
-            font-size: 1.05rem;
-            margin-bottom: 8px;
+
+        .tier-filter-row {
+            grid-template-columns: 1fr;
         }
-        .challenge-card p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            margin-bottom: 15px;
-            line-height: 1.3;
+
+        .challenges-grid-chronological {
+            grid-template-columns:
+                repeat(2,1fr);
         }
-        .challenge-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid var(--border-color);
-            padding-top: 12px;
-            gap: 5px;
+
+        .progress-banner {
+            grid-template-columns: 1fr;
         }
-        .start-workout-btn {
-            background: var(--accent-red);
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.75rem;
-            cursor: pointer;
-            white-space: nowrap;
+
+        .progress-percentage {
+            font-size: 1.3rem;
         }
-        .start-workout-btn:hover {
-            background: #ff6b81;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+
+        .progress-label {
+            text-align: left;
         }
-        /* Interactive Workout Session Modal Overlay */
-        #workoutModal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 16, 22, 0.95);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-        .workout-modal-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            position: relative;
-        }
-        .countdown-number {
-            font-size: 5rem;
-            color: var(--accent-red);
-            font-weight: bold;
-            margin: 20px 0;
-        }
-        .exercise-title {
-            color: #fff;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        .exercise-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-        }
-        .modal-btn-row {
-            display: flex;
+
+    }
+
+    @media(max-width: 600px) {
+
+        .challenge-nav {
+            padding:
+                15px 20px;
+
+            flex-wrap: wrap;
+
             gap: 12px;
-            justify-content: center;
-            margin-top: 25px;
         }
+
+        .challenge-nav-links {
+            width: 100%;
+
+            order: 3;
+
+            overflow-x: auto;
+
+            padding-bottom: 3px;
+
+            scrollbar-width: none;
+        }
+
+        .challenge-nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .challenge-hero {
+            min-height: 650px;
+
+            padding:
+                70px 22px 55px;
+        }
+
+        .hero-inner h1 {
+            font-size:
+                clamp(3.5rem,17vw,6rem);
+
+            letter-spacing: -4px;
+        }
+
+        .hero-meta {
+            gap: 22px;
+        }
+
+        .challenge-container {
+            width:
+                calc(100% - 32px);
+        }
+
+        .challenges-grid-chronological {
+            grid-template-columns:
+                1fr;
+        }
+
+        .challenge-card {
+            min-height: 160px;
+        }
+
+        .modal-btn-row {
+            flex-direction: column;
+        }
+
         .control-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
+            width: 100%;
         }
-        .control-btn:hover {
-            border-color: var(--accent-red);
-        }
-        .control-btn.primary {
-            background: var(--accent-red);
-            border-color: var(--accent-red);
-        }
-        @media(max-width: 1200px) {
-            .challenges-grid-chronological {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        @media(max-width: 768px) {
-            .challenges-grid-chronological {
-                grid-template-columns: 1fr;
-            }
-            .progress-banner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .progress-bar-container {
-                width: 100%;
-            }
-            header nav {
-                gap: 10px;
-                font-size: 0.85rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .tier-filter-row {
-                flex-direction: column;
-            }
-        }
-    </style>
+
+    }
+
+</style>
+```
+
 </head>
+
 <body>
-    <header>
-        <h1>Nexfit</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/calculator">Calculator</a>
-            <a href="/muscle">Muscle Guide</a>
-            <a href="/challenges">30-Day Challenges</a>
-            <a href="/myths">Fitness Myths</a>
-        </nav>
-    </header>
-    
-    <div class="container" style="max-width: 1100px;">
-        <!-- Global Challenge Progress Tracker -->
-        <div class="progress-banner">
-            <div class="progress-info">
-                <h3 id="selectedMuscleHeader">Your 30-Day Progress</h3>
-                <div class="progress-bar-container">
-                    <div id="progressBarFill" class="progress-bar-fill"></div>
-                </div>
-            </div>
-            <div>
-                <span id="progressText" class="progress-percentage">0% Completed</span>
-            </div>
-        </div>
 
-        <!-- Tier Category Filter Navigation -->
-        <div class="tier-filter-row">
-            <button id="btn-beginner" class="tier-filter-btn active" onclick="switchTier('beginner', this)">🌱 Beginner (Days 1-10)</button>
-            <button id="btn-intermediate" class="tier-filter-btn" onclick="switchTier('intermediate', this)">⚡ Intermediate (Days 11-20)</button>
-            <button id="btn-advanced" class="tier-filter-btn" onclick="switchTier('advanced', this)">🔥 Advanced (Days 21-30)</button>
-        </div>
+<!-- =====================================================
+     NAVIGATION
+     ===================================================== -->
 
-        <!-- BEGINNER TIER (Days 1 - 10) -->
-        <div id="tier-beginner" class="tier-section active">
-            <div class="tier-header" id="headerBeginner">Beginner Foundation Phase (Days 1 - 10)</div>
-            <div class="challenges-grid-chronological">
-                {% for day in range(1, 11) %}
-                <div class="challenge-card" id="card-day-{{ day }}">
-                    <div>
-                        <h4 id="title-day-{{ day }}">Day {{ day }}: Foundations</h4>
-                        <p>Fundamental bodyweight mechanics & form establishment.</p>
-                    </div>
-                    <div class="challenge-footer">
-                        <span id="status-day-{{ day }}" style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600;">25m</span>
-                        <button class="start-workout-btn" onclick="openWorkoutSession({{ day }})">Start ➔</button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+<header class="challenge-nav">
 
-        <!-- INTERMEDIATE TIER (Days 11 - 20) -->
-        <div id="tier-intermediate" class="tier-section">
-            <div class="tier-header" id="headerIntermediate">Intermediate Hypertrophy Phase (Days 11 - 20)</div>
-            <div class="challenges-grid-chronological">
-                {% for day in range(11, 21) %}
-                <div class="challenge-card" id="card-day-{{ day }}">
-                    <div>
-                        <h4 id="title-day-{{ day }}">Day {{ day }}: Hypertrophy</h4>
-                        <p>Compound loading & increased time under tension.</p>
-                    </div>
-                    <div class="challenge-footer">
-                        <span id="status-day-{{ day }}" style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600;">30m</span>
-                        <button class="start-workout-btn" onclick="openWorkoutSession({{ day }})">Start ➔</button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+```
+<a href="/" class="challenge-brand">
+    NEX<span>FIT</span>
+</a>
 
-        <!-- ADVANCED TIER (Days 21 - 30) -->
-        <div id="tier-advanced" class="tier-section">
-            <div class="tier-header" id="headerAdvanced">Advanced Peak Conditioning Phase (Days 21 - 30)</div>
-            <div class="challenges-grid-chronological">
-                {% for day in range(21, 31) %}
-                <div class="challenge-card" id="card-day-{{ day }}">
-                    <div>
-                        <h4 id="title-day-{{ day }}">Day {{ day }}: Peak Shred</h4>
-                        <p>High-intensity threshold testing & maximum conditioning.</p>
-                    </div>
-                    <div class="challenge-footer">
-                        <span id="status-day-{{ day }}" style="color: var(--text-muted); font-size: 0.75rem; font-weight: 600;">35m</span>
-                        <button class="start-workout-btn" onclick="openWorkoutSession({{ day }})">Start ➔</button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+<nav class="challenge-nav-links">
+
+    <a href="/">
+        Home
+    </a>
+
+    <a href="/calculator">
+        Calculator
+    </a>
+
+    <a href="/muscle">
+        Muscle Guide
+    </a>
+
+    <a href="/challenges" class="active">
+        30-Day Challenge
+    </a>
+
+    <a href="/myths">
+        Fitness Myths
+    </a>
+
+</nav>
+```
+
+</header>
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+
+<section class="challenge-hero">
+
+```
+<div class="hero-inner">
+
+    <div class="hero-kicker">
+        <span></span>
+        THE NEXFIT SIGNATURE PROGRAM
     </div>
 
-    <!-- Active Workout Modal Session -->
-    <div id="workoutModal">
-        <div class="workout-modal-box">
-            <div id="modalContent">
-                <!-- Injected dynamically via JS -->
-            </div>
+    <h1>
+        30 DAYS.
+        <span>NO EXCUSES.</span>
+    </h1>
+
+    <p>
+        One month of structured training designed to build
+        consistency, strength and discipline. Start where
+        you are. Finish stronger.
+    </p>
+
+    <div class="hero-meta">
+
+        <div class="hero-meta-item">
+            <strong>30</strong>
+            <span>DAYS</span>
         </div>
+
+        <div class="hero-meta-item">
+            <strong>3</strong>
+            <span>PHASES</span>
+        </div>
+
+        <div class="hero-meta-item">
+            <strong>12</strong>
+            <span>EXERCISES</span>
+        </div>
+
     </div>
 
-    <!-- Professional Attribution Footer -->
-    <footer style="margin-top: 80px; padding: 25px 0; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.9rem;">
-        <p style="margin: 0;">&copy; 2026 Nexfit. All rights reserved. &bull; Designed & Developed by <span style="color: var(--accent-red); font-weight: 600;">Varad Gurav</span></p>
-    </footer>
+</div>
+```
 
-    <script>
-        const provenWorkouts = [
-            { name: "1. Barbell or Bodyweight Squats", desc: "Target quads, glutes, and core strength." },
-            { name: "2. Push-Ups or Bench Press", desc: "Builds absolute pressing power across chest and triceps." },
-            { name: "3. Pull-Ups or Inverted Rows", desc: "Ultimate upper-body pull for lat width." },
-            { name: "4. Romanian Deadlifts", desc: "Builds powerful hamstrings and glutes." },
-            { name: "5. Overhead Shoulder Press", desc: "Develops shoulder stability and core strength." },
-            { name: "6. Walking Lunges", desc: "Unilateral leg movement correcting imbalances." },
-            { name: "7. Bent-Over Rows", desc: "Crucial compound lift for mid-back hypertrophy." },
-            { name: "8. Plank Shoulder Taps", desc: "Anti-rotation core stability exercise." },
-            { name: "9. Bulgarian Split Squats", desc: "Single-leg hypertrophy builder for quads." },
-            { name: "10. Tricep Dips", desc: "Effective movement for tricep mass." },
-            { name: "11. Bicep Hammer Curls", desc: "Builds brachialis and forearm thickness." },
-            { name: "12. High-Intensity Burpees", desc: "Metabolic conditioning to maximize fat burn." }
+</section>
+
+<main class="challenge-container">
+
+<!-- =====================================================
+     PROGRESS
+     ===================================================== -->
+
+<section class="progress-banner">
+
+```
+<div class="progress-info">
+
+    <h3 id="selectedMuscleHeader">
+        Your 30-Day Progress
+    </h3>
+
+    <div class="progress-subtitle">
+        Keep showing up. Every completed session moves you forward.
+    </div>
+
+    <div class="progress-bar-container">
+
+        <div
+            id="progressBarFill"
+            class="progress-bar-fill">
+        </div>
+
+    </div>
+
+</div>
+
+<div>
+
+    <span
+        id="progressText"
+        class="progress-percentage">
+        0%
+    </span>
+
+    <span class="progress-label">
+        COMPLETED
+    </span>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     PROGRAM PHASES
+     ===================================================== -->
+
+<section class="tier-section-wrapper">
+
+```
+<div class="section-intro">
+
+    <span>CHOOSE YOUR PHASE</span>
+
+    <h2>
+        YOUR 30-DAY
+        <em>JOURNEY.</em>
+    </h2>
+
+</div>
+
+
+<div class="tier-filter-row">
+
+    <button
+        id="btn-beginner"
+        class="tier-filter-btn active"
+        onclick="switchTier('beginner', this)">
+
+        <strong>
+            FOUNDATION
+        </strong>
+
+        <small>
+            DAYS 01 — 10 · BUILD THE BASE
+        </small>
+
+    </button>
+
+
+    <button
+        id="btn-intermediate"
+        class="tier-filter-btn"
+        onclick="switchTier('intermediate', this)">
+
+        <strong>
+            PROGRESSION
+        </strong>
+
+        <small>
+            DAYS 11 — 20 · BUILD STRENGTH
+        </small>
+
+    </button>
+
+
+    <button
+        id="btn-advanced"
+        class="tier-filter-btn"
+        onclick="switchTier('advanced', this)">
+
+        <strong>
+            PEAK
+        </strong>
+
+        <small>
+            DAYS 21 — 30 · TEST YOUR LIMITS
+        </small>
+
+    </button>
+
+</div>
+```
+
+<!-- =====================================================
+     BEGINNER
+     ===================================================== -->
+
+<div id="tier-beginner" class="tier-section active">
+
+```
+<div
+    class="tier-header"
+    id="headerBeginner">
+
+    Beginner Foundation Phase
+
+    <span>
+        01 — 10
+    </span>
+
+</div>
+
+<div class="challenges-grid-chronological">
+
+    {% for day in range(1, 11) %}
+
+    <div
+        class="challenge-card"
+        id="card-day-{{ day }}">
+
+        <div>
+
+            <div class="day-number">
+                DAY {{ "%02d"|format(day) }}
+            </div>
+
+            <h4 id="title-day-{{ day }}">
+                Day {{ day }}: Foundations
+            </h4>
+
+            <p>
+                Fundamental movement mechanics,
+                controlled training and form development.
+            </p>
+
+        </div>
+
+        <div class="challenge-footer">
+
+            <span
+                id="status-day-{{ day }}"
+                class="day-duration">
+                25 MIN
+            </span>
+
+            <button
+                class="start-workout-btn"
+                onclick="openWorkoutSession({{ day }})">
+
+                START →
+
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+```
+
+</div>
+
+<!-- =====================================================
+     INTERMEDIATE
+     ===================================================== -->
+
+<div
+    id="tier-intermediate"
+    class="tier-section">
+
+```
+<div
+    class="tier-header"
+    id="headerIntermediate">
+
+    Intermediate Hypertrophy Phase
+
+    <span>
+        11 — 20
+    </span>
+
+</div>
+
+<div class="challenges-grid-chronological">
+
+    {% for day in range(11, 21) %}
+
+    <div
+        class="challenge-card"
+        id="card-day-{{ day }}">
+
+        <div>
+
+            <div class="day-number">
+                DAY {{ "%02d"|format(day) }}
+            </div>
+
+            <h4 id="title-day-{{ day }}">
+                Day {{ day }}: Hypertrophy
+            </h4>
+
+            <p>
+                Increased training volume,
+                progressive overload and time under tension.
+            </p>
+
+        </div>
+
+        <div class="challenge-footer">
+
+            <span
+                id="status-day-{{ day }}"
+                class="day-duration">
+                30 MIN
+            </span>
+
+            <button
+                class="start-workout-btn"
+                onclick="openWorkoutSession({{ day }})">
+
+                START →
+
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+```
+
+</div>
+
+<!-- =====================================================
+     ADVANCED
+     ===================================================== -->
+
+<div
+    id="tier-advanced"
+    class="tier-section">
+
+```
+<div
+    class="tier-header"
+    id="headerAdvanced">
+
+    Advanced Peak Conditioning Phase
+
+    <span>
+        21 — 30
+    </span>
+
+</div>
+
+<div class="challenges-grid-chronological">
+
+    {% for day in range(21, 31) %}
+
+    <div
+        class="challenge-card"
+        id="card-day-{{ day }}">
+
+        <div>
+
+            <div class="day-number">
+                DAY {{ "%02d"|format(day) }}
+            </div>
+
+            <h4 id="title-day-{{ day }}">
+                Day {{ day }}: Peak Shred
+            </h4>
+
+            <p>
+                High-intensity conditioning,
+                performance testing and advanced progression.
+            </p>
+
+        </div>
+
+        <div class="challenge-footer">
+
+            <span
+                id="status-day-{{ day }}"
+                class="day-duration">
+                35 MIN
+            </span>
+
+            <button
+                class="start-workout-btn"
+                onclick="openWorkoutSession({{ day }})">
+
+                START →
+
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+```
+
+</div>
+
+</section>
+
+</main>
+
+<!-- =====================================================
+     WORKOUT MODAL
+     ===================================================== -->
+
+<div id="workoutModal">
+
+```
+<div class="workout-modal-box">
+
+    <div id="modalContent">
+
+        <!-- Dynamically generated -->
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer class="site-challenge-footer">
+
+```
+<div>
+    © 2026 NEXFIT
+</div>
+
+<div style="margin-top:7px;">
+    Train. Track. Transform.
+</div>
+
+<div style="margin-top:7px;">
+    Designed & Developed by
+    <strong>Varad Gurav</strong>
+</div>
+```
+
+</footer>
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   WORKOUT DATABASE
+   ===================================================== */
+
+const provenWorkouts = [
+
+    {
+        name: "Barbell or Bodyweight Squats",
+        desc: "Target quads, glutes and core strength."
+    },
+
+    {
+        name: "Push-Ups or Bench Press",
+        desc: "Build pressing power across the chest and triceps."
+    },
+
+    {
+        name: "Pull-Ups or Inverted Rows",
+        desc: "Develop upper-body pulling strength and lat width."
+    },
+
+    {
+        name: "Romanian Deadlifts",
+        desc: "Build powerful hamstrings and glutes."
+    },
+
+    {
+        name: "Overhead Shoulder Press",
+        desc: "Develop shoulder strength and stability."
+    },
+
+    {
+        name: "Walking Lunges",
+        desc: "Build unilateral leg strength and balance."
+    },
+
+    {
+        name: "Bent-Over Rows",
+        desc: "Build the mid-back and improve pulling strength."
+    },
+
+    {
+        name: "Plank Shoulder Taps",
+        desc: "Develop anti-rotation core stability."
+    },
+
+    {
+        name: "Bulgarian Split Squats",
+        desc: "Challenge each leg independently for strength and hypertrophy."
+    },
+
+    {
+        name: "Tricep Dips",
+        desc: "Build tricep strength and pressing capacity."
+    },
+
+    {
+        name: "Bicep Hammer Curls",
+        desc: "Build the biceps, brachialis and forearms."
+    },
+
+    {
+        name: "High-Intensity Burpees",
+        desc: "Finish the session with full-body conditioning."
+    }
+
+];
+
+
+let activeDay = 1;
+
+let currentExIdx = 0;
+
+let countdownTimer = null;
+
+let isPaused = false;
+
+let currentMuscleGroup = "Full Body";
+
+
+/* =====================================================
+   INITIALIZATION
+   ===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const muscleParam =
+            urlParams.get("muscle");
+
+        const levelParam =
+            urlParams.get("level");
+
+
+        /* Muscle selection */
+
+        if (muscleParam) {
+
+            currentMuscleGroup =
+                muscleParam;
+
+            document
+                .getElementById(
+                    "selectedMuscleHeader"
+                )
+                .innerText =
+                `${muscleParam} Challenge Progress`;
+
+
+            for (
+                let i = 1;
+                i <= 30;
+                i++
+            ) {
+
+                const title =
+                    document.getElementById(
+                        "title-day-" + i
+                    );
+
+                if (!title) continue;
+
+
+                const phase =
+                    i <= 10
+                        ? "Foundations"
+                        : i <= 20
+                            ? "Hypertrophy"
+                            : "Peak Conditioning";
+
+
+                title.innerText =
+                    `Day ${i}: ${muscleParam} ${phase}`;
+
+            }
+
+        }
+
+
+        /* Level selection */
+
+        if (levelParam) {
+
+            const target =
+                levelParam.toLowerCase();
+
+
+            if (
+                [
+                    "beginner",
+                    "intermediate",
+                    "advanced"
+                ].includes(target)
+            ) {
+
+                const btn =
+                    document.getElementById(
+                        "btn-" + target
+                    );
+
+                if (btn) {
+
+                    switchTier(
+                        target,
+                        btn
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        /* Restore progress */
+
+        for (
+            let i = 1;
+            i <= 30;
+            i++
+        ) {
+
+            if (
+                localStorage.getItem(
+                    "nexfit_challenge_day_" + i
+                ) === "true"
+            ) {
+
+                markDayCompletedUI(
+                    i,
+                    true
+                );
+
+            }
+
+        }
+
+
+        updateProgress();
+
+    }
+);
+
+
+/* =====================================================
+   SWITCH PHASE
+   ===================================================== */
+
+function switchTier(
+    tierName,
+    btn
+) {
+
+    document
+        .querySelectorAll(
+            ".tier-filter-btn"
+        )
+        .forEach(
+            button =>
+                button.classList.remove(
+                    "active"
+                )
+        );
+
+
+    if (btn) {
+
+        btn.classList.add(
+            "active"
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".tier-section"
+        )
+        .forEach(
+            section =>
+                section.classList.remove(
+                    "active"
+                )
+        );
+
+
+    const target =
+        document.getElementById(
+            "tier-" + tierName
+        );
+
+
+    if (target) {
+
+        target.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   OPEN WORKOUT
+   ===================================================== */
+
+function openWorkoutSession(day) {
+
+    activeDay = day;
+
+    currentExIdx = 0;
+
+    isPaused = false;
+
+
+    document
+        .getElementById(
+            "workoutModal"
+        )
+        .style.display = "flex";
+
+
+    runCountdown(5);
+
+}
+
+
+/* =====================================================
+   COUNTDOWN
+   ===================================================== */
+
+function runCountdown(sec) {
+
+    const box =
+        document.getElementById(
+            "modalContent"
+        );
+
+
+    if (sec > 0) {
+
+        box.innerHTML = `
+
+            <div class="modal-top-line"></div>
+
+            <div class="modal-day-label">
+                DAY ${activeDay}
+                ·
+                ${currentMuscleGroup.toUpperCase()}
+            </div>
+
+            <div class="countdown-number">
+                ${sec}
+            </div>
+
+            <p class="exercise-desc">
+                Prepare your station.
+                Your session begins shortly.
+            </p>
+
+            <button
+                class="control-btn"
+                onclick="quitWorkout()">
+
+                Exit Session
+
+            </button>
+
+        `;
+
+
+        countdownTimer =
+            setTimeout(
+                () =>
+                    runCountdown(sec - 1),
+                1000
+            );
+
+
+    } else {
+
+        renderActiveExercise();
+
+    }
+
+}
+
+
+/* =====================================================
+   ACTIVE EXERCISE
+   ===================================================== */
+
+function renderActiveExercise() {
+
+    const exercise =
+        provenWorkouts[
+            currentExIdx
         ];
 
-        let activeDay = 1;
-        let currentExIdx = 0;
-        let countdownTimer = null;
-        let isPaused = false;
-        let currentMuscleGroup = "Full Body";
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check for URL parameters (e.g. /challenges?muscle=Arm&level=beginner)
-            const urlParams = new URLSearchParams(window.location.search);
-            const muscleParam = urlParams.get('muscle');
-            const levelParam = urlParams.get('level');
+    const box =
+        document.getElementById(
+            "modalContent"
+        );
 
-            if (muscleParam) {
-                currentMuscleGroup = muscleParam;
-                document.getElementById('selectedMuscleHeader').innerText = `${muscleParam} Challenge Progress`;
-                
-                // Update card text titles to reflect selected muscle group
-                for (let i = 1; i <= 30; i++) {
-                    let titleEl = document.getElementById('title-day-' + i);
-                    if(titleEl) {
-                        let phaseName = i <= 10 ? "Foundations" : (i <= 20 ? "Hypertrophy" : "Peak Conditioning");
-                        titleEl.innerText = `Day ${i}: ${muscleParam} ${phaseName}`;
-                    }
-                }
+
+    const percentage =
+        (
+            (currentExIdx + 1) /
+            provenWorkouts.length
+        ) * 100;
+
+
+    box.innerHTML = `
+
+        <div class="modal-day-label">
+
+            DAY ${activeDay}
+            ·
+            EXERCISE
+            ${currentExIdx + 1}
+            OF
+            ${provenWorkouts.length}
+
+        </div>
+
+        <div class="modal-progress">
+
+            <span
+                style="width:${percentage}%">
+            </span>
+
+        </div>
+
+        <h2 class="exercise-title">
+            ${exercise.name}
+        </h2>
+
+        <p class="exercise-desc">
+            ${exercise.desc}
+        </p>
+
+        <div class="modal-btn-row">
+
+            <button
+                class="control-btn"
+                id="pauseResumeBtn"
+                onclick="togglePause()">
+
+                Pause
+
+            </button>
+
+            <button
+                class="control-btn primary"
+                onclick="nextExercise()">
+
+                Next Exercise →
+
+            </button>
+
+        </div>
+
+        <div style="margin-top:15px;">
+
+            <button
+                class="control-btn"
+                onclick="quitWorkout()">
+
+                Exit Session
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   PAUSE / RESUME
+   ===================================================== */
+
+function togglePause() {
+
+    isPaused =
+        !isPaused;
+
+
+    const btn =
+        document.getElementById(
+            "pauseResumeBtn"
+        );
+
+
+    if (btn) {
+
+        btn.innerText =
+            isPaused
+                ? "Resume"
+                : "Pause";
+
+    }
+
+}
+
+
+/* =====================================================
+   NEXT EXERCISE
+   ===================================================== */
+
+function nextExercise() {
+
+    if (isPaused) {
+
+        return;
+
+    }
+
+
+    currentExIdx++;
+
+
+    if (
+        currentExIdx <
+        provenWorkouts.length
+    ) {
+
+        renderActiveExercise();
+
+    } else {
+
+        completeWorkoutSession();
+
+    }
+
+}
+
+
+/* =====================================================
+   COMPLETE SESSION
+   ===================================================== */
+
+function completeWorkoutSession() {
+
+    localStorage.setItem(
+        "nexfit_challenge_day_" +
+        activeDay,
+        "true"
+    );
+
+
+    markDayCompletedUI(
+        activeDay,
+        true
+    );
+
+
+    updateProgress();
+
+
+    const box =
+        document.getElementById(
+            "modalContent"
+        );
+
+
+    box.innerHTML = `
+
+        <div class="modal-top-line"></div>
+
+        <div class="modal-day-label">
+            SESSION COMPLETE
+        </div>
+
+        <div
+            style="
+                font-family:'Space Grotesk';
+                font-size:4rem;
+                color:#c8ff00;
+                margin:20px 0;
+            ">
+
+            ${activeDay}
+
+        </div>
+
+        <h2 class="exercise-title">
+            Day ${activeDay} Complete.
+        </h2>
+
+        <p class="exercise-desc">
+
+            Outstanding work.
+            You completed today's
+            ${currentMuscleGroup}
+            session.
+
+        </p>
+
+        <button
+            class="control-btn primary"
+            onclick="closeModal()">
+
+            Finish & Return
+
+        </button>
+
+    `;
+
+}
+
+
+/* =====================================================
+   QUIT
+   ===================================================== */
+
+function quitWorkout() {
+
+    clearTimeout(
+        countdownTimer
+    );
+
+    closeModal();
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+   ===================================================== */
+
+function closeModal() {
+
+    document
+        .getElementById(
+            "workoutModal"
+        )
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   MARK COMPLETED
+   ===================================================== */
+
+function markDayCompletedUI(
+    day,
+    isDone
+) {
+
+    const status =
+        document.getElementById(
+            "status-day-" + day
+        );
+
+
+    const btn =
+        document.querySelector(
+            "#card-day-" +
+            day +
+            " .start-workout-btn"
+        );
+
+
+    const card =
+        document.getElementById(
+            "card-day-" + day
+        );
+
+
+    if (
+        isDone &&
+        status &&
+        btn
+    ) {
+
+        status.innerHTML =
+            "COMPLETED";
+
+
+        status.classList.add(
+            "completed"
+        );
+
+
+        btn.innerText =
+            "RETAKE →";
+
+
+        if (card) {
+
+            card.style.borderColor =
+                "rgba(200,255,0,.22)";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   PROGRESS
+   ===================================================== */
+
+function updateProgress() {
+
+    let completed = 0;
+
+
+    for (
+        let i = 1;
+        i <= 30;
+        i++
+    ) {
+
+        if (
+            localStorage.getItem(
+                "nexfit_challenge_day_" + i
+            ) === "true"
+        ) {
+
+            completed++;
+
+        }
+
+    }
+
+
+    const percentage =
+        Math.round(
+            (completed / 30) * 100
+        );
+
+
+    const progress =
+        document.getElementById(
+            "progressBarFill"
+        );
+
+
+    const text =
+        document.getElementById(
+            "progressText"
+        );
+
+
+    if (progress) {
+
+        progress.style.width =
+            percentage + "%";
+
+    }
+
+
+    if (text) {
+
+        text.innerText =
+            percentage + "%";
+
+    }
+
+}
+
+
+/* =====================================================
+   ESC KEY
+   ===================================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            quitWorkout();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CLICK OUTSIDE MODAL
+   ===================================================== */
+
+document
+    .getElementById("workoutModal")
+    .addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target.id ===
+                "workoutModal"
+            ) {
+
+                quitWorkout();
+
             }
 
-            if (levelParam) {
-                let targetTier = levelParam.toLowerCase();
-                if (['beginner', 'intermediate', 'advanced'].includes(targetTier)) {
-                    let btnElem = document.getElementById('btn-' + targetTier);
-                    if (btnElem) {
-                        switchTier(targetTier, btnElem);
-                    }
-                }
-            }
-
-            for (let i = 1; i <= 30; i++) {
-                if (localStorage.getItem('nexfit_challenge_day_' + i) === 'true') {
-                    markDayCompletedUI(i, true);
-                }
-            }
-            updateProgress();
-        });
-
-        function switchTier(tierName, btn) {
-            document.querySelectorAll('.tier-filter-btn').forEach(b => b.classList.remove('active'));
-            if(btn) btn.classList.add('active');
-
-            document.querySelectorAll('.tier-section').forEach(s => s.classList.remove('active'));
-            let targetSec = document.getElementById('tier-' + tierName);
-            if(targetSec) targetSec.classList.add('active');
         }
+    );
 
-        function openWorkoutSession(day) {
-            activeDay = day;
-            currentExIdx = 0;
-            isPaused = false;
-            document.getElementById('workoutModal').style.display = 'flex';
-            runCountdown(5);
-        }
+</script>
 
-        function runCountdown(sec) {
-            let box = document.getElementById('modalContent');
-            if (sec > 0) {
-                box.innerHTML = `
-                    <h3 style="color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Day ${activeDay} &bull; ${currentMuscleGroup} Routine</h3>
-                    <div class="countdown-number">${sec}</div>
-                    <p class="exercise-desc">Prepare your station. Session starting shortly...</p>
-                    <button class="control-btn" onclick="quitWorkout()">Quit</button>
-                `;
-                countdownTimer = setTimeout(() => runCountdown(sec - 1), 1000);
-            } else {
-                renderActiveExercise();
-            }
-        }
-
-        function renderActiveExercise() {
-            let ex = provenWorkouts[currentExIdx];
-            let box = document.getElementById('modalContent');
-            box.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <span style="color: var(--accent-red); font-weight: bold; font-size: 0.85rem;">Day ${activeDay} &bull; Exercise ${currentExIdx + 1} of ${provenWorkouts.length}</span>
-                    <button class="control-btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="quitWorkout()">Quit</button>
-                </div>
-                <h2 class="exercise-title">${ex.name}</h2>
-                <p class="exercise-desc">${ex.desc}</p>
-                <div class="modal-btn-row">
-                    <button class="control-btn" id="pauseResumeBtn" onclick="togglePause()">Pause</button>
-                    <button class="control-btn primary" onclick="nextExercise()">Next Exercise ➔</button>
-                </div>
-            `;
-        }
-
-        function togglePause() {
-            isPaused = !isPaused;
-            let btn = document.getElementById('pauseResumeBtn');
-            btn.innerText = isPaused ? "Resume" : "Pause";
-        }
-
-        function nextExercise() {
-            if (isPaused) return;
-            currentExIdx++;
-            if (currentExIdx < provenWorkouts.length) {
-                renderActiveExercise();
-            } else {
-                completeWorkoutSession();
-            }
-        }
-
-        function completeWorkoutSession() {
-            localStorage.setItem('nexfit_challenge_day_' + activeDay, 'true');
-            markDayCompletedUI(activeDay, true);
-            updateProgress();
-
-            let box = document.getElementById('modalContent');
-            box.innerHTML = `
-                <h2 class="exercise-title" style="color: var(--accent-green);">🎉 Day ${activeDay} Completed!</h2>
-                <p class="exercise-desc">Outstanding work! You completed today's ${currentMuscleGroup} session successfully.</p>
-                <button class="control-btn primary" onclick="closeModal()">Finish & Return</button>
-            `;
-        }
-
-        function quitWorkout() {
-            clearTimeout(countdownTimer);
-            closeModal();
-        }
-
-        function closeModal() {
-            document.getElementById('workoutModal').style.display = 'none';
-        }
-
-        function markDayCompletedUI(day, isDone) {
-            let statusSpan = document.getElementById('status-day-' + day);
-            let btn = document.querySelector(`#card-day-${day} .start-workout-btn`);
-            if (isDone && statusSpan && btn) {
-                statusSpan.innerHTML = "Done ✔";
-                statusSpan.style.color = "var(--accent-green)";
-                btn.innerText = "Retake";
-            }
-        }
-
-        function updateProgress() {
-            let completed = 0;
-            for (let i = 1; i <= 30; i++) {
-                if (localStorage.getItem('nexfit_challenge_day_' + i) === 'true') {
-                    completed++;
-                }
-            }
-            let percentage = Math.round((completed / 30) * 100);
-            document.getElementById('progressBarFill').style.width = percentage + '%';
-            document.getElementById('progressText').innerText = percentage + '% Completed';
-        }
-    </script>
 </body>
 </html>
