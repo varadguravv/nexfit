@@ -1,889 +1,2835 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Nexfit — Train. Track. Transform.</title>
+```
+<meta charset="UTF-8">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<title>Nexfit — Train With Purpose</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+>
 
-<body>
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
 
-<!-- ================= NAVBAR ================= -->
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
 
-<header class="site-header">
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+>
 
-    <a href="/" class="brand">
-        NEX<span>FIT</span>
-    </a>
 
-    <nav class="main-nav">
-        <a href="/" class="active">Home</a>
-        <a href="/calculator">Calculator</a>
-        <a href="/muscle">Muscle Guide</a>
-        <a href="/challenges">30-Day Challenge</a>
-        <a href="/myths">Fitness Myths</a>
-    </nav>
+<style>
 
-    <a href="/challenges" class="nav-cta">
-        Start Training
-    </a>
+    :root {
+        --nx-bg: #060606;
+        --nx-surface: #0b0b0b;
+        --nx-card: #101010;
+        --nx-card-2: #141414;
 
-</header>
+        --nx-border: rgba(255,255,255,.08);
+        --nx-border-hover: rgba(200,255,0,.28);
 
+        --nx-text: #f4f4f4;
+        --nx-muted: #777;
+        --nx-dim: #444;
 
-<main>
-
-
-<!-- ================= HERO ================= -->
-
-<section class="hero-section">
-
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-
-        <div class="eyebrow">
-            <span></span>
-            YOUR FITNESS. YOUR DISCIPLINE.
-        </div>
-
-        <h1>
-            BUILD YOUR
-            <strong>STRONGEST SELF.</strong>
-        </h1>
-
-        <p>
-            Train smarter, stay consistent and transform yourself
-            with a structured fitness experience built for real progress.
-        </p>
-
-        <div class="hero-buttons">
-
-            <a href="/challenges" class="primary-btn">
-                Start 30-Day Challenge
-                <span>→</span>
-            </a>
-
-            <a href="#training" class="secondary-btn">
-                Explore Training
-            </a>
-
-        </div>
-
-        <div class="hero-stats">
-
-            <div>
-                <strong>30</strong>
-                <span>Day Challenge</span>
-            </div>
-
-            <div>
-                <strong>8+</strong>
-                <span>Muscle Groups</span>
-            </div>
-
-            <div>
-                <strong>100%</strong>
-                <span>Consistency</span>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="hero-scroll">
-        <span></span>
-        SCROLL TO EXPLORE
-    </div>
-
-</section>
-
-
-<!-- ================= INTRO ================= -->
-
-<section class="section intro-section">
-
-    <div class="section-label">01 / THE NEXFIT METHOD</div>
-
-    <div class="intro-grid">
-
-        <div>
-            <h2>
-                TRAIN WITH
-                <span>PURPOSE.</span>
-            </h2>
-        </div>
-
-        <div>
-            <p class="large-text">
-                Nexfit gives you the tools to train, understand your body
-                and stay accountable. No complicated systems. Just better
-                training and consistent progress.
-            </p>
-        </div>
-
-    </div>
-
-    <div class="feature-grid">
-
-        <article class="feature-card">
-            <span class="feature-number">01</span>
-            <div class="feature-icon">01</div>
-            <h3>TRAIN SMART</h3>
-            <p>
-                Discover structured workouts designed around your
-                goals, experience and available equipment.
-            </p>
-        </article>
-
-        <article class="feature-card featured">
-            <span class="feature-number">02</span>
-            <div class="feature-icon">02</div>
-            <h3>STAY CONSISTENT</h3>
-            <p>
-                Build your streak, complete your daily check-in
-                and keep yourself accountable.
-            </p>
-        </article>
-
-        <article class="feature-card">
-            <span class="feature-number">03</span>
-            <div class="feature-icon">03</div>
-            <h3>TRACK PROGRESS</h3>
-            <p>
-                Understand your body through BMI tools, training
-                information and practical fitness guidance.
-            </p>
-        </article>
-
-    </div>
-
-</section>
-
-
-<!-- ================= STREAK ================= -->
-
-<section class="section compact-section">
-
-    <div class="streak-card">
-
-        <div class="streak-left">
-
-            <div class="status-dot"></div>
-
-            <div>
-                <span class="small-label">CURRENT STREAK</span>
-
-                <div class="streak-number">
-                    <strong id="streakCount">1</strong>
-                    <span>DAY(S)</span>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="streak-message">
-            <span>Consistency compounds.</span>
-            <small>Show up today. Thank yourself later.</small>
-        </div>
-
-        <button id="checkinBtn"
-                class="checkin-btn"
-                onclick="triggerCheckIn()">
-            Check In →
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- ================= LIVE METRICS ================= -->
-
-<section class="section metrics-section">
-
-    <div class="section-heading">
-
-        <div>
-            <span class="section-kicker">LIVE TRACKING</span>
-            <h2>YOUR DAILY <span>NUMBERS.</span></h2>
-        </div>
-
-    </div>
-
-    <div class="metrics-grid">
-
-        <div class="metric-card">
-
-            <div class="metric-top">
-                <span>HEART RATE</span>
-                <div class="pulse"></div>
-            </div>
-
-            <strong id="liveBpmDisplay">72</strong>
-
-            <span class="metric-unit">BPM</span>
-
-            <div class="metric-line">
-                <span></span>
-            </div>
-
-        </div>
-
-
-        <div class="metric-card">
-
-            <div class="metric-top">
-                <span>SESSION STEPS</span>
-                <span class="metric-status">ACTIVE</span>
-            </div>
-
-            <strong id="stepCountDisplay">1,428</strong>
-
-            <span class="metric-unit">STEPS</span>
-
-            <div class="metric-line">
-                <span></span>
-            </div>
-
-        </div>
-
-
-        <div class="metric-card tip-metric">
-
-            <div class="metric-top">
-                <span>DAILY INSIGHT</span>
-            </div>
-
-            <p id="dailyTipText">
-                Loading today's insight...
-            </p>
-
-            <button onclick="rotateTip()">
-                Next insight →
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= CHALLENGE ================= -->
-
-<section class="section challenge-section">
-
-    <div class="challenge-card">
-
-        <div class="challenge-content">
-
-            <span class="section-kicker">THE SIGNATURE PROGRAM</span>
-
-            <h2>
-                30 DAYS.
-                <br>
-                <span>NO EXCUSES.</span>
-            </h2>
-
-            <p>
-                Choose your training style and commit to the next
-                30 days. Your strongest version doesn't happen
-                overnight. It happens one session at a time.
-            </p>
-
-            <div class="challenge-details">
-
-                <div>
-                    <strong>30</strong>
-                    <span>DAYS</span>
-                </div>
-
-                <div>
-                    <strong>3</strong>
-                    <span>LEVELS</span>
-                </div>
-
-                <div>
-                    <strong>2</strong>
-                    <span>ENVIRONMENTS</span>
-                </div>
-
-            </div>
-
-            <a href="/challenges" class="primary-btn">
-                Enter Challenge
-                <span>→</span>
-            </a>
-
-        </div>
-
-        <div class="challenge-image">
-
-            <img
-                src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=85"
-                alt="Athlete training"
-            >
-
-            <div class="image-label">
-                <span>01</span>
-                START TODAY
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= TRAINING ================= -->
-
-<section class="section" id="training">
-
-    <div class="section-heading">
-
-        <div>
-            <span class="section-kicker">EXPLORE</span>
-            <h2>TRAIN EVERY <span>MUSCLE.</span></h2>
-        </div>
-
-        <a href="/challenges" class="text-link">
-            View all →
-        </a>
-
-    </div>
-
-
-    <!-- Home / Gym -->
-
-    <div class="training-mode">
-
-        <button
-            class="mode-btn active"
-            onclick="switchMode('home', this)">
-            HOME
-        </button>
-
-        <button
-            class="mode-btn"
-            onclick="switchMode('gym', this)">
-            GYM
-        </button>
-
-    </div>
-
-
-    <!-- Featured Workout -->
-
-    <div class="workout-feature">
-
-        <div class="workout-feature-content">
-
-            <span class="workout-tag">
-                CUSTOMIZED FOR YOU
-            </span>
-
-            <h3 id="heroTitle">
-                TOTAL BODY
-                <span>SHRED.</span>
-            </h3>
-
-            <p class="workout-description">
-                A complete training routine designed to challenge
-                your entire body and build consistency.
-            </p>
-
-            <div class="workout-meta" id="metaGridContainer">
-
-                <div>
-                    <span>PROGRAM</span>
-                    <strong>30 DAYS</strong>
-                </div>
-
-                <div>
-                    <span>LEVEL</span>
-                    <strong>ALL LEVELS</strong>
-                </div>
-
-                <div>
-                    <span>TARGET</span>
-                    <strong>FULL BODY</strong>
-                </div>
-
-                <div id="equipmentMeta">
-                    <span>EQUIPMENT</span>
-                    <strong>NONE</strong>
-                </div>
-
-            </div>
-
-            <a href="/challenges" class="light-btn">
-                Start Day 1 →
-            </a>
-
-        </div>
-
-
-        <div class="workout-feature-image">
-
-            <img
-                id="heroImage"
-                src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=85"
-                alt="Nexfit workout"
-            >
-
-            <div class="image-gradient"></div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Muscle Filters -->
-
-    <div class="workout-section-title">
-
-        <span>CLASSIC WORKOUTS</span>
-
-        <small>
-            SELECT A MUSCLE GROUP
-        </small>
-
-    </div>
-
-    <div class="filter-pills-row" id="filterPills">
-
-        <button class="filter-pill active"
-                onclick="filterWorkout('Arm', this)">
-            ARMS
-        </button>
-
-        <button class="filter-pill"
-                onclick="filterWorkout('Back', this)">
-            BACK
-        </button>
-
-        <button class="filter-pill"
-                onclick="filterWorkout('Legs', this)">
-            LEGS
-        </button>
-
-        <button class="filter-pill"
-                onclick="filterWorkout('Calisthenics', this)">
-            CALISTHENICS
-        </button>
-
-        <button class="filter-pill"
-                onclick="filterWorkout('Full Body', this)">
-            FULL BODY
-        </button>
-
-        <button class="filter-pill"
-                onclick="filterWorkout('Abs', this)">
-            ABS
-        </button>
-
-        <button class="filter-pill"
-                onclick="filterWorkout('Chest', this)">
-            CHEST
-        </button>
-
-        <button class="filter-pill"
-                onclick="filterWorkout('Shoulder', this)">
-            SHOULDERS
-        </button>
-
-    </div>
-
-
-    <div id="workoutPreviewList">
-
-        <div class="workout-list-item"
-             onclick="window.location.href='/challenges?muscle=Arm'">
-
-            <div class="workout-item-left">
-
-                <img
-                    id="previewImage"
-                    src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=300&q=80"
-                    class="workout-thumb"
-                    alt="Arm workout"
-                >
-
-                <div>
-
-                    <span class="workout-label">
-                        BEGINNER PROGRAM
-                    </span>
-
-                    <h4 id="previewTitle">
-                        ARM — BEGINNER
-                    </h4>
-
-                    <p id="previewTime">
-                        16 MINUTES · STRENGTH
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="workout-arrow">
-                →
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= BMI ================= -->
-
-<section class="section calculator-section">
-
-    <div class="calculator-card">
-
-        <div class="calculator-copy">
-
-            <span class="section-kicker">
-                KNOW YOUR BODY
-            </span>
-
-            <h2>
-                QUICK
-                <span>BMI CHECK.</span>
-            </h2>
-
-            <p>
-                Get an instant estimate of your BMI and use our
-                detailed calculator for more personalized guidance.
-            </p>
-
-            <a href="/calculator" class="text-link">
-                Open full calculator →
-            </a>
-
-        </div>
-
-
-        <div class="quick-calculator">
-
-            <div class="input-group">
-
-                <label for="quickWeight">
-                    WEIGHT
-                </label>
-
-                <div class="input-wrap">
-                    <input
-                        type="number"
-                        id="quickWeight"
-                        placeholder="70"
-                        min="20"
-                        max="300"
-                    >
-                    <span>KG</span>
-                </div>
-
-            </div>
-
-
-            <div class="input-group">
-
-                <label for="quickHeight">
-                    HEIGHT
-                </label>
-
-                <div class="input-wrap">
-                    <input
-                        type="number"
-                        id="quickHeight"
-                        placeholder="175"
-                        min="100"
-                        max="250"
-                    >
-                    <span>CM</span>
-                </div>
-
-            </div>
-
-
-            <button
-                class="primary-btn full-btn"
-                onclick="calculateQuickBMI()">
-                Calculate BMI →
-            </button>
-
-            <div id="quickResultBox" class="bmi-result">
-                Enter your details to calculate your BMI.
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= TOOLS ================= -->
-
-<section class="section tools-section">
-
-    <div class="section-heading">
-
-        <div>
-            <span class="section-kicker">NEXFIT TOOLS</span>
-            <h2>MORE THAN <span>WORKOUTS.</span></h2>
-        </div>
-
-    </div>
-
-
-    <div class="tools-grid">
-
-        <a href="/muscle" class="tool-card">
-
-            <span class="tool-number">01</span>
-
-            <div>
-                <span class="tool-label">LEARN</span>
-                <h3>MUSCLE GUIDE</h3>
-                <p>
-                    Understand the muscles you're training,
-                    how they work and how to target them.
-                </p>
-            </div>
-
-            <strong>↗</strong>
-
-        </a>
-
-
-        <a href="/myths" class="tool-card">
-
-            <span class="tool-number">02</span>
-
-            <div>
-                <span class="tool-label">EDUCATE</span>
-                <h3>FITNESS MYTHS</h3>
-                <p>
-                    Separate useful fitness science from
-                    common gym myths and misinformation.
-                </p>
-            </div>
-
-            <strong>↗</strong>
-
-        </a>
-
-
-        <a href="/calculator" class="tool-card">
-
-            <span class="tool-number">03</span>
-
-            <div>
-                <span class="tool-label">ANALYZE</span>
-                <h3>FITNESS CALCULATOR</h3>
-                <p>
-                    Calculate your BMI and explore practical
-                    fitness recommendations.
-                </p>
-            </div>
-
-            <strong>↗</strong>
-
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- ================= FINAL CTA ================= -->
-
-<section class="final-cta">
-
-    <div class="final-cta-inner">
-
-        <span class="section-kicker">
-            YOUR NEXT REP STARTS HERE
-        </span>
-
-        <h2>
-            READY TO
-            <span>TRANSFORM?</span>
-        </h2>
-
-        <p>
-            Thirty days. One commitment.
-            A stronger version of you.
-        </p>
-
-        <a href="/challenges" class="primary-btn">
-            Start Nexfit →
-        </a>
-
-    </div>
-
-</section>
-
-</main>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer class="site-footer">
-
-    <div class="footer-brand">
-        <span>NEXFIT</span>
-        <p>Train. Track. Transform.</p>
-    </div>
-
-    <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/calculator">Calculator</a>
-        <a href="/muscle">Muscle Guide</a>
-        <a href="/challenges">Challenges</a>
-        <a href="/myths">Myths</a>
-    </div>
-
-    <div class="footer-bottom">
-        © 2026 Nexfit · Designed & Developed by Varad Gurav
-    </div>
-
-</footer>
-
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script>
-
-const fitnessTips = [
-
-    "Consistency beats intensity. Showing up regularly is more valuable than occasional extreme workouts.",
-
-    "Prioritize controlled movement and good technique before adding more weight.",
-
-    "Hydration supports performance and recovery. Keep water close during your training session.",
-
-    "Recovery is part of training. Give your body enough time and nutrition to adapt.",
-
-    "Focus on progressive improvement rather than comparing your journey to someone else's."
-
-];
-
-let currentTipIdx = 0;
-
-
-/* ================= PAGE LOAD ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    let currentStreak =
-        localStorage.getItem("nexfit_streak") || 1;
-
-    let lastCheckIn =
-        localStorage.getItem("nexfit_last_date") || "";
-
-    let todayStr =
-        new Date().toDateString();
-
-
-    const streakElement =
-        document.getElementById("streakCount");
-
-    if (streakElement) {
-        streakElement.innerText = currentStreak;
+        --nx-accent: #c8ff00;
     }
 
 
-    if (lastCheckIn === todayStr) {
+    * {
+        box-sizing: border-box;
+    }
 
-        const btn =
-            document.getElementById("checkinBtn");
 
-        if (btn) {
+    html {
+        scroll-behavior: smooth;
+    }
 
-            btn.innerText = "Checked In ✓";
-            btn.classList.add("checked");
 
+    body {
+
+        margin: 0;
+
+        min-height: 100vh;
+
+        color: var(--nx-text);
+
+        font-family:
+            Inter,
+            Arial,
+            sans-serif;
+
+        background:
+
+            radial-gradient(
+                circle at 82% 4%,
+                rgba(200,255,0,.055),
+                transparent 27%
+            ),
+
+            radial-gradient(
+                circle at 5% 40%,
+                rgba(255,255,255,.025),
+                transparent 28%
+            ),
+
+            var(--nx-bg);
+
+        overflow-x: hidden;
+    }
+
+
+    button,
+    input {
+        font-family: inherit;
+    }
+
+
+    a {
+        text-decoration: none;
+    }
+
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+
+    .nx-nav {
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 1000;
+
+        min-height: 76px;
+
+        padding:
+            0
+            max(5vw, 22px);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 30px;
+
+        background:
+            rgba(6,6,6,.88);
+
+        border-bottom:
+            1px solid var(--nx-border);
+
+        backdrop-filter:
+            blur(18px);
+    }
+
+
+    .nx-logo {
+
+        color: #fff;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
+        font-size: 1.45rem;
+
+        font-weight: 900;
+
+        letter-spacing: -1.3px;
+    }
+
+
+    .nx-logo span {
+        color: var(--nx-accent);
+    }
+
+
+    .nx-links {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 27px;
+    }
+
+
+    .nx-links a {
+
+        position: relative;
+
+        color: #666;
+
+        font-size: .68rem;
+
+        font-weight: 800;
+
+        transition:
+            color .2s ease;
+    }
+
+
+    .nx-links a:hover,
+    .nx-links a.active {
+        color: #fff;
+    }
+
+
+    .nx-links a.active::after {
+
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        right: 0;
+
+        bottom: -13px;
+
+        height: 2px;
+
+        background:
+            var(--nx-accent);
+    }
+
+
+    /* =====================================================
+       MAIN
+    ===================================================== */
+
+    .nx-container {
+
+        width:
+            min(1120px, 90%);
+
+        margin:
+            auto;
+    }
+
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+
+    .nx-hero {
+
+        position: relative;
+
+        min-height:
+            560px;
+
+        margin-top: 24px;
+
+        display:
+            flex;
+
+        align-items:
+            flex-end;
+
+        overflow:
+            hidden;
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            18px;
+
+        background:
+
+            linear-gradient(
+                90deg,
+                rgba(0,0,0,.96),
+                rgba(0,0,0,.7) 48%,
+                rgba(0,0,0,.18)
+            ),
+
+            linear-gradient(
+                0deg,
+                rgba(0,0,0,.85),
+                transparent 65%
+            ),
+
+            url("https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=2200&q=90")
+            center/cover;
+    }
+
+
+    .nx-hero::after {
+
+        content: "";
+
+        position: absolute;
+
+        inset: 0;
+
+        pointer-events: none;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(200,255,0,.06),
+                transparent 35%
+            );
+    }
+
+
+    .nx-hero-content {
+
+        position: relative;
+
+        z-index: 2;
+
+        width: 100%;
+
+        padding:
+            clamp(35px, 7vw, 70px);
+    }
+
+
+    .nx-eyebrow {
+
+        color:
+            var(--nx-accent);
+
+        font-size:
+            .5rem;
+
+        font-weight:
+            900;
+
+        letter-spacing:
+            2px;
+    }
+
+
+    .nx-hero h1 {
+
+        max-width:
+            850px;
+
+        margin:
+            16px 0 0;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
+        font-size:
+            clamp(4rem, 9vw, 8.2rem);
+
+        line-height:
+            .82;
+
+        letter-spacing:
+            -7px;
+    }
+
+
+    .nx-hero h1 span {
+
+        display:
+            block;
+
+        color:
+            var(--nx-accent);
+    }
+
+
+    .nx-hero-description {
+
+        max-width:
+            590px;
+
+        margin:
+            28px 0 0;
+
+        color:
+            #898989;
+
+        font-size:
+            .67rem;
+
+        line-height:
+            1.85;
+    }
+
+
+    .nx-hero-actions {
+
+        display:
+            flex;
+
+        flex-wrap:
+            wrap;
+
+        gap:
+            9px;
+
+        margin-top:
+            28px;
+    }
+
+
+    .nx-primary {
+
+        min-height:
+            50px;
+
+        padding:
+            0 22px;
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        background:
+            var(--nx-accent);
+
+        color:
+            #050505;
+
+        border-radius:
+            7px;
+
+        font-size:
+            .55rem;
+
+        font-weight:
+            900;
+
+        letter-spacing:
+            .5px;
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease;
+    }
+
+
+    .nx-primary:hover {
+
+        transform:
+            translateY(-3px);
+
+        box-shadow:
+            0 14px 35px
+            rgba(200,255,0,.16);
+    }
+
+
+    .nx-secondary {
+
+        min-height:
+            50px;
+
+        padding:
+            0 22px;
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        background:
+            rgba(255,255,255,.04);
+
+        color:
+            #fff;
+
+        border:
+            1px solid
+            rgba(255,255,255,.13);
+
+        border-radius:
+            7px;
+
+        font-size:
+            .55rem;
+
+        font-weight:
+            800;
+
+        transition:
+            border-color .2s ease,
+            background .2s ease;
+    }
+
+
+    .nx-secondary:hover {
+
+        border-color:
+            rgba(255,255,255,.3);
+
+        background:
+            rgba(255,255,255,.07);
+    }
+
+
+    /* =====================================================
+       MODE SWITCH
+    ===================================================== */
+
+    .mode-switch {
+
+        display:
+            flex;
+
+        justify-content:
+            center;
+
+        gap:
+            7px;
+
+        margin:
+            25px 0 15px;
+    }
+
+
+    .mode-btn {
+
+        padding:
+            10px 21px;
+
+        color:
+            #626262;
+
+        background:
+            #0c0c0c;
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            999px;
+
+        cursor:
+            pointer;
+
+        font-size:
+            .52rem;
+
+        font-weight:
+            900;
+
+        transition:
+            all .2s ease;
+    }
+
+
+    .mode-btn:hover {
+
+        color:
+            #fff;
+
+        border-color:
+            rgba(255,255,255,.2);
+
+        transform:
+            translateY(-1px);
+    }
+
+
+    .mode-btn.active {
+
+        color:
+            #050505;
+
+        background:
+            var(--nx-accent);
+
+        border-color:
+            var(--nx-accent);
+
+        box-shadow:
+            0 8px 25px
+            rgba(200,255,0,.1);
+    }
+
+
+    /* =====================================================
+       STREAK
+    ===================================================== */
+
+    .streak-banner {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        gap:
+            20px;
+
+        padding:
+            15px 18px;
+
+        margin-bottom:
+            10px;
+
+        background:
+            rgba(255,255,255,.018);
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            10px;
+
+        transition:
+            border-color .2s ease;
+    }
+
+
+    .streak-banner:hover {
+
+        border-color:
+            rgba(200,255,0,.16);
+    }
+
+
+    .streak-info {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            11px;
+
+        color:
+            #aaa;
+
+        font-size:
+            .57rem;
+
+        font-weight:
+            700;
+    }
+
+
+    .streak-icon-box {
+
+        width:
+            34px;
+
+        height:
+            34px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        background:
+            rgba(200,255,0,.06);
+
+        border:
+            1px solid
+            rgba(200,255,0,.12);
+
+        border-radius:
+            7px;
+    }
+
+
+    .streak-icon-box svg {
+
+        width:
+            16px;
+
+        height:
+            16px;
+
+        fill:
+            var(--nx-accent);
+    }
+
+
+    #streakCount {
+
+        color:
+            var(--nx-accent) !important;
+    }
+
+
+    .checkin-btn {
+
+        padding:
+            8px 13px;
+
+        color:
+            var(--nx-accent);
+
+        background:
+            rgba(200,255,0,.045);
+
+        border:
+            1px solid
+            rgba(200,255,0,.15);
+
+        border-radius:
+            6px;
+
+        cursor:
+            pointer;
+
+        font-size:
+            .48rem;
+
+        font-weight:
+            900;
+
+        transition:
+            all .2s ease;
+    }
+
+
+    .checkin-btn:hover {
+
+        background:
+            rgba(200,255,0,.1);
+
+        transform:
+            translateY(-1px);
+    }
+
+
+    .checkin-btn.checked {
+
+        color:
+            #050505;
+
+        background:
+            var(--nx-accent);
+
+        border-color:
+            var(--nx-accent);
+    }
+
+
+    /* =====================================================
+       BIOMETRICS
+    ===================================================== */
+
+    .bio-tracker-card {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:
+            10px;
+
+        margin-bottom:
+            10px;
+    }
+
+
+    .bio-metric-item {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            13px;
+
+        padding:
+            18px;
+
+        background:
+            rgba(255,255,255,.018);
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            10px;
+
+        transition:
+            transform .2s ease,
+            border-color .2s ease;
+    }
+
+
+    .bio-metric-item:hover {
+
+        transform:
+            translateY(-2px);
+
+        border-color:
+            rgba(255,255,255,.15);
+    }
+
+
+    .bio-icon-circle {
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        flex-shrink:
+            0;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        background:
+            rgba(200,255,0,.05);
+
+        border:
+            1px solid
+            rgba(200,255,0,.12);
+
+        border-radius:
+            9px;
+    }
+
+
+    .bio-icon-circle svg {
+
+        width:
+            20px;
+
+        height:
+            20px;
+
+        fill:
+            var(--nx-accent);
+    }
+
+
+    .bio-metric-info span {
+
+        display:
+            block;
+
+        margin-bottom:
+            3px;
+
+        color:
+            #555;
+
+        font-size:
+            .46rem;
+
+        font-weight:
+            800;
+
+        text-transform:
+            uppercase;
+    }
+
+
+    .bio-metric-info h3 {
+
+        margin:
+            0;
+
+        color:
+            #eee;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
+        font-size:
+            1rem;
+    }
+
+
+    .pulsing-dot {
+
+        display:
+            inline-block;
+
+        width:
+            6px;
+
+        height:
+            6px;
+
+        margin-left:
+            5px;
+
+        background:
+            var(--nx-accent);
+
+        border-radius:
+            50%;
+
+        animation:
+            pulseBpm 1.2s infinite;
+    }
+
+
+    @keyframes pulseBpm {
+
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.35);
+            opacity: .55;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
         }
 
     }
 
 
-    currentTipIdx =
-        Math.floor(Math.random() * fitnessTips.length);
+    /* =====================================================
+       DAILY TIP
+    ===================================================== */
 
-    const tip =
-        document.getElementById("dailyTipText");
+    .daily-tip-card {
 
-    if (tip) {
-        tip.innerText = fitnessTips[currentTipIdx];
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        gap:
+            20px;
+
+        padding:
+            20px;
+
+        margin-bottom:
+            10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #111,
+                #0c0c0c
+            );
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            10px;
     }
 
 
-    /* Heart rate display */
+    .daily-tip-content h4 {
 
-    setInterval(() => {
+        margin:
+            0 0 7px;
 
-        const bpm =
-            document.getElementById("liveBpmDisplay");
+        color:
+            var(--nx-accent);
 
-        if (!bpm) return;
+        font-size:
+            .47rem;
 
-        const baseBpm = 72;
+        font-weight:
+            900;
 
-        const fluctuation =
-            Math.floor(Math.random() * 5) - 2;
+        letter-spacing:
+            1.2px;
 
-        bpm.innerText =
-            baseBpm + fluctuation;
+        text-transform:
+            uppercase;
+    }
 
-    }, 3000);
+
+    .daily-tip-content p {
+
+        margin:
+            0;
+
+        color:
+            #a0a0a0;
+
+        font-size:
+            .59rem;
+
+        line-height:
+            1.65;
+    }
 
 
-    /* Steps */
+    .next-tip-btn {
 
-    let storedSteps =
-        parseInt(
-            localStorage.getItem("nexfit_steps") || 1428
+        flex-shrink:
+            0;
+
+        padding:
+            8px 13px;
+
+        color:
+            #777;
+
+        background:
+            rgba(255,255,255,.03);
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            6px;
+
+        cursor:
+            pointer;
+
+        font-size:
+            .47rem;
+
+        font-weight:
+            800;
+    }
+
+
+    .next-tip-btn:hover {
+
+        color:
+            #fff;
+
+        border-color:
+            rgba(255,255,255,.2);
+    }
+
+
+    /* =====================================================
+       QUICK BMI
+    ===================================================== */
+
+    .quick-calc-card {
+
+        margin:
+            20px 0 40px;
+
+        padding:
+            23px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #111,
+                #0b0b0b
+            );
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            12px;
+    }
+
+
+    .quick-calc-title {
+
+        margin-bottom:
+            15px;
+
+        color:
+            #ddd;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
+        font-size:
+            .78rem;
+
+        font-weight:
+            700;
+    }
+
+
+    .quick-calc-title span {
+
+        color:
+            var(--nx-accent);
+    }
+
+
+    .quick-calc-grid {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            1fr 1fr 170px;
+
+        gap:
+            8px;
+    }
+
+
+    .quick-input {
+
+        width:
+            100%;
+
+        height:
+            45px;
+
+        padding:
+            0 13px;
+
+        color:
+            #fff;
+
+        background:
+            #080808;
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            6px;
+
+        outline:
+            none;
+
+        font-size:
+            .56rem;
+
+        transition:
+            border-color .2s ease;
+    }
+
+
+    .quick-input:focus {
+
+        border-color:
+            rgba(200,255,0,.5);
+    }
+
+
+    .quick-calc-btn {
+
+        height:
+            45px;
+
+        color:
+            #050505;
+
+        background:
+            var(--nx-accent);
+
+        border:
+            0;
+
+        border-radius:
+            6px;
+
+        cursor:
+            pointer;
+
+        font-size:
+            .52rem;
+
+        font-weight:
+            900;
+    }
+
+
+    .quick-calc-btn:hover {
+
+        box-shadow:
+            0 10px 25px
+            rgba(200,255,0,.12);
+
+        transform:
+            translateY(-2px);
+    }
+
+
+    #quickResultBox {
+
+        margin-top:
+            12px;
+
+        color:
+            #555;
+
+        font-size:
+            .5rem;
+
+        line-height:
+            1.6;
+    }
+
+
+    /* =====================================================
+       SECTION HEADER
+    ===================================================== */
+
+    .section-header {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        margin-bottom:
+            14px;
+    }
+
+
+    .section-header h3 {
+
+        margin:
+            0;
+
+        padding-left:
+            11px;
+
+        color:
+            #eee;
+
+        border-left:
+            2px solid
+            var(--nx-accent);
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
+        font-size:
+            .85rem;
+
+        letter-spacing:
+            -.2px;
+    }
+
+
+    .see-all {
+
+        color:
+            var(--nx-accent);
+
+        font-size:
+            .48rem;
+
+        font-weight:
+            900;
+
+        letter-spacing:
+            .5px;
+    }
+
+
+    .see-all:hover {
+        opacity: .75;
+    }
+
+
+    /* =====================================================
+       FEATURED PLAN
+    ===================================================== */
+
+    .hero-banner-card {
+
+        position:
+            relative;
+
+        display:
+            grid;
+
+        grid-template-columns:
+            1.15fr .85fr;
+
+        min-height:
+            360px;
+
+        margin-bottom:
+            40px;
+
+        overflow:
+            hidden;
+
+        background:
+            #0d0d0d;
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            14px;
+
+        box-shadow:
+            0 25px 70px
+            rgba(0,0,0,.35);
+    }
+
+
+    .hero-banner-card:hover {
+
+        border-color:
+            rgba(200,255,0,.18);
+    }
+
+
+    .hero-content {
+
+        position:
+            relative;
+
+        z-index:
+            2;
+
+        padding:
+            clamp(25px, 5vw, 45px);
+
+        display:
+            flex;
+
+        flex-direction:
+            column;
+
+        justify-content:
+            center;
+    }
+
+
+    .customized-badge {
+
+        width:
+            fit-content;
+
+        margin-bottom:
+            15px;
+
+        padding:
+            5px 9px;
+
+        color:
+            var(--nx-accent);
+
+        background:
+            rgba(200,255,0,.06);
+
+        border:
+            1px solid
+            rgba(200,255,0,.12);
+
+        border-radius:
+            4px;
+
+        font-size:
+            .42rem;
+
+        font-weight:
+            900;
+
+        letter-spacing:
+            1.2px;
+    }
+
+
+    .hero-content h2 {
+
+        margin:
+            0 0 24px;
+
+        color:
+            #fff;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
+        font-size:
+            clamp(2rem, 5vw, 3.6rem);
+
+        line-height:
+            .9;
+
+        letter-spacing:
+            -2px;
+    }
+
+
+    .hero-meta {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:
+            10px;
+
+        margin-bottom:
+            24px;
+    }
+
+
+    .meta-item {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            9px;
+
+        color:
+            #555;
+
+        font-size:
+            .44rem;
+    }
+
+
+    .meta-icon-box {
+
+        width:
+            31px;
+
+        height:
+            31px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        background:
+            rgba(255,255,255,.025);
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            6px;
+    }
+
+
+    .meta-icon-box svg {
+
+        width:
+            14px;
+
+        height:
+            14px;
+
+        fill:
+            var(--nx-accent);
+    }
+
+
+    .meta-item strong {
+
+        display:
+            block;
+
+        margin-bottom:
+            2px;
+
+        color:
+            #ddd;
+
+        font-size:
+            .54rem;
+    }
+
+
+    .start-day-btn {
+
+        width:
+            fit-content;
+
+        padding:
+            12px 19px;
+
+        color:
+            #050505;
+
+        background:
+            #fff;
+
+        border:
+            0;
+
+        border-radius:
+            6px;
+
+        cursor:
+            pointer;
+
+        font-size:
+            .5rem;
+
+        font-weight:
+            900;
+
+        transition:
+            all .2s ease;
+    }
+
+
+    .start-day-btn:hover {
+
+        color:
+            #050505;
+
+        background:
+            var(--nx-accent);
+
+        transform:
+            translateY(-3px);
+
+        box-shadow:
+            0 12px 30px
+            rgba(200,255,0,.13);
+    }
+
+
+    .hero-image-side {
+
+        position:
+            relative;
+
+        min-height:
+            360px;
+    }
+
+
+    .hero-image-side::after {
+
+        content: "";
+
+        position:
+            absolute;
+
+        inset:
+            0;
+
+        background:
+            linear-gradient(
+                90deg,
+                #0d0d0d,
+                transparent 35%
+            );
+    }
+
+
+    .hero-image-side img {
+
+        width:
+            100%;
+
+        height:
+            100%;
+
+        object-fit:
+            cover;
+
+        filter:
+            saturate(.75);
+    }
+
+
+    /* =====================================================
+       WORKOUT FILTERS
+    ===================================================== */
+
+    .filter-pills-row {
+
+        display:
+            flex;
+
+        gap:
+            7px;
+
+        overflow-x:
+            auto;
+
+        padding-bottom:
+            9px;
+
+        margin-bottom:
+            12px;
+
+        scrollbar-width:
+            none;
+    }
+
+
+    .filter-pills-row::-webkit-scrollbar {
+        display: none;
+    }
+
+
+    .filter-pill {
+
+        flex-shrink:
+            0;
+
+        padding:
+            8px 15px;
+
+        color:
+            #555;
+
+        background:
+            #0c0c0c;
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            999px;
+
+        cursor:
+            pointer;
+
+        font-size:
+            .48rem;
+
+        font-weight:
+            800;
+
+        transition:
+            all .2s ease;
+    }
+
+
+    .filter-pill:hover {
+
+        color:
+            #fff;
+
+        border-color:
+            rgba(255,255,255,.18);
+    }
+
+
+    .filter-pill.active {
+
+        color:
+            #050505;
+
+        background:
+            var(--nx-accent);
+
+        border-color:
+            var(--nx-accent);
+    }
+
+
+    /* =====================================================
+       WORKOUT LIST
+    ===================================================== */
+
+    .workout-list-item {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            space-between;
+
+        gap:
+            15px;
+
+        padding:
+            13px 16px;
+
+        margin-bottom:
+            8px;
+
+        background:
+            rgba(255,255,255,.015);
+
+        border:
+            1px solid var(--nx-border);
+
+        border-radius:
+            9px;
+
+        cursor:
+            pointer;
+
+        transition:
+            transform .2s ease,
+            border-color .2s ease;
+    }
+
+
+    .workout-list-item:hover {
+
+        transform:
+            translateY(-2px);
+
+        border-color:
+            rgba(200,255,0,.2);
+    }
+
+
+    .workout-item-left {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            12px;
+    }
+
+
+    .workout-thumb {
+
+        width:
+            48px;
+
+        height:
+            48px;
+
+        object-fit:
+            cover;
+
+        border-radius:
+            7px;
+
+        filter:
+            saturate(.75);
+    }
+
+
+    .workout-item-left h4 {
+
+        margin:
+            0 0 4px;
+
+        color:
+            #ddd;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
+        font-size:
+            .62rem;
+    }
+
+
+    .workout-item-left p {
+
+        margin:
+            0;
+
+        color:
+            #4d4d4d;
+
+        font-size:
+            .46rem;
+    }
+
+
+    .arrow-icon {
+
+        width:
+            31px;
+
+        height:
+            31px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        color:
+            var(--nx-accent);
+
+        background:
+            rgba(200,255,0,.04);
+
+        border:
+            1px solid
+            rgba(200,255,0,.1);
+
+        border-radius:
+            50%;
+
+        font-size:
+            .6rem;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .nx-footer {
+
+        margin-top:
+            85px;
+
+        padding:
+            28px 20px;
+
+        color:
+            #383838;
+
+        border-top:
+            1px solid var(--nx-border);
+
+        text-align:
+            center;
+
+        font-size:
+            .47rem;
+    }
+
+
+    .nx-footer strong {
+        color:
+            var(--nx-accent);
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media(max-width: 800px) {
+
+        .nx-nav {
+
+            padding:
+                15px 18px;
+
+            flex-wrap:
+                wrap;
+        }
+
+
+        .nx-links {
+
+            width:
+                100%;
+
+            overflow-x:
+                auto;
+
+            gap:
+                18px;
+
+            scrollbar-width:
+                none;
+        }
+
+
+        .nx-links::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .nx-links a {
+            white-space:
+                nowrap;
+        }
+
+
+        .nx-hero {
+
+            min-height:
+                540px;
+
+            margin-top:
+                15px;
+
+            border-radius:
+                12px;
+        }
+
+
+        .nx-hero h1 {
+
+            font-size:
+                clamp(3.5rem, 15vw, 6rem);
+
+            letter-spacing:
+                -5px;
+        }
+
+
+        .bio-tracker-card {
+
+            grid-template-columns:
+                1fr;
+        }
+
+
+        .hero-banner-card {
+
+            grid-template-columns:
+                1fr;
+        }
+
+
+        .hero-image-side {
+
+            min-height:
+                220px;
+
+            order:
+                -1;
+        }
+
+
+        .hero-image-side::after {
+
+            background:
+                linear-gradient(
+                    0deg,
+                    #0d0d0d,
+                    transparent 55%
+                );
+        }
+
+
+        .quick-calc-grid {
+
+            grid-template-columns:
+                1fr;
+        }
+
+
+        .quick-calc-btn {
+
+            width:
+                100%;
+        }
+
+    }
+
+
+    @media(max-width: 520px) {
+
+        .nx-container {
+
+            width:
+                calc(100% - 28px);
+        }
+
+
+        .nx-hero-content {
+
+            padding:
+                30px 23px;
+        }
+
+
+        .nx-hero-description {
+
+            font-size:
+                .59rem;
+        }
+
+
+        .hero-meta {
+
+            grid-template-columns:
+                1fr;
+        }
+
+
+        .streak-banner,
+        .daily-tip-card {
+
+            align-items:
+                flex-start;
+
+            flex-direction:
+                column;
+        }
+
+
+        .checkin-btn,
+        .next-tip-btn {
+
+            width:
+                100%;
+        }
+
+
+        .mode-switch {
+
+            overflow-x:
+                auto;
+
+            justify-content:
+                flex-start;
+        }
+
+    }
+
+
+    @media(prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+
+            animation-duration:
+                .01ms !important;
+
+            transition-duration:
+                .01ms !important;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<header class="nx-nav">
+
+```
+<a
+    href="/"
+    class="nx-logo"
+>
+    NEX<span>FIT</span>
+</a>
+
+
+<nav class="nx-links">
+
+    <a
+        href="/"
+        class="active"
+    >
+        Home
+    </a>
+
+    <a href="/calculator">
+        Calculator
+    </a>
+
+    <a href="/muscle">
+        Muscle Guide
+    </a>
+
+    <a href="/challenges">
+        30-Day Challenges
+    </a>
+
+    <a href="/myths">
+        Fitness Myths
+    </a>
+
+</nav>
+```
+
+</header>
+
+<main class="nx-container">
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="nx-hero">
+
+```
+<div class="nx-hero-content">
+
+    <div class="nx-eyebrow">
+        NEXFIT PERFORMANCE PLATFORM
+    </div>
+
+
+    <h1>
+        BUILD YOUR
+        <span>BEST SELF.</span>
+    </h1>
+
+
+    <p class="nx-hero-description">
+
+        A smarter fitness system built around
+        structured challenges, personalized metrics,
+        practical workouts and evidence-based guidance.
+
+        No noise. No guesswork. Just a better way to train.
+
+    </p>
+
+
+    <div class="nx-hero-actions">
+
+        <a
+            href="/challenges"
+            class="nx-primary"
+        >
+            START 30-DAY CHALLENGE →
+        </a>
+
+
+        <a
+            href="/calculator"
+            class="nx-secondary"
+        >
+            CALCULATE YOUR PLAN
+        </a>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     MODE SWITCH
+===================================================== -->
+
+<div class="mode-switch">
+
+```
+<button
+    class="mode-btn active"
+    onclick="switchMode('home', this)"
+>
+    HOME WORKOUT
+</button>
+
+
+<button
+    class="mode-btn"
+    onclick="switchMode('gym', this)"
+>
+    GYM WORKOUT
+</button>
+```
+
+</div>
+
+<!-- =====================================================
+     STREAK
+===================================================== -->
+
+<div class="streak-banner">
+
+```
+<div class="streak-info">
+
+    <div class="streak-icon-box">
+
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+
+    </div>
+
+
+    <span>
+        ACTIVE STREAK:
+        <strong id="streakCount">1</strong>
+        DAY(S)
+    </span>
+
+</div>
+
+
+<button
+    id="checkinBtn"
+    class="checkin-btn"
+    onclick="triggerCheckIn()"
+>
+    DAILY CHECK-IN
+</button>
+```
+
+</div>
+
+<!-- =====================================================
+     BIOMETRICS
+===================================================== -->
+
+<div class="bio-tracker-card">
+
+```
+<div class="bio-metric-item">
+
+    <div class="bio-icon-circle">
+
+        <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+
+    </div>
+
+
+    <div class="bio-metric-info">
+
+        <span>
+            LIVE HEART RATE
+            <span class="pulsing-dot"></span>
+        </span>
+
+        <h3 id="liveBpmDisplay">
+            72 BPM
+        </h3>
+
+    </div>
+
+</div>
+
+
+<div class="bio-metric-item">
+
+    <div class="bio-icon-circle">
+
+        <svg viewBox="0 0 24 24">
+            <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.2L6 8.3V13h2V9.6l1.8-.7z"/>
+        </svg>
+
+    </div>
+
+
+    <div class="bio-metric-info">
+
+        <span>
+            SESSION STEP COUNTER
+        </span>
+
+        <h3 id="stepCountDisplay">
+            1,428 Steps
+        </h3>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- =====================================================
+     DAILY TIP
+===================================================== -->
+
+<div class="daily-tip-card">
+
+```
+<div class="daily-tip-content">
+
+    <h4>
+        DAILY EXPERT FITNESS TIP
+    </h4>
+
+    <p id="dailyTipText">
+        Loading today's insight...
+    </p>
+
+</div>
+
+
+<button
+    class="next-tip-btn"
+    onclick="rotateTip()"
+>
+    NEXT TIP →
+</button>
+```
+
+</div>
+
+<!-- =====================================================
+     QUICK BMI
+===================================================== -->
+
+<div class="quick-calc-card">
+
+```
+<div class="quick-calc-title">
+
+    <span>⚡</span>
+    QUICK BMI CHECKER
+
+</div>
+
+
+<div class="quick-calc-grid">
+
+    <input
+        type="number"
+        id="quickWeight"
+        class="quick-input"
+        placeholder="Weight (kg)"
+        min="20"
+        max="300"
+    >
+
+
+    <input
+        type="number"
+        id="quickHeight"
+        class="quick-input"
+        placeholder="Height (cm)"
+        min="100"
+        max="250"
+    >
+
+
+    <button
+        class="quick-calc-btn"
+        onclick="calculateQuickBMI()"
+    >
+        CALCULATE BMI
+    </button>
+
+</div>
+
+
+<div id="quickResultBox">
+    Enter your weight and height for an instant BMI calculation.
+</div>
+```
+
+</div>
+
+<!-- =====================================================
+     FEATURED PLAN
+===================================================== -->
+
+<div class="section-header">
+
+```
+<h3 id="planTitle">
+    CLASSIC PLAN: HOME WORKOUT
+</h3>
+
+
+<a
+    href="/challenges"
+    class="see-all"
+>
+    VIEW ALL →
+</a>
+```
+
+</div>
+
+<div class="hero-banner-card">
+
+```
+<div class="hero-content">
+
+    <span class="customized-badge">
+        FEATURED PROGRAM
+    </span>
+
+
+    <h2 id="heroTitle">
+        TOTAL BODY
+        SHRED
+    </h2>
+
+
+    <div
+        class="hero-meta"
+        id="metaGridContainer"
+    >
+
+
+        <div class="meta-item">
+
+            <div class="meta-icon-box">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                </svg>
+
+            </div>
+
+            <div>
+                <strong>30 DAYS</strong>
+                Duration
+            </div>
+
+        </div>
+
+
+        <div class="meta-item">
+
+            <div class="meta-icon-box">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+                </svg>
+
+            </div>
+
+            <div>
+                <strong>ALL LEVELS</strong>
+                Level
+            </div>
+
+        </div>
+
+
+        <div class="meta-item">
+
+            <div class="meta-icon-box">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+
+            </div>
+
+            <div>
+                <strong>FULL BODY</strong>
+                Target
+            </div>
+
+        </div>
+
+
+        <div
+            class="meta-item"
+            id="equipmentMeta"
+        >
+
+            <div class="meta-icon-box">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 6.29 3.43 4.86 2 3.43 3.43 4.86 4.86 2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l1.43-1.43L19.14 22l1.43-1.43L19.14 19.14l1.43-1.43z"/>
+                </svg>
+
+            </div>
+
+            <div>
+                <strong>NO EQUIPMENT</strong>
+                Equipment
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="start-day-btn"
+        onclick="window.location.href='/challenges'"
+    >
+        START DAY 1 →
+    </button>
+
+</div>
+
+
+<div class="hero-image-side">
+
+    <img
+        id="heroImage"
+        src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=90"
+        alt="Nexfit workout"
+    >
+
+</div>
+```
+
+</div>
+
+<!-- =====================================================
+     WORKOUTS
+===================================================== -->
+
+<div class="section-header">
+
+```
+<h3>
+    CLASSIC WORKOUTS
+</h3>
+```
+
+</div>
+
+<div
+    class="filter-pills-row"
+    id="filterPills"
+>
+
+```
+<button
+    class="filter-pill active"
+    onclick="filterWorkout('Arm', this)"
+>
+    ARM
+</button>
+
+
+<button
+    class="filter-pill"
+    onclick="filterWorkout('Back', this)"
+>
+    BACK
+</button>
+
+
+<button
+    class="filter-pill"
+    onclick="filterWorkout('Legs', this)"
+>
+    LEGS
+</button>
+
+
+<button
+    class="filter-pill"
+    onclick="filterWorkout('Calisthenics', this)"
+>
+    CALISTHENICS
+</button>
+
+
+<button
+    class="filter-pill"
+    onclick="filterWorkout('Full Body', this)"
+>
+    FULL BODY
+</button>
+
+
+<button
+    class="filter-pill"
+    onclick="filterWorkout('Abs', this)"
+>
+    ABS
+</button>
+
+
+<button
+    class="filter-pill"
+    onclick="filterWorkout('Chest', this)"
+>
+    CHEST
+</button>
+
+
+<button
+    class="filter-pill"
+    onclick="filterWorkout('Shoulder', this)"
+>
+    SHOULDERS
+</button>
+```
+
+</div>
+
+<div id="workoutPreviewList">
+
+```
+<div
+    class="workout-list-item"
+    onclick="window.location.href='/challenges?muscle=Arm'"
+>
+
+    <div class="workout-item-left">
+
+        <img
+            src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=180&q=80"
+            class="workout-thumb"
+            alt="Arm workout"
+        >
+
+
+        <div>
+
+            <h4 id="previewTitle">
+                ARM — BEGINNER
+            </h4>
+
+            <p id="previewTime">
+                16 MINUTES · STARTER
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="arrow-icon">
+        →
+    </div>
+
+</div>
+```
+
+</div>
+
+</main>
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="nx-footer">
+
+```
+© 2026 NEXFIT · TRAIN. TRACK. TRANSFORM.
+
+<br><br>
+
+Designed & Developed by
+<strong>Varad Gurav</strong>
+```
+
+</footer>
+
+<!-- =====================================================
+     JAVASCRIPT
+     Existing functionality preserved
+===================================================== -->
+
+<script>
+
+const fitnessTips = [
+
+    "Consistency beats intensity. Showing up regularly creates better long-term progress than occasional burnout.",
+
+    "Prioritize controlled range of motion before adding more weight.",
+
+    "Hydration supports training performance and recovery.",
+
+    "Spread protein across your meals to make hitting your daily target easier.",
+
+    "Focus on the muscle performing the movement instead of simply moving the weight."
+
+];
+
+
+let currentTipIdx = 0;
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+
+
+        /* STREAK */
+
+        let currentStreak =
+            localStorage.getItem(
+                'nexfit_streak'
+            ) || 1;
+
+
+        let lastCheckIn =
+            localStorage.getItem(
+                'nexfit_last_date'
+            ) || '';
+
+
+        let todayStr =
+            new Date().toDateString();
+
+
+        document
+            .getElementById(
+                'streakCount'
+            )
+            .innerText =
+            currentStreak;
+
+
+        if (
+            lastCheckIn ===
+            todayStr
+        ) {
+
+            let btn =
+                document.getElementById(
+                    'checkinBtn'
+                );
+
+            btn.innerText =
+                "CHECKED IN ✓";
+
+            btn.classList.add(
+                'checked'
+            );
+
+        }
+
+
+        /* DAILY TIP */
+
+        currentTipIdx =
+            Math.floor(
+                Math.random() *
+                fitnessTips.length
+            );
+
+
+        document
+            .getElementById(
+                'dailyTipText'
+            )
+            .innerText =
+            fitnessTips[currentTipIdx];
+
+
+        /* LIVE HEART RATE SIMULATION */
+
+        setInterval(
+            () => {
+
+                let baseBpm =
+                    72;
+
+                let fluctuation =
+                    Math.floor(
+                        Math.random() * 5
+                    ) - 2;
+
+                document
+                    .getElementById(
+                        'liveBpmDisplay'
+                    )
+                    .innerText =
+                    (
+                        baseBpm +
+                        fluctuation
+                    ) +
+                    " BPM";
+
+            },
+            3000
         );
 
-    const stepElement =
-        document.getElementById("stepCountDisplay");
 
-    if (stepElement) {
+        /* STEP COUNTER */
 
-        stepElement.innerText =
-            storedSteps.toLocaleString();
+        let storedSteps =
+            parseInt(
+                localStorage.getItem(
+                    'nexfit_steps'
+                ) || 1428
+            );
 
-    }
+
+        document
+            .getElementById(
+                'stepCountDisplay'
+            )
+            .innerText =
+            storedSteps.toLocaleString()
+            +
+            " Steps";
 
 
-    /* Device motion */
+        /* DEVICE MOTION */
 
-    if (window.DeviceMotionEvent) {
-
-        try {
+        if (
+            window.DeviceMotionEvent
+        ) {
 
             window.addEventListener(
-                "devicemotion",
+                'devicemotion',
                 (event) => {
 
-                    const acc =
+                    let acc =
                         event.accelerationIncludingGravity;
+
 
                     if (
                         acc &&
@@ -894,114 +2840,133 @@ document.addEventListener("DOMContentLoaded", () => {
                         storedSteps++;
 
                         localStorage.setItem(
-                            "nexfit_steps",
+                            'nexfit_steps',
                             storedSteps
                         );
 
-                        if (stepElement) {
 
-                            stepElement.innerText =
-                                storedSteps.toLocaleString();
-
-                        }
+                        document
+                            .getElementById(
+                                'stepCountDisplay'
+                            )
+                            .innerText =
+                            storedSteps.toLocaleString()
+                            +
+                            " Steps";
 
                     }
 
                 },
-                { once: true }
-            );
-
-        } catch (error) {
-
-            console.log(
-                "Motion sensor unavailable."
+                {
+                    once: true
+                }
             );
 
         }
 
     }
+);
 
-});
 
-
-/* ================= FITNESS TIP ================= */
+/* =====================================================
+   DAILY TIPS
+===================================================== */
 
 function rotateTip() {
 
     currentTipIdx =
-        (currentTipIdx + 1) %
+        (
+            currentTipIdx + 1
+        ) %
         fitnessTips.length;
 
-    const tip =
-        document.getElementById("dailyTipText");
 
-    if (tip) {
-
-        tip.style.opacity = "0";
-
-        setTimeout(() => {
-
-            tip.innerText =
-                fitnessTips[currentTipIdx];
-
-            tip.style.opacity = "1";
-
-        }, 180);
-
-    }
+    document
+        .getElementById(
+            'dailyTipText'
+        )
+        .innerText =
+        fitnessTips[currentTipIdx];
 
 }
 
 
-/* ================= CHECK-IN ================= */
+/* =====================================================
+   CHECK-IN
+===================================================== */
 
 function triggerCheckIn() {
 
-    const todayStr =
+    let todayStr =
         new Date().toDateString();
 
-    const lastCheckIn =
+
+    let lastCheckIn =
         localStorage.getItem(
-            "nexfit_last_date"
-        ) || "";
+            'nexfit_last_date'
+        ) || '';
 
 
-    if (lastCheckIn === todayStr) {
+    if (
+        lastCheckIn ===
+        todayStr
+    ) {
+
         return;
+
     }
 
 
     let currentStreak =
         parseInt(
             localStorage.getItem(
-                "nexfit_streak"
+                'nexfit_streak'
             ) || 1
         );
 
 
     if (lastCheckIn) {
 
-        const lastDate =
-            new Date(lastCheckIn);
-
-        const today =
-            new Date(todayStr);
-
-        const diffTime =
-            Math.abs(today - lastDate);
-
-        const diffDays =
-            Math.ceil(
-                diffTime /
-                (1000 * 60 * 60 * 24)
+        let lastDateObj =
+            new Date(
+                lastCheckIn
             );
 
 
-        if (diffDays === 1) {
+        let todayObj =
+            new Date(
+                todayStr
+            );
+
+
+        let diffTime =
+            Math.abs(
+                todayObj -
+                lastDateObj
+            );
+
+
+        let diffDays =
+            Math.ceil(
+                diffTime /
+                (
+                    1000 *
+                    60 *
+                    60 *
+                    24
+                )
+            );
+
+
+        if (
+            diffDays === 1
+        ) {
 
             currentStreak++;
 
-        } else if (diffDays > 1) {
+        } else if (
+            diffDays > 1
+        ) {
 
             currentStreak = 1;
 
@@ -1011,51 +2976,67 @@ function triggerCheckIn() {
 
 
     localStorage.setItem(
-        "nexfit_streak",
+        'nexfit_streak',
         currentStreak
     );
 
+
     localStorage.setItem(
-        "nexfit_last_date",
+        'nexfit_last_date',
         todayStr
     );
 
 
-    document.getElementById(
-        "streakCount"
-    ).innerText = currentStreak;
+    document
+        .getElementById(
+            'streakCount'
+        )
+        .innerText =
+        currentStreak;
 
 
-    const btn =
-        document.getElementById("checkinBtn");
+    let btn =
+        document.getElementById(
+            'checkinBtn'
+        );
 
-    btn.innerText = "Checked In ✓";
-    btn.classList.add("checked");
+
+    btn.innerText =
+        "CHECKED IN ✓";
+
+
+    btn.classList.add(
+        'checked'
+    );
 
 }
 
 
-/* ================= BMI ================= */
+/* =====================================================
+   QUICK BMI
+===================================================== */
 
 function calculateQuickBMI() {
 
-    const weight =
+    let weight =
         parseFloat(
             document.getElementById(
-                "quickWeight"
+                'quickWeight'
             ).value
         );
 
-    const height =
+
+    let height =
         parseFloat(
             document.getElementById(
-                "quickHeight"
+                'quickHeight'
             ).value
         );
 
-    const result =
+
+    let resBox =
         document.getElementById(
-            "quickResultBox"
+            'quickResultBox'
         );
 
 
@@ -1066,195 +3047,285 @@ function calculateQuickBMI() {
         height <= 0
     ) {
 
-        result.innerHTML =
-            "Please enter valid weight and height.";
-
-        result.classList.add("error");
+        resBox.innerHTML =
+            "<span style='color:#c8ff00;'>Please enter valid weight and height numbers.</span>";
 
         return;
 
     }
 
 
-    const heightM =
+    let heightM =
         height / 100;
 
-    const bmi =
+
+    let bmi =
         (
             weight /
-            (heightM * heightM)
+            (
+                heightM *
+                heightM
+            )
         ).toFixed(1);
 
 
-    let category = "";
+    let category;
 
 
-    if (bmi < 18.5) {
+    if (
+        bmi < 18.5
+    ) {
 
-        category = "Underweight";
+        category =
+            "Underweight";
 
-    } else if (bmi <= 24.9) {
+    } else if (
+        bmi >= 18.5 &&
+        bmi <= 24.9
+    ) {
 
-        category = "Normal weight";
+        category =
+            "Normal weight";
 
-    } else if (bmi <= 29.9) {
+    } else if (
+        bmi >= 25 &&
+        bmi <= 29.9
+    ) {
 
-        category = "Overweight";
+        category =
+            "Overweight";
 
     } else {
 
-        category = "Obese";
+        category =
+            "Obese";
 
     }
 
 
-    result.classList.remove("error");
+    resBox.innerHTML =
 
-    result.innerHTML = `
-
-        <span>Your BMI</span>
-
-        <strong>${bmi}</strong>
-
-        <small>${category}</small>
-
-        <a href="/calculator">
+        `Your BMI is
+        <strong style="color:#fff;">
+            ${bmi}
+        </strong>
+        (${category}).
+        <a
+            href="/calculator"
+            style="
+                color:#c8ff00;
+                margin-left:5px;
+            "
+        >
             Detailed Calculator →
-        </a>
-
-    `;
+        </a>`;
 
 }
 
 
-/* ================= HOME / GYM MODE ================= */
+/* =====================================================
+   HOME / GYM MODE
+===================================================== */
 
-function switchMode(mode, btn) {
+function switchMode(
+    mode,
+    btn
+) {
 
     document
-        .querySelectorAll(".mode-btn")
-        .forEach(button =>
-            button.classList.remove("active")
-        );
-
-    btn.classList.add("active");
-
-
-    const title =
-        document.getElementById("heroTitle");
-
-    const equipment =
-        document.getElementById(
-            "equipmentMeta"
-        );
-
-    const image =
-        document.getElementById(
-            "heroImage"
+        .querySelectorAll(
+            '.mode-btn'
+        )
+        .forEach(
+            b =>
+                b.classList.remove(
+                    'active'
+                )
         );
 
 
-    if (mode === "home") {
-
-        title.innerHTML =
-            "TOTAL BODY <span>SHRED.</span>";
-
-
-        equipment.innerHTML = `
-            <span>EQUIPMENT</span>
-            <strong>NONE</strong>
-        `;
+    btn.classList.add(
+        'active'
+    );
 
 
-        image.src =
-            "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=85";
+    if (
+        mode === 'home'
+    ) {
+
+        document
+            .getElementById(
+                'planTitle'
+            )
+            .innerText =
+            "CLASSIC PLAN: HOME WORKOUT";
+
+
+        document
+            .getElementById(
+                'heroTitle'
+            )
+            .innerText =
+            "TOTAL BODY SHRED";
+
+
+        document
+            .getElementById(
+                'equipmentMeta'
+            )
+            .innerHTML = `
+
+                <div class="meta-icon-box">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 6.29 3.43 4.86 2 3.43 3.43 4.86 4.86 2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l1.43-1.43L19.14 22l1.43-1.43L19.14 19.14l1.43-1.43z"/>
+
+                    </svg>
+
+                </div>
+
+                <div>
+                    <strong>NO EQUIPMENT</strong>
+                    Equipment
+                </div>
+
+            `;
+
+
+        document
+            .getElementById(
+                'heroImage'
+            )
+            .src =
+            "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=90";
 
 
     } else {
 
-        title.innerHTML =
-            "HEAVY <span>HYPERTROPHY.</span>";
+
+        document
+            .getElementById(
+                'planTitle'
+            )
+            .innerText =
+            "CLASSIC PLAN: GYM WORKOUT";
 
 
-        equipment.innerHTML = `
-            <span>EQUIPMENT</span>
-            <strong>BARBELLS & CABLES</strong>
-        `;
+        document
+            .getElementById(
+                'heroTitle'
+            )
+            .innerText =
+            "HEAVY HYPERTROPHY";
 
 
-        image.src =
-            "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=85";
+        document
+            .getElementById(
+                'equipmentMeta'
+            )
+            .innerHTML = `
+
+                <div class="meta-icon-box">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 5h12v2H6V5zm0 12h12v2H6v-2zm10-5H8V9h8v3z"/>
+
+                    </svg>
+
+                </div>
+
+                <div>
+                    <strong>BARBELLS & CABLES</strong>
+                    Equipment
+                </div>
+
+            `;
+
+
+        document
+            .getElementById(
+                'heroImage'
+            )
+            .src =
+            "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=90";
 
     }
 
 }
 
 
-/* ================= WORKOUT FILTER ================= */
+/* =====================================================
+   WORKOUT FILTER
+===================================================== */
 
-function filterWorkout(muscle, btn) {
+function filterWorkout(
+    muscle,
+    btn
+) {
 
     document
-        .querySelectorAll(".filter-pill")
-        .forEach(pill =>
-            pill.classList.remove("active")
-        );
-
-    btn.classList.add("active");
-
-
-    const title =
-        document.getElementById(
-            "previewTitle"
-        );
-
-    const time =
-        document.getElementById(
-            "previewTime"
+        .querySelectorAll(
+            '.filter-pill'
+        )
+        .forEach(
+            p =>
+                p.classList.remove(
+                    'active'
+                )
         );
 
 
-    title.innerText =
+    btn.classList.add(
+        'active'
+    );
+
+
+    document
+        .getElementById(
+            'previewTitle'
+        )
+        .innerText =
         `${muscle.toUpperCase()} — BEGINNER`;
 
 
-    let mins = "16 MINUTES";
-
-    if (muscle === "Full Body") {
-
-        mins = "25 MINUTES";
-
-    } else if (muscle === "Legs") {
-
-        mins = "20 MINUTES";
-
-    }
-
-
-    time.innerText =
-        `${mins} · STRENGTH`;
+    let mins =
+        muscle ===
+        'Full Body'
+            ? '25 MINUTES · STARTER'
+            :
+        muscle ===
+        'Legs'
+            ? '20 MINUTES · STARTER'
+            :
+            '16 MINUTES · STARTER';
 
 
-    const workout =
-        document.querySelector(
-            ".workout-list-item"
-        );
+    document
+        .getElementById(
+            'previewTime'
+        )
+        .innerText =
+        mins;
 
 
-    if (workout) {
-
-        workout.onclick = () => {
+    document
+        .querySelector(
+            '.workout-list-item'
+        )
+        .onclick =
+        () => {
 
             window.location.href =
                 `/challenges?muscle=${encodeURIComponent(muscle)}`;
 
         };
 
-    }
-
 }
 
 </script>
 
 </body>
+
 </html>
