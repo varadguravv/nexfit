@@ -4,1165 +4,1488 @@
 
 <head>
 
-```
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+<title>Nexfit — Muscle Guide</title>
 
-<title>Nexfit — Muscle Intelligence</title>
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-    rel="stylesheet">
-
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet">
 
 <style>
 
-    /* =====================================================
-       NEXFIT MUSCLE INTELLIGENCE
-       ===================================================== */
+/* =========================================================
+   NEXFIT MUSCLE GUIDE
+   ========================================================= */
 
-    :root {
-        --bg: #070707;
-        --card: #101010;
-        --card2: #141414;
-        --border: rgba(255,255,255,.09);
-        --muted: #777;
-        --dim: #454545;
-        --white: #f5f5f5;
-        --accent: #c8ff00;
-    }
+:root {
 
-    * {
-        box-sizing: border-box;
-    }
+    --bg: #070707;
+    --panel: #101010;
+    --panel2: #141414;
 
-    html {
-        scroll-behavior: smooth;
-    }
+    --border: rgba(255,255,255,.09);
+    --border-hover: rgba(255,255,255,.16);
 
-    body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--white);
-        font-family: "Inter", sans-serif;
-    }
+    --text: #f5f5f5;
+    --muted: #777;
+    --dim: #444;
 
-    a {
-        text-decoration: none;
-    }
-
-    /* =====================================================
-       NAV
-       ===================================================== */
+    --accent: #c8ff00;
 
-    .muscle-nav {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+}
 
-        min-height: 76px;
+* {
+    box-sizing: border-box;
+}
 
-        padding: 0 max(5vw, 22px);
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        background: rgba(7,7,7,.88);
-        backdrop-filter: blur(18px);
-
-        border-bottom: 1px solid var(--border);
-    }
+html {
+    scroll-behavior: smooth;
+}
 
-    .brand {
-        color: white;
-
-        font-family: "Space Grotesk";
-        font-size: 1.45rem;
-        font-weight: 800;
+body {
 
-        letter-spacing: -1px;
-    }
+    margin: 0;
 
-    .brand span {
-        color: var(--accent);
-    }
+    background: var(--bg);
 
-    .nav-links {
-        display: flex;
-        gap: 28px;
-        align-items: center;
-    }
+    color: var(--text);
 
-    .nav-links a {
-        position: relative;
+    font-family: Inter, sans-serif;
 
-        color: #777;
+}
 
-        font-size: .74rem;
-        font-weight: 700;
+a {
+    text-decoration: none;
+}
 
-        transition: .2s ease;
-    }
 
-    .nav-links a:hover,
-    .nav-links a.active {
-        color: white;
-    }
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-    .nav-links a.active::after {
-        content: "";
+.nex-nav {
 
-        position: absolute;
+    position: sticky;
 
-        left: 0;
-        right: 0;
-        bottom: -11px;
+    top: 0;
 
-        height: 2px;
+    z-index: 1000;
 
-        background: var(--accent);
-    }
+    min-height: 76px;
 
-    /* =====================================================
-       HERO
-       ===================================================== */
+    padding:
+        0 max(5vw,22px);
 
-    .muscle-hero {
-        min-height: 570px;
+    display: flex;
 
-        display: flex;
-        align-items: flex-end;
+    align-items: center;
 
-        padding:
-            100px max(7vw, 25px) 80px;
+    justify-content: space-between;
 
-        position: relative;
-        overflow: hidden;
+    background:
+        rgba(7,7,7,.88);
 
-        background:
-            linear-gradient(
-                90deg,
-                rgba(0,0,0,.96),
-                rgba(0,0,0,.68),
-                rgba(0,0,0,.25)
-            ),
-            url("https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=2000&q=90")
-            center / cover no-repeat;
-    }
+    backdrop-filter:
+        blur(18px);
 
-    .muscle-hero::after {
-        content: "";
+    border-bottom:
+        1px solid var(--border);
 
-        position: absolute;
-        inset: 0;
+}
 
-        background:
-            linear-gradient(
-                0deg,
-                var(--bg),
-                transparent 38%
-            );
-    }
+.logo {
 
-    .hero-content {
-        position: relative;
-        z-index: 2;
+    color: white;
 
-        width: min(1180px,100%);
-        margin: auto;
-    }
+    font-family:
+        "Space Grotesk";
 
-    .eyebrow {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+    font-size: 1.45rem;
 
-        color: var(--accent);
+    font-weight: 800;
 
-        font-size: .62rem;
-        font-weight: 800;
+    letter-spacing: -1px;
 
-        letter-spacing: 2px;
-    }
+}
 
-    .eyebrow::before {
-        content: "";
+.logo span {
+    color: var(--accent);
+}
 
-        width: 7px;
-        height: 7px;
+.nav-menu {
 
-        border-radius: 50%;
+    display: flex;
 
-        background: var(--accent);
+    align-items: center;
 
-        box-shadow:
-            0 0 16px
-            rgba(200,255,0,.7);
-    }
+    gap: 28px;
 
-    .hero-content h1 {
-        max-width: 900px;
+}
 
-        margin: 20px 0 0;
+.nav-menu a {
 
-        font-family: "Space Grotesk";
+    position: relative;
 
-        font-size:
-            clamp(4rem,9vw,8.5rem);
+    color: #707070;
 
-        line-height: .83;
+    font-size: .72rem;
 
-        letter-spacing: -6px;
-    }
+    font-weight: 700;
 
-    .hero-content h1 span {
-        display: block;
-        color: var(--accent);
-    }
+    transition: .2s;
 
-    .hero-content p {
-        max-width: 560px;
+}
 
-        margin-top: 30px;
+.nav-menu a:hover,
+.nav-menu a.active {
 
-        color: #aaa;
+    color: white;
 
-        font-size: .92rem;
-        line-height: 1.75;
-    }
+}
 
-    .hero-stats {
-        display: flex;
+.nav-menu a.active::after {
 
-        gap: 38px;
+    content: "";
 
-        margin-top: 35px;
-    }
+    position: absolute;
 
-    .hero-stat strong {
-        display: block;
+    left: 0;
+    right: 0;
 
-        font-family: "Space Grotesk";
+    bottom: -11px;
 
-        font-size: 1.45rem;
-    }
+    height: 2px;
 
-    .hero-stat span {
-        display: block;
+    background: var(--accent);
 
-        margin-top: 4px;
+}
 
-        color: #555;
 
-        font-size: .54rem;
-        font-weight: 800;
+/* =========================================================
+   HERO
+   ========================================================= */
 
-        letter-spacing: 1.5px;
-    }
+.guide-hero {
 
-    /* =====================================================
-       MAIN
-       ===================================================== */
+    min-height: 570px;
 
-    .page {
-        width: min(1180px, calc(100% - 10vw));
+    position: relative;
 
-        margin: auto;
-    }
+    display: flex;
 
-    /* =====================================================
-       MUSCLE SELECTOR
-       ===================================================== */
+    align-items: flex-end;
 
-    .selector-section {
-        padding-top: 45px;
-    }
+    overflow: hidden;
 
-    .section-label {
-        color: var(--accent);
+    background:
 
-        font-size: .58rem;
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.97) 0%,
+            rgba(0,0,0,.76) 42%,
+            rgba(0,0,0,.20) 100%
+        ),
 
-        font-weight: 800;
+        linear-gradient(
+            0deg,
+            var(--bg),
+            transparent 45%
+        ),
 
-        letter-spacing: 2px;
-    }
+        url("https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=2200&q=90")
+        center / cover;
 
-    .section-title {
-        margin: 9px 0 25px;
+}
 
-        font-family: "Space Grotesk";
+.hero-inner {
 
-        font-size:
-            clamp(2rem,4vw,3.5rem);
+    width:
+        min(1180px, calc(100% - 10vw));
 
-        line-height: 1;
+    margin: auto;
 
-        letter-spacing: -2px;
-    }
+    padding:
+        90px 0 75px;
 
-    .section-title span {
-        color: #555;
-    }
+}
 
-    .muscle-selector {
-        display: grid;
+.kicker {
 
+    color: var(--accent);
+
+    font-size: .56rem;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+.hero-title {
+
+    max-width: 950px;
+
+    margin: 18px 0 0;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size:
+        clamp(4rem,8vw,7.5rem);
+
+    line-height: .84;
+
+    letter-spacing: -5px;
+
+}
+
+.hero-title span {
+    display: block;
+    color: var(--accent);
+}
+
+.hero-copy {
+
+    max-width: 620px;
+
+    margin-top: 28px;
+
+    color: #888;
+
+    font-size: .74rem;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.page {
+
+    width:
+        min(1180px, calc(100% - 10vw));
+
+    margin: auto;
+
+}
+
+
+/* =========================================================
+   QUICK STATS
+   ========================================================= */
+
+.stats {
+
+    margin-top: -35px;
+
+    position: relative;
+
+    z-index: 5;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 9px;
+
+}
+
+.stat {
+
+    padding: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #0c0c0c
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 12px;
+
+}
+
+.stat span {
+
+    display: block;
+
+    color: #555;
+
+    font-size: .48rem;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+.stat strong {
+
+    display: block;
+
+    margin-top: 12px;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: 1.35rem;
+
+}
+
+.stat strong.accent {
+    color: var(--accent);
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.intro {
+
+    padding: 95px 0 50px;
+
+}
+
+.section-kicker {
+
+    color: var(--accent);
+
+    font-size: .55rem;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+.section-title {
+
+    max-width: 850px;
+
+    margin: 10px 0 18px;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size:
+        clamp(2.6rem,5vw,4.6rem);
+
+    line-height: .9;
+
+    letter-spacing: -3px;
+
+}
+
+.section-title span {
+    color: #454545;
+}
+
+.section-copy {
+
+    max-width: 650px;
+
+    color: #777;
+
+    font-size: .72rem;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.search-wrap {
+
+    margin-top: 30px;
+
+    position: relative;
+
+}
+
+.search-input {
+
+    width: 100%;
+
+    padding: 18px 20px;
+
+    background: #101010;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    color: white;
+
+    font-size: .7rem;
+
+    transition: .2s;
+
+}
+
+.search-input:focus {
+
+    border-color:
+        rgba(200,255,0,.4);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(200,255,0,.04);
+
+}
+
+.search-input::placeholder {
+    color: #4d4d4d;
+}
+
+
+/* =========================================================
+   MUSCLE FILTER
+   ========================================================= */
+
+.filter-row {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 12px;
+
+}
+
+.filter-btn {
+
+    padding:
+        10px 15px;
+
+    background: #101010;
+
+    color: #666;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 6px;
+
+    font-size: .5rem;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.filter-btn:hover {
+
+    color: white;
+
+    border-color:
+        var(--border-hover);
+
+}
+
+.filter-btn.active {
+
+    color: #000;
+
+    background: var(--accent);
+
+    border-color: var(--accent);
+
+}
+
+
+/* =========================================================
+   MUSCLE GRID
+   ========================================================= */
+
+.muscle-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 10px;
+
+    margin-top: 35px;
+
+}
+
+.muscle-card {
+
+    min-height: 260px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 13px;
+
+    background: #101010;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s,
+        border-color .25s;
+
+}
+
+.muscle-card:hover {
+
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(200,255,0,.32);
+
+}
+
+.muscle-card.hidden {
+    display: none;
+}
+
+.muscle-image {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    opacity: .54;
+
+    transition:
+        transform .5s,
+        opacity .3s;
+
+}
+
+.muscle-card:hover .muscle-image {
+
+    transform: scale(1.06);
+
+    opacity: .67;
+
+}
+
+.muscle-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            0deg,
+            rgba(0,0,0,.96) 0%,
+            rgba(0,0,0,.35) 65%,
+            rgba(0,0,0,.05)
+        );
+
+}
+
+.muscle-content {
+
+    position: absolute;
+
+    left: 21px;
+    right: 21px;
+    bottom: 20px;
+
+}
+
+.muscle-number {
+
+    color: rgba(200,255,0,.8);
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: .53rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+}
+
+.muscle-content h3 {
+
+    margin: 7px 0 6px;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: 1.35rem;
+
+}
+
+.muscle-content p {
+
+    margin: 0;
+
+    color: #888;
+
+    font-size: .57rem;
+
+    line-height: 1.55;
+
+}
+
+.explore {
+
+    display: inline-block;
+
+    margin-top: 13px;
+
+    color: var(--accent);
+
+    font-size: .49rem;
+
+    font-weight: 900;
+
+    letter-spacing: .8px;
+
+}
+
+
+/* =========================================================
+   DETAIL AREA
+   ========================================================= */
+
+.detail-section {
+
+    padding-top: 105px;
+
+}
+
+.detail-heading {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 20px;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+.detail-heading h2 {
+
+    margin: 7px 0 0;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: 2rem;
+
+}
+
+.detail-heading p {
+
+    max-width: 420px;
+
+    margin: 0;
+
+    color: #666;
+
+    font-size: .59rem;
+
+    line-height: 1.7;
+
+    text-align: right;
+
+}
+
+
+/* =========================================================
+   DETAIL CARDS
+   ========================================================= */
+
+.details {
+
+    display: grid;
+
+    grid-template-columns:
+        1.2fr .8fr;
+
+    gap: 10px;
+
+    margin-top: 10px;
+
+}
+
+.detail-card {
+
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #131313,
+            #0c0c0c
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 12px;
+
+}
+
+.detail-card h3 {
+
+    margin: 0 0 18px;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: 1.05rem;
+
+}
+
+.detail-card p {
+
+    color: #777;
+
+    font-size: .65rem;
+
+    line-height: 1.8;
+
+}
+
+.detail-list {
+
+    padding: 0;
+
+    margin: 0;
+
+    list-style: none;
+
+}
+
+.detail-list li {
+
+    padding:
+        15px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+
+    color: #777;
+
+    font-size: .6rem;
+
+    line-height: 1.65;
+
+}
+
+.detail-list li:last-child {
+    border-bottom: 0;
+}
+
+.detail-list strong {
+    color: #eee;
+}
+
+
+/* =========================================================
+   EXERCISE TABLE
+   ========================================================= */
+
+.exercise-section {
+
+    padding-top: 90px;
+
+}
+
+.exercise-table {
+
+    margin-top: 25px;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 12px;
+
+}
+
+.exercise-row {
+
+    display: grid;
+
+    grid-template-columns:
+        1.2fr .8fr .7fr .7fr;
+
+    gap: 15px;
+
+    padding:
+        17px 20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+
+    background: #101010;
+
+}
+
+.exercise-row:last-child {
+    border-bottom: 0;
+}
+
+.exercise-row.header {
+
+    background: #151515;
+
+    color: #555;
+
+    font-size: .48rem;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+.exercise-row:not(.header) {
+
+    color: #777;
+
+    font-size: .58rem;
+
+}
+
+.exercise-row strong {
+    color: #eee;
+}
+
+
+/* =========================================================
+   RECOVERY
+   ========================================================= */
+
+.recovery {
+
+    margin-top: 100px;
+
+    padding: 50px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            rgba(200,255,0,.09),
+            rgba(200,255,0,.015)
+        );
+
+    border:
+        1px solid
+        rgba(200,255,0,.14);
+
+    border-radius: 15px;
+
+}
+
+.recovery::after {
+
+    content: "RECOVER";
+
+    position: absolute;
+
+    right: -30px;
+
+    bottom: -50px;
+
+    color:
+        rgba(200,255,0,.035);
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: 8rem;
+
+    font-weight: 800;
+
+}
+
+.recovery-inner {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+.recovery h2 {
+
+    max-width: 700px;
+
+    margin: 8px 0 15px;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size:
+        clamp(2rem,4vw,3.5rem);
+
+    line-height: .95;
+
+}
+
+.recovery p {
+
+    max-width: 620px;
+
+    color: #666;
+
+    font-size: .65rem;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   INJURY GUIDE
+   ========================================================= */
+
+.injury-section {
+
+    padding-top: 100px;
+
+}
+
+.injury-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 9px;
+
+    margin-top: 28px;
+
+}
+
+.injury-card {
+
+    padding: 25px;
+
+    background: #101010;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 11px;
+
+}
+
+.injury-number {
+
+    color: #444;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: 1.7rem;
+
+}
+
+.injury-card h3 {
+
+    margin: 15px 0 8px;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: .9rem;
+
+}
+
+.injury-card p {
+
+    margin: 0;
+
+    color: #666;
+
+    font-size: .59rem;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.final-cta {
+
+    margin-top: 100px;
+
+    padding: 60px 45px;
+
+    background: #101010;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 14px;
+
+}
+
+.final-cta h2 {
+
+    max-width: 750px;
+
+    margin: 10px 0 13px;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size:
+        clamp(2.2rem,5vw,4rem);
+
+    line-height: .9;
+
+    letter-spacing: -2px;
+
+}
+
+.final-cta p {
+
+    max-width: 570px;
+
+    color: #666;
+
+    font-size: .65rem;
+
+    line-height: 1.7;
+
+}
+
+.cta-button {
+
+    display: inline-block;
+
+    margin-top: 18px;
+
+    padding:
+        13px 18px;
+
+    border-radius: 6px;
+
+    background: var(--accent);
+
+    color: #000;
+
+    font-size: .55rem;
+
+    font-weight: 900;
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+
+    margin-top: 90px;
+
+    padding: 35px 20px;
+
+    text-align: center;
+
+    color: #3e3e3e;
+
+    font-size: .55rem;
+
+    border-top:
+        1px solid var(--border);
+
+}
+
+footer strong {
+    color: var(--accent);
+}
+
+
+/* =========================================================
+   DETAIL MODAL
+   ========================================================= */
+
+.muscle-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.88);
+
+    backdrop-filter:
+        blur(12px);
+
+}
+
+.muscle-modal.open {
+    display: flex;
+}
+
+.modal-box {
+
+    width:
+        min(680px,100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 32px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #0b0b0b
+        );
+
+    border:
+        1px solid var(--border-hover);
+
+    border-radius: 15px;
+
+}
+
+.modal-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+}
+
+.modal-kicker {
+
+    color: var(--accent);
+
+    font-size: .5rem;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+}
+
+.modal-box h2 {
+
+    margin: 8px 0 0;
+
+    font-family:
+        "Space Grotesk";
+
+    font-size: 2rem;
+
+}
+
+.close {
+
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 50%;
+
+    background: #111;
+
+    color: #777;
+
+    cursor: pointer;
+
+    font-size: 1.1rem;
+
+}
+
+.close:hover {
+    color: white;
+}
+
+.modal-content {
+
+    margin-top: 28px;
+
+}
+
+.modal-item {
+
+    padding:
+        18px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+
+}
+
+.modal-item:last-child {
+    border-bottom: 0;
+}
+
+.modal-item span {
+
+    display: block;
+
+    color: #4d4d4d;
+
+    font-size: .47rem;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+.modal-item p {
+
+    margin:
+        8px 0 0;
+
+    color: #888;
+
+    font-size: .65rem;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+    .stats {
         grid-template-columns:
-            repeat(7,1fr);
-
-        gap: 8px;
+            repeat(2,1fr);
     }
 
-    .muscle-button {
-        min-height: 82px;
-
-        padding: 15px;
-
-        text-align: left;
-
-        color: #777;
-
-        background: #0e0e0e;
-
-        border:
-            1px solid
-            var(--border);
-
-        border-radius: 10px;
-
-        cursor: pointer;
-
-        transition:
-            transform .2s ease,
-            color .2s ease,
-            border-color .2s ease,
-            background .2s ease;
-    }
-
-    .muscle-button:hover {
-        transform: translateY(-3px);
-
-        color: white;
-
-        border-color:
-            rgba(200,255,0,.28);
-    }
-
-    .muscle-button.active {
-        color: var(--accent);
-
-        background:
-            rgba(200,255,0,.06);
-
-        border-color:
-            rgba(200,255,0,.42);
-    }
-
-    .muscle-button strong {
-        display: block;
-
-        font-family: "Space Grotesk";
-
-        font-size: .78rem;
-    }
-
-    .muscle-button small {
-        display: block;
-
-        margin-top: 6px;
-
-        color: #4d4d4d;
-
-        font-size: .5rem;
-
-        font-weight: 800;
-
-        letter-spacing: .8px;
-    }
-
-    /* =====================================================
-       SELECTED MUSCLE PANEL
-       ===================================================== */
-
-    .muscle-panel {
-        display: grid;
-
+    .muscle-grid {
         grid-template-columns:
-            1.15fr .85fr;
-
-        gap: 12px;
-
-        margin-top: 18px;
-
-        min-height: 430px;
+            repeat(2,1fr);
     }
 
-    .muscle-main-card {
-        position: relative;
-
-        min-height: 430px;
-
-        padding: 45px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-
-        overflow: hidden;
-
-        border-radius: 16px;
-
-        background:
-            linear-gradient(
-                0deg,
-                rgba(0,0,0,.96),
-                rgba(0,0,0,.18)
-            ),
-            url("https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1400&q=90")
-            center / cover;
-    }
-
-    .muscle-main-card::before {
-        content: "";
-
-        position: absolute;
-        inset: 0;
-
-        border:
-            1px solid
-            rgba(255,255,255,.1);
-
-        border-radius: 16px;
-
-        pointer-events: none;
-    }
-
-    .selected-number {
-        position: absolute;
-
-        top: 25px;
-        right: 28px;
-
-        color: rgba(255,255,255,.18);
-
-        font-family: "Space Grotesk";
-
-        font-size: 5rem;
-
-        line-height: 1;
-    }
-
-    .selected-tag {
-        color: var(--accent);
-
-        font-size: .58rem;
-
-        font-weight: 800;
-
-        letter-spacing: 1.5px;
-    }
-
-    .muscle-main-card h2 {
-        margin: 9px 0;
-
-        font-family: "Space Grotesk";
-
-        font-size:
-            clamp(2.2rem,5vw,4rem);
-
-        line-height: .9;
-
-        letter-spacing: -2px;
-    }
-
-    .muscle-main-card p {
-        max-width: 600px;
-
-        color: #aaa;
-
-        font-size: .76rem;
-
-        line-height: 1.7;
-    }
-
-    .muscle-side {
-        display: grid;
-
-        grid-template-rows:
-            1fr 1fr;
-
-        gap: 12px;
-    }
-
-    .info-card {
-        padding: 28px;
-
-        background:
-            linear-gradient(
-                145deg,
-                #131313,
-                #0d0d0d
-            );
-
-        border:
-            1px solid
-            var(--border);
-
-        border-radius: 16px;
-    }
-
-    .info-card-label {
-        color: #555;
-
-        font-size: .54rem;
-
-        font-weight: 800;
-
-        letter-spacing: 1.5px;
-    }
-
-    .info-card strong {
-        display: block;
-
-        margin-top: 12px;
-
-        color: white;
-
-        font-family: "Space Grotesk";
-
-        font-size: 1.45rem;
-    }
-
-    .info-card p {
-        color: #777;
-
-        font-size: .68rem;
-
-        line-height: 1.65;
-    }
-
-    .recovery-value {
-        color: var(--accent) !important;
-    }
-
-    /* =====================================================
-       CONTENT GRID
-       ===================================================== */
-
-    .content-section {
-        margin-top: 75px;
-    }
-
-    .content-grid {
-        display: grid;
-
-        grid-template-columns:
-            1fr 1fr;
-
-        gap: 12px;
-    }
-
-    .content-card {
-        padding: 32px;
-
-        background:
-            linear-gradient(
-                145deg,
-                #121212,
-                #0d0d0d
-            );
-
-        border:
-            1px solid
-            var(--border);
-
-        border-radius: 15px;
-    }
-
-    .content-card.full {
-        grid-column: 1 / -1;
-    }
-
-    .content-card h3 {
-        margin: 0 0 18px;
-
-        font-family: "Space Grotesk";
-
-        font-size: 1.25rem;
-
-        letter-spacing: -.5px;
-    }
-
-    .content-card h3 span {
-        color: var(--accent);
-    }
-
-    .content-card p {
-        color: #777;
-
-        font-size: .78rem;
-
-        line-height: 1.8;
-    }
-
-    .content-card ul {
-        list-style: none;
-
-        padding: 0;
-        margin: 0;
-    }
-
-    .content-card li {
-        position: relative;
-
-        padding:
-            13px 0 13px 20px;
-
-        color: #888;
-
-        font-size: .72rem;
-
-        line-height: 1.65;
-
-        border-bottom:
-            1px solid
-            rgba(255,255,255,.05);
-    }
-
-    .content-card li:last-child {
-        border-bottom: none;
-    }
-
-    .content-card li::before {
-        content: "";
-
-        position: absolute;
-
-        left: 0;
-        top: 22px;
-
-        width: 5px;
-        height: 5px;
-
-        background:
-            var(--accent);
-
-        border-radius: 50%;
-    }
-
-    .content-card strong {
-        color: #ddd;
-    }
-
-    /* =====================================================
-       WORKOUT MOVEMENTS
-       ===================================================== */
-
-    .exercise-grid {
-        display: grid;
-
-        grid-template-columns:
-            repeat(4,1fr);
-
-        gap: 8px;
-
-        margin-top: 20px;
-    }
-
-    .exercise-card {
-        padding: 20px;
-
-        min-height: 145px;
-
-        background: #0c0c0c;
-
-        border:
-            1px solid
-            rgba(255,255,255,.07);
-
-        border-radius: 10px;
-
-        transition: .2s ease;
-    }
-
-    .exercise-card:hover {
-        transform:
-            translateY(-3px);
-
-        border-color:
-            rgba(200,255,0,.25);
-    }
-
-    .exercise-index {
-        color: #444;
-
-        font-size: .52rem;
-
-        font-weight: 800;
-
-        letter-spacing: 1px;
-    }
-
-    .exercise-card strong {
-        display: block;
-
-        margin-top: 14px;
-
-        color: white;
-
-        font-family: "Space Grotesk";
-
-        font-size: .84rem;
-    }
-
-    .exercise-card span {
-        display: block;
-
-        margin-top: 8px;
-
-        color: #666;
-
-        font-size: .62rem;
-
-        line-height: 1.5;
-    }
-
-    /* =====================================================
-       HYPERTROPHY
-       ===================================================== */
-
-    .growth-banner {
-        position: relative;
-
-        min-height: 340px;
-
-        margin-top: 75px;
-
-        padding: 45px;
-
-        display: flex;
-        align-items: flex-end;
-
-        overflow: hidden;
-
-        border-radius: 16px;
-
-        background:
-            linear-gradient(
-                90deg,
-                rgba(0,0,0,.96),
-                rgba(0,0,0,.45)
-            ),
-            url("https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1600&q=90")
-            center / cover;
-    }
-
-    .growth-banner-content {
-        max-width: 620px;
-    }
-
-    .growth-banner h2 {
-        margin: 10px 0;
-
-        font-family: "Space Grotesk";
-
-        font-size:
-            clamp(2.2rem,5vw,4rem);
-
-        line-height: .9;
-
-        letter-spacing: -2px;
-    }
-
-    .growth-banner h2 span {
-        color: var(--accent);
-    }
-
-    .growth-banner p {
-        color: #999;
-
-        font-size: .76rem;
-
-        line-height: 1.75;
-    }
-
-    /* =====================================================
-       INJURY
-       ===================================================== */
-
-    .injury-section {
-        margin-top: 75px;
+    .details {
+        grid-template-columns: 1fr;
     }
 
     .injury-grid {
-        display: grid;
-
         grid-template-columns:
             repeat(2,1fr);
-
-        gap: 10px;
     }
 
-    .injury-card {
-        padding: 28px;
+}
 
-        background:
-            #101010;
+@media(max-width:700px) {
 
-        border:
-            1px solid
-            var(--border);
+    .nex-nav {
 
-        border-radius: 13px;
+        padding: 15px 18px;
+
+        flex-wrap: wrap;
+
+        gap: 13px;
+
     }
 
-    .injury-number {
-        color: var(--accent);
+    .nav-menu {
 
-        font-family: "Space Grotesk";
+        width: 100%;
 
-        font-size: .72rem;
+        gap: 14px;
 
-        font-weight: 700;
+        overflow-x: auto;
+
+        scrollbar-width: none;
+
     }
 
-    .injury-card h3 {
-        margin: 10px 0 15px;
-
-        font-family: "Space Grotesk";
-
-        font-size: 1.05rem;
+    .nav-menu::-webkit-scrollbar {
+        display: none;
     }
 
-    .injury-card p {
-        color: #707070;
-
-        font-size: .7rem;
-
-        line-height: 1.7;
-
-        margin: 9px 0;
+    .nav-menu a {
+        white-space: nowrap;
     }
 
-    .injury-card strong {
-        color: #ccc;
+    .guide-hero {
+        min-height: 560px;
     }
 
-    /* =====================================================
-       NUTRITION
-       ===================================================== */
+    .hero-inner {
 
-    .nutrition {
-        margin-top: 75px;
+        width:
+            calc(100% - 36px);
 
-        padding: 38px;
+        padding-bottom: 55px;
 
-        background:
-            rgba(200,255,0,.045);
-
-        border:
-            1px solid
-            rgba(200,255,0,.15);
-
-        border-radius: 15px;
     }
 
-    .nutrition h2 {
-        margin: 0 0 15px;
-
-        font-family: "Space Grotesk";
-
-        font-size: 1.5rem;
-    }
-
-    .nutrition p {
-        color: #777;
-
-        font-size: .74rem;
-
-        line-height: 1.75;
-    }
-
-    .nutrition strong {
-        color: var(--accent);
-    }
-
-    /* =====================================================
-       CTA
-       ===================================================== */
-
-    .final-cta {
-        margin-top: 75px;
-
-        padding: 65px 35px;
-
-        text-align: center;
-
-        border-top:
-            1px solid
-            var(--border);
-
-        border-bottom:
-            1px solid
-            var(--border);
-    }
-
-    .final-cta span {
-        color: var(--accent);
-
-        font-size: .58rem;
-
-        font-weight: 800;
-
-        letter-spacing: 2px;
-    }
-
-    .final-cta h2 {
-        max-width: 720px;
-
-        margin: 15px auto;
-
-        font-family: "Space Grotesk";
+    .hero-title {
 
         font-size:
-            clamp(2.4rem,5vw,4.5rem);
+            clamp(3.4rem,15vw,5.5rem);
 
-        line-height: .9;
-
-        letter-spacing: -3px;
-    }
-
-    .final-cta p {
-        max-width: 480px;
-
-        margin: 0 auto 25px;
-
-        color: #666;
-
-        font-size: .72rem;
-
-        line-height: 1.7;
-    }
-
-    .cta-button {
-        display: inline-flex;
-
-        align-items: center;
-        justify-content: center;
-
-        min-width: 190px;
-
-        padding: 14px 22px;
-
-        background:
-            var(--accent);
-
-        color: #000;
-
-        border-radius: 7px;
-
-        font-size: .65rem;
-
-        font-weight: 900;
-
-        letter-spacing: .5px;
-
-        transition: .2s ease;
-    }
-
-    .cta-button:hover {
-        transform:
-            translateY(-2px);
-
-        box-shadow:
-            0 10px 35px
-            rgba(200,255,0,.18);
-    }
-
-    /* =====================================================
-       FOOTER
-       ===================================================== */
-
-    .site-footer {
-        padding: 35px 20px;
-
-        text-align: center;
-
-        color: #3f3f3f;
-
-        font-size: .6rem;
-    }
-
-    .site-footer strong {
-        color: var(--accent);
-    }
-
-    /* =====================================================
-       RESPONSIVE
-       ===================================================== */
-
-    @media(max-width: 1050px) {
-
-        .muscle-selector {
-            grid-template-columns:
-                repeat(4,1fr);
-        }
-
-        .exercise-grid {
-            grid-template-columns:
-                repeat(2,1fr);
-        }
+        letter-spacing: -4px;
 
     }
 
-    @media(max-width: 800px) {
+    .page {
 
-        .nav-links {
-            gap: 14px;
-        }
-
-        .nav-links a {
-            font-size: .62rem;
-        }
-
-        .muscle-panel {
-            grid-template-columns: 1fr;
-        }
-
-        .muscle-side {
-            grid-template-columns:
-                1fr 1fr;
-
-            grid-template-rows: 1fr;
-        }
-
-        .content-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .content-card.full {
-            grid-column: auto;
-        }
-
-        .injury-grid {
-            grid-template-columns: 1fr;
-        }
+        width:
+            calc(100% - 32px);
 
     }
 
-    @media(max-width: 600px) {
+    .stats {
 
-        .muscle-nav {
-            min-height: auto;
+        grid-template-columns: 1fr;
 
-            padding: 16px 18px;
-
-            flex-wrap: wrap;
-
-            gap: 14px;
-        }
-
-        .nav-links {
-            width: 100%;
-
-            overflow-x: auto;
-
-            padding-bottom: 2px;
-
-            scrollbar-width: none;
-        }
-
-        .nav-links::-webkit-scrollbar {
-            display: none;
-        }
-
-        .muscle-hero {
-            min-height: 610px;
-
-            padding:
-                75px 22px 55px;
-        }
-
-        .hero-content h1 {
-            font-size:
-                clamp(3.5rem,17vw,6rem);
-
-            letter-spacing: -4px;
-        }
-
-        .hero-stats {
-            gap: 22px;
-        }
-
-        .page {
-            width:
-                calc(100% - 32px);
-        }
-
-        .muscle-selector {
-            grid-template-columns:
-                repeat(2,1fr);
-        }
-
-        .muscle-main-card {
-            min-height: 390px;
-
-            padding: 28px;
-        }
-
-        .muscle-side {
-            grid-template-columns: 1fr;
-
-            grid-template-rows:
-                1fr 1fr;
-        }
-
-        .exercise-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .growth-banner {
-            min-height: 390px;
-
-            padding: 30px;
-        }
-
-        .nutrition {
-            padding: 28px;
-        }
+        margin-top: -25px;
 
     }
+
+    .intro {
+        padding-top: 65px;
+    }
+
+    .muscle-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-heading {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+    .detail-heading p {
+        text-align: left;
+    }
+
+    .exercise-row {
+
+        grid-template-columns:
+            1.3fr 1fr;
+
+        gap: 8px;
+
+    }
+
+    .exercise-row div:nth-child(3),
+    .exercise-row div:nth-child(4) {
+        display: none;
+    }
+
+    .injury-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .recovery {
+        padding: 35px 25px;
+    }
+
+    .final-cta {
+        padding: 40px 25px;
+    }
+
+}
 
 </style>
-```
 
 </head>
 
 <body>
 
 <!-- =====================================================
-     NAVIGATION
+     NAV
      ===================================================== -->
 
-<header class="muscle-nav">
+<header class="nex-nav">
 
 ```
-<a href="/" class="brand">
+<a href="/" class="logo">
     NEX<span>FIT</span>
 </a>
 
-<nav class="nav-links">
+<nav class="nav-menu">
 
     <a href="/">
         Home
@@ -1172,9 +1495,7 @@
         Calculator
     </a>
 
-    <a
-        href="/muscle"
-        class="active">
+    <a href="/muscle" class="active">
         Muscle Guide
     </a>
 
@@ -1195,44 +1516,29 @@
      HERO
      ===================================================== -->
 
-<section class="muscle-hero">
+<section class="guide-hero">
 
 ```
-<div class="hero-content">
+<div class="hero-inner">
 
-    <div class="eyebrow">
-        NEXFIT MUSCLE INTELLIGENCE
+    <div class="kicker">
+        NEXFIT ANATOMY SYSTEM
     </div>
 
-    <h1>
+    <h1 class="hero-title">
+
         KNOW YOUR
-        <span>MUSCLES.</span>
+        <span>MUSCLE.</span>
+
     </h1>
 
-    <p>
-        Understand how your body works, how each muscle
-        grows, how long it needs to recover and which
-        movements actually deserve a place in your program.
+    <p class="hero-copy">
+
+        Understand what you're training, why it grows,
+        how long it needs to recover and which movements
+        actually target it.
+
     </p>
-
-    <div class="hero-stats">
-
-        <div class="hero-stat">
-            <strong>07</strong>
-            <span>MUSCLE GROUPS</span>
-        </div>
-
-        <div class="hero-stat">
-            <strong>48–72H</strong>
-            <span>AVG RECOVERY</span>
-        </div>
-
-        <div class="hero-stat">
-            <strong>01</strong>
-            <span>COMPLETE GUIDE</span>
-        </div>
-
-    </div>
 
 </div>
 ```
@@ -1242,231 +1548,486 @@
 <main class="page">
 
 <!-- =====================================================
-     SELECTOR
+     STATS
      ===================================================== -->
 
-<section class="selector-section">
+<section class="stats">
 
 ```
-<div class="section-label">
+<div class="stat">
+
+    <span>
+        MUSCLE GROUPS
+    </span>
+
+    <strong class="accent">
+        07
+    </strong>
+
+</div>
+
+<div class="stat">
+
+    <span>
+        TRAINING FOCUS
+    </span>
+
+    <strong>
+        HYPERTROPHY
+    </strong>
+
+</div>
+
+<div class="stat">
+
+    <span>
+        RECOVERY
+    </span>
+
+    <strong>
+        24–72H
+    </strong>
+
+</div>
+
+<div class="stat">
+
+    <span>
+        SYSTEM
+    </span>
+
+    <strong>
+        NEXFIT
+    </strong>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     INTRO
+     ===================================================== -->
+
+<section class="intro">
+
+```
+<div class="section-kicker">
     EXPLORE THE BODY
 </div>
 
 <h2 class="section-title">
-    SELECT A
-    <span>MUSCLE GROUP.</span>
+
+    TRAIN WITH
+    <span>PURPOSE.</span>
+
 </h2>
 
+<p class="section-copy">
 
-<div class="muscle-selector">
+    Select a muscle group to understand its role,
+    growth stimulus, recovery needs and the exercises
+    used to train it effectively.
+
+</p>
+
+
+<!-- SEARCH -->
+
+<div class="search-wrap">
+
+    <input
+        type="text"
+        id="muscleSearch"
+        class="search-input"
+        placeholder="Search a muscle group...">
+
+</div>
+
+
+<!-- FILTER -->
+
+<div class="filter-row">
 
     <button
-        class="muscle-button active"
-        onclick="selectMuscle('chest',this)">
+        class="filter-btn active"
+        onclick="filterMuscles('all',this)">
 
-        <strong>CHEST</strong>
-        <small>PECTORALS</small>
+        ALL
 
     </button>
 
     <button
-        class="muscle-button"
-        onclick="selectMuscle('back',this)">
+        class="filter-btn"
+        onclick="filterMuscles('upper',this)">
 
-        <strong>BACK</strong>
-        <small>LATS + TRAPS</small>
-
-    </button>
-
-    <button
-        class="muscle-button"
-        onclick="selectMuscle('shoulders',this)">
-
-        <strong>SHOULDERS</strong>
-        <small>DELTOIDS</small>
+        UPPER BODY
 
     </button>
 
     <button
-        class="muscle-button"
-        onclick="selectMuscle('arms',this)">
+        class="filter-btn"
+        onclick="filterMuscles('core',this)">
 
-        <strong>ARMS</strong>
-        <small>BICEPS + TRICEPS</small>
-
-    </button>
-
-    <button
-        class="muscle-button"
-        onclick="selectMuscle('abs',this)">
-
-        <strong>ABS</strong>
-        <small>CORE</small>
+        CORE
 
     </button>
 
     <button
-        class="muscle-button"
-        onclick="selectMuscle('neck',this)">
+        class="filter-btn"
+        onclick="filterMuscles('lower',this)">
 
-        <strong>NECK</strong>
-        <small>CERVICAL</small>
-
-    </button>
-
-    <button
-        class="muscle-button"
-        onclick="selectMuscle('legs',this)">
-
-        <strong>LEGS</strong>
-        <small>LOWER BODY</small>
+        LOWER BODY
 
     </button>
 
 </div>
+
+
+<!-- =================================================
+     MUSCLE CARDS
+     ================================================= -->
+
+<div class="muscle-grid">
+
+
+    <!-- CHEST -->
+
+    <article
+        class="muscle-card"
+        data-group="upper"
+        data-name="chest"
+        onclick="openMuscle('chest')">
+
+        <img
+            class="muscle-image"
+            src="https://images.unsplash.com/photo-1598971639058-999f7d9b1d5e?auto=format&fit=crop&w=900&q=80"
+            alt="Chest training">
+
+        <div class="muscle-overlay"></div>
+
+        <div class="muscle-content">
+
+            <div class="muscle-number">
+                01 / UPPER
+            </div>
+
+            <h3>
+                Chest
+            </h3>
+
+            <p>
+                Pectorals · Pressing · Adduction
+            </p>
+
+            <span class="explore">
+                EXPLORE MUSCLE →
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- BACK -->
+
+    <article
+        class="muscle-card"
+        data-group="upper"
+        data-name="back"
+        onclick="openMuscle('back')">
+
+        <img
+            class="muscle-image"
+            src="https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=900&q=80"
+            alt="Back training">
+
+        <div class="muscle-overlay"></div>
+
+        <div class="muscle-content">
+
+            <div class="muscle-number">
+                02 / UPPER
+            </div>
+
+            <h3>
+                Back
+            </h3>
+
+            <p>
+                Lats · Traps · Rows · Pulls
+            </p>
+
+            <span class="explore">
+                EXPLORE MUSCLE →
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- SHOULDERS -->
+
+    <article
+        class="muscle-card"
+        data-group="upper"
+        data-name="shoulders"
+        onclick="openMuscle('shoulders')">
+
+        <img
+            class="muscle-image"
+            src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=900&q=80"
+            alt="Shoulder training">
+
+        <div class="muscle-overlay"></div>
+
+        <div class="muscle-content">
+
+            <div class="muscle-number">
+                03 / UPPER
+            </div>
+
+            <h3>
+                Shoulders
+            </h3>
+
+            <p>
+                Deltoids · Pressing · Raises
+            </p>
+
+            <span class="explore">
+                EXPLORE MUSCLE →
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- ARMS -->
+
+    <article
+        class="muscle-card"
+        data-group="upper"
+        data-name="arms biceps triceps forearms"
+        onclick="openMuscle('arms')">
+
+        <img
+            class="muscle-image"
+            src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=80"
+            alt="Arm training">
+
+        <div class="muscle-overlay"></div>
+
+        <div class="muscle-content">
+
+            <div class="muscle-number">
+                04 / UPPER
+            </div>
+
+            <h3>
+                Arms
+            </h3>
+
+            <p>
+                Biceps · Triceps · Forearms
+            </p>
+
+            <span class="explore">
+                EXPLORE MUSCLE →
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- ABS -->
+
+    <article
+        class="muscle-card"
+        data-group="core"
+        data-name="abs core abdominals obliques"
+        onclick="openMuscle('abs')">
+
+        <img
+            class="muscle-image"
+            src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=900&q=80"
+            alt="Core training">
+
+        <div class="muscle-overlay"></div>
+
+        <div class="muscle-content">
+
+            <div class="muscle-number">
+                05 / CORE
+            </div>
+
+            <h3>
+                Abs
+            </h3>
+
+            <p>
+                Rectus Abdominis · Obliques
+            </p>
+
+            <span class="explore">
+                EXPLORE MUSCLE →
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- NECK -->
+
+    <article
+        class="muscle-card"
+        data-group="upper"
+        data-name="neck cervical traps"
+        onclick="openMuscle('neck')">
+
+        <img
+            class="muscle-image"
+            src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=80"
+            alt="Neck and trap training">
+
+        <div class="muscle-overlay"></div>
+
+        <div class="muscle-content">
+
+            <div class="muscle-number">
+                06 / UPPER
+            </div>
+
+            <h3>
+                Neck
+            </h3>
+
+            <p>
+                Cervical Flexors · Extensors · Traps
+            </p>
+
+            <span class="explore">
+                EXPLORE MUSCLE →
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- LEGS -->
+
+    <article
+        class="muscle-card"
+        data-group="lower"
+        data-name="legs quads hamstrings glutes calves"
+        onclick="openMuscle('legs')">
+
+        <img
+            class="muscle-image"
+            src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=900&q=80"
+            alt="Leg training">
+
+        <div class="muscle-overlay"></div>
+
+        <div class="muscle-content">
+
+            <div class="muscle-number">
+                07 / LOWER
+            </div>
+
+            <h3>
+                Legs
+            </h3>
+
+            <p>
+                Quads · Hamstrings · Glutes · Calves
+            </p>
+
+            <span class="explore">
+                EXPLORE MUSCLE →
+            </span>
+
+        </div>
+
+    </article>
+
+
+</div>
 ```
+
+</section>
 
 <!-- =====================================================
-     SELECTED MUSCLE
+     TRAINING PRINCIPLES
      ===================================================== -->
 
-<div class="muscle-panel">
+<section class="detail-section">
 
 ```
-<div class="muscle-main-card">
+<div class="detail-heading">
 
-    <div
-        class="selected-number"
-        id="muscleNumber">
-        01
+    <div>
+
+        <div class="section-kicker">
+            THE FUNDAMENTALS
+        </div>
+
+        <h2>
+            HOW MUSCLE GROWS
+        </h2>
+
     </div>
 
-    <div class="selected-tag">
-        SELECTED MUSCLE
-    </div>
-
-    <h2 id="muscleName">
-        CHEST
-    </h2>
-
-    <p id="muscleDescription">
-        The chest is primarily made up of the pectoralis
-        major and minor. Effective training combines
-        pressing and fly-based movements through a
-        controlled range of motion.
+    <p>
+        Muscle development requires an appropriate training
+        stimulus, adequate recovery and progressive overload.
     </p>
 
 </div>
 
 
-<div class="muscle-side">
+<div class="details">
 
-    <div class="info-card">
 
-        <div class="info-card-label">
-            RECOVERY WINDOW
-        </div>
+    <div class="detail-card">
 
-        <strong
-            id="recoveryValue"
-            class="recovery-value">
-            48–72 HOURS
-        </strong>
+        <h3>
+            Hypertrophy Principles
+        </h3>
 
         <p>
-            Allow adequate recovery before repeatedly
-            training the same muscle intensely.
+            Progressive resistance training creates the stimulus
+            for muscle adaptation. Consistent training combined
+            with adequate recovery supports continued development.
         </p>
 
-    </div>
-
-
-    <div class="info-card">
-
-        <div class="info-card-label">
-            PRIMARY FOCUS
-        </div>
-
-        <strong id="focusValue">
-            PRESS + FLY
-        </strong>
-
-        <p id="focusDescription">
-            Horizontal pressing and controlled adduction
-            are the foundation of chest development.
-        </p>
-
-    </div>
-
-</div>
-```
-
-</div>
-
-</section>
-
-<!-- =====================================================
-     MUSCLE DETAILS
-     ===================================================== -->
-
-<section class="content-section">
-
-```
-<div class="section-label">
-    TRAINING INTELLIGENCE
-</div>
-
-<h2 class="section-title">
-    BUILD IT.
-    <span>DON'T JUST MOVE IT.</span>
-</h2>
-
-
-<div class="content-grid">
-
-
-    <div class="content-card">
-
-        <h3>
-            How It <span>Grows</span>
-        </h3>
-
-        <p id="growthText">
-            Effective chest development requires horizontal
-            adduction of the arm and arm flexion. The muscle
-            responds well to progressive overload and
-            controlled range of motion.
-        </p>
-
-    </div>
-
-
-    <div class="content-card">
-
-        <h3>
-            Best <span>Movements</span>
-        </h3>
-
-        <ul id="movementList">
+        <ul class="detail-list">
 
             <li>
-                <strong>Barbell / Dumbbell Bench Press</strong>
-                — primary pressing movement.
+                <strong>Progressive overload:</strong>
+                Gradually increase the training challenge.
             </li>
 
             <li>
-                <strong>Incline Press</strong>
-                — emphasizes upper chest.
+                <strong>Controlled repetitions:</strong>
+                Maintain technique and control throughout the movement.
             </li>
 
             <li>
-                <strong>Chest Dips</strong>
-                — compound pressing movement.
+                <strong>Training volume:</strong>
+                Accumulate enough productive work without allowing
+                fatigue to overwhelm recovery.
             </li>
 
             <li>
-                <strong>Cable Flyes</strong>
-                — controlled adduction and tension.
+                <strong>Recovery:</strong>
+                Allow trained muscles sufficient time to recover
+                before demanding another hard session.
             </li>
 
         </ul>
@@ -1474,16 +2035,215 @@
     </div>
 
 
-    <div class="content-card full">
+    <div class="detail-card">
 
         <h3>
-            Recommended <span>Exercise Library</span>
+            The Recovery Rule
         </h3>
 
-        <div
-            class="exercise-grid"
-            id="exerciseGrid">
+        <ul class="detail-list">
 
+            <li>
+                <strong>Smaller groups:</strong>
+                approximately 24–48 hours.
+            </li>
+
+            <li>
+                <strong>Arms:</strong>
+                approximately 48 hours.
+            </li>
+
+            <li>
+                <strong>Large muscle groups:</strong>
+                approximately 48–72 hours.
+            </li>
+
+            <li>
+                <strong>Important:</strong>
+                actual recovery depends on training volume,
+                intensity, sleep, nutrition and individual factors.
+            </li>
+
+        </ul>
+
+    </div>
+
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     EXERCISE TABLE
+     ===================================================== -->
+
+<section class="exercise-section">
+
+```
+<div class="section-kicker">
+    MOVEMENT LIBRARY
+</div>
+
+<h2 class="section-title">
+
+    BUILD YOUR
+    <span>PROGRAM.</span>
+
+</h2>
+
+<p class="section-copy">
+
+    Start with proven movement patterns and build your
+    training around progressive resistance and good technique.
+
+</p>
+
+
+<div class="exercise-table">
+
+    <div class="exercise-row header">
+
+        <div>
+            MOVEMENT
+        </div>
+
+        <div>
+            TARGET
+        </div>
+
+        <div>
+            PATTERN
+        </div>
+
+        <div>
+            FOCUS
+        </div>
+
+    </div>
+
+
+    <div class="exercise-row">
+
+        <div>
+            <strong>Barbell Bench Press</strong>
+        </div>
+
+        <div>
+            Chest
+        </div>
+
+        <div>
+            Push
+        </div>
+
+        <div>
+            Strength
+        </div>
+
+    </div>
+
+
+    <div class="exercise-row">
+
+        <div>
+            <strong>Barbell Row</strong>
+        </div>
+
+        <div>
+            Back
+        </div>
+
+        <div>
+            Pull
+        </div>
+
+        <div>
+            Thickness
+        </div>
+
+    </div>
+
+
+    <div class="exercise-row">
+
+        <div>
+            <strong>Overhead Press</strong>
+        </div>
+
+        <div>
+            Shoulders
+        </div>
+
+        <div>
+            Push
+        </div>
+
+        <div>
+            Delts
+        </div>
+
+    </div>
+
+
+    <div class="exercise-row">
+
+        <div>
+            <strong>Barbell Curl</strong>
+        </div>
+
+        <div>
+            Biceps
+        </div>
+
+        <div>
+            Flexion
+        </div>
+
+        <div>
+            Arms
+        </div>
+
+    </div>
+
+
+    <div class="exercise-row">
+
+        <div>
+            <strong>Romanian Deadlift</strong>
+        </div>
+
+        <div>
+            Hamstrings
+        </div>
+
+        <div>
+            Hinge
+        </div>
+
+        <div>
+            Posterior Chain
+        </div>
+
+    </div>
+
+
+    <div class="exercise-row">
+
+        <div>
+            <strong>Leg Press</strong>
+        </div>
+
+        <div>
+            Legs
+        </div>
+
+        <div>
+            Push
+        </div>
+
+        <div>
+            Quads
         </div>
 
     </div>
@@ -1494,29 +2254,28 @@
 </section>
 
 <!-- =====================================================
-     HYPERTROPHY
+     RECOVERY
      ===================================================== -->
 
-<section class="growth-banner">
+<section class="recovery">
 
 ```
-<div class="growth-banner-content">
+<div class="recovery-inner">
 
-    <div class="section-label">
-        THE SCIENCE
+    <div class="section-kicker">
+        RECOVERY IS TRAINING
     </div>
 
     <h2>
-        MUSCLE GROWTH IS
-        <span>MECHANICAL.</span>
+        YOU DON'T GROW
+        WHILE YOU TRAIN.
     </h2>
 
     <p>
-        Type I muscle fibers are highly fatigue resistant
-        and respond well to higher repetitions and sustained
-        tension. Type II fibers produce greater force and
-        respond strongly to mechanical tension, progressive
-        overload and explosive work.
+        Training provides the stimulus. Recovery allows your
+        body to adapt. Sleep, nutrition, hydration and appropriate
+        rest between demanding sessions all contribute to your
+        ability to train consistently.
     </p>
 
 </div>
@@ -1531,14 +2290,23 @@
 <section class="injury-section">
 
 ```
-<div class="section-label">
+<div class="section-kicker">
     TRAIN SMART
 </div>
 
 <h2 class="section-title">
-    INJURY
-    <span>INTELLIGENCE.</span>
+
+    PROTECT THE
+    <span>PROGRESS.</span>
+
 </h2>
+
+<p class="section-copy">
+
+    Good training isn't simply about pushing harder.
+    Technique, appropriate progression and recovery matter.
+
+</p>
 
 
 <div class="injury-grid">
@@ -1551,26 +2319,12 @@
         </div>
 
         <h3>
-            Rotator Cuff Tendonitis / Impingement
+            TECHNIQUE FIRST
         </h3>
 
         <p>
-            <strong>ROOT CAUSE:</strong>
-            Overuse of pressing movements, poor scapular
-            stability and insufficient rear-delt / upper-back
-            work.
-        </p>
-
-        <p>
-            <strong>APPROACH:</strong>
-            Include face pulls, band pull-aparts and controlled
-            external rotation work.
-        </p>
-
-        <p>
-            <strong>AVOID:</strong>
-            Heavy behind-the-neck pressing and uncontrolled
-            repetitions.
+            Learn the movement before chasing heavier loads.
+            Controlled repetitions create a stronger foundation.
         </p>
 
     </div>
@@ -1583,25 +2337,12 @@
         </div>
 
         <h3>
-            Lower Back Strain
+            PROGRESS GRADUALLY
         </h3>
 
         <p>
-            <strong>ROOT CAUSE:</strong>
-            Poor bracing, spinal rounding under load and
-            attempting loads beyond current technique.
-        </p>
-
-        <p>
-            <strong>APPROACH:</strong>
-            Master the hip hinge with manageable loads and
-            develop core control.
-        </p>
-
-        <p>
-            <strong>AVOID:</strong>
-            Lifting with a rounded spine or sacrificing
-            technique for heavier weight.
+            Increase training difficulty progressively rather
+            than making sudden jumps in volume or intensity.
         </p>
 
     </div>
@@ -1614,53 +2355,13 @@
         </div>
 
         <h3>
-            Patellar Tendonitis
+            RESPECT PAIN
         </h3>
 
         <p>
-            <strong>ROOT CAUSE:</strong>
-            Rapid training-volume increases, repetitive
-            jumping and poor movement mechanics.
-        </p>
-
-        <p>
-            <strong>APPROACH:</strong>
-            Progress gradually and maintain appropriate
-            recovery between demanding leg sessions.
-        </p>
-
-        <p>
-            <strong>AVOID:</strong>
-            Ignoring sharp pain around the kneecap.
-        </p>
-
-    </div>
-
-
-    <div class="injury-card">
-
-        <div class="injury-number">
-            04
-        </div>
-
-        <h3>
-            Tennis / Golfer's Elbow
-        </h3>
-
-        <p>
-            <strong>ROOT CAUSE:</strong>
-            Repetitive gripping and excessive wrist loading.
-        </p>
-
-        <p>
-            <strong>APPROACH:</strong>
-            Gradual forearm conditioning and neutral grips
-            where appropriate.
-        </p>
-
-        <p>
-            <strong>AVOID:</strong>
-            Ignoring persistent elbow discomfort.
+            Persistent or significant pain should not be ignored.
+            Stop aggravating movements and seek appropriate
+            professional assessment when needed.
         </p>
 
     </div>
@@ -1672,59 +2373,31 @@
 </section>
 
 <!-- =====================================================
-     NUTRITION
-     ===================================================== -->
-
-<section class="nutrition">
-
-```
-<h2>
-    RECOVERY STARTS
-    <span style="color:var(--accent)">
-        OUTSIDE THE GYM.
-    </span>
-</h2>
-
-<p>
-    Muscle development depends on more than training.
-    Prioritize adequate protein, carbohydrates for training
-    performance, healthy fats and hydration. The original
-    Nexfit guide recommends approximately
-    <strong>1.6–2.2 g of protein per kg of body weight</strong>
-    as a general muscle-building target.
-</p>
-```
-
-</section>
-
-<!-- =====================================================
-     CTA
+     FINAL CTA
      ===================================================== -->
 
 <section class="final-cta">
 
 ```
-<span>
-    READY TO PUT THE KNOWLEDGE TO WORK?
-</span>
+<div class="section-kicker">
+    NEXT STEP
+</div>
 
 <h2>
-    TRAIN WITH
-    <span style="color:var(--accent)">
-        PURPOSE.
-    </span>
+    NOW TURN KNOWLEDGE
+    INTO TRAINING.
 </h2>
 
 <p>
-    Take what you've learned and turn it into a structured
-    30-day training routine.
+    Use the Nexfit Challenge system to turn your understanding
+    of training into a structured 30-day progression.
 </p>
 
 <a
     href="/challenges"
     class="cta-button">
 
-    START 30-DAY CHALLENGE →
+    EXPLORE 30-DAY CHALLENGES →
 
 </a>
 ```
@@ -1734,14 +2407,64 @@
 </main>
 
 <!-- =====================================================
-     FOOTER
+     MUSCLE MODAL
      ===================================================== -->
 
-<footer class="site-footer">
+<div
+    class="muscle-modal"
+    id="muscleModal">
 
 ```
-© 2026 NEXFIT ·
-Train. Track. Transform.
+<div class="modal-box">
+
+    <div class="modal-top">
+
+        <div>
+
+            <div
+                class="modal-kicker"
+                id="modalKicker">
+
+                MUSCLE GROUP
+
+            </div>
+
+            <h2
+                id="modalTitle">
+
+                Chest
+
+            </h2>
+
+        </div>
+
+
+        <button
+            class="close"
+            onclick="closeMuscle()">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="modal-content"
+        id="modalContent">
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<footer>
+
+```
+© 2026 NEXFIT · Train. Track. Transform.
 
 <br><br>
 
@@ -1751,398 +2474,385 @@ Designed & Developed by
 
 </footer>
 
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
-
 <script>
 
+/* =========================================================
+   MUSCLE DATA
+   ========================================================= */
 
 const muscleData = {
 
     chest: {
 
-        number: "01",
+        title: "Chest",
 
-        name: "CHEST",
-
-        recovery: "48–72 HOURS",
-
-        focus: "PRESS + FLY",
-
-        focusDescription:
-            "Horizontal pressing and controlled adduction are the foundation of chest development.",
-
-        description:
-            "The chest is primarily made up of the pectoralis major and minor. Effective training combines pressing and fly-based movements through a controlled range of motion.",
+        subtitle: "Pectorals · Pressing · Adduction",
 
         growth:
-            "Chest development requires horizontal adduction of the arm and arm flexion. Progressive overload, adequate range of motion and controlled repetitions are central to productive training.",
+            "The chest responds to pressing movements that challenge the pectoral muscles through an appropriate range of motion and progressive resistance.",
 
-        exercises: [
+        recovery:
+            "Approximately 48–72 hours depending on training volume and intensity.",
 
-            ["01","Barbell Bench Press","Compound chest press for overall strength."],
-
-            ["02","Incline Dumbbell Press","Strong upper-chest pressing movement."],
-
-            ["03","Chest Dips","Bodyweight compound pressing movement."],
-
-            ["04","Cable Flyes","Controlled chest adduction and constant tension."]
-
-        ]
+        exercises:
+            "Barbell Bench Press, Incline Press, Dumbbell Press, Cable Fly and Push-Ups."
 
     },
 
 
     back: {
 
-        number: "02",
+        title: "Back",
 
-        name: "BACK",
-
-        recovery: "48–72 HOURS",
-
-        focus: "PULL + ROW",
-
-        focusDescription:
-            "Vertical pulling develops width while horizontal rowing builds mid-back thickness.",
-
-        description:
-            "The back includes the latissimus dorsi, rhomboids and trapezius. A complete back program uses both vertical pulling and horizontal rowing patterns.",
+        subtitle: "Lats · Traps · Rows · Pulls",
 
         growth:
-            "Back development combines vertical pulling for lat width with horizontal rowing for mid-back thickness and scapular retraction.",
+            "Back development comes from combining vertical and horizontal pulling patterns while progressively increasing training demands.",
 
-        exercises: [
+        recovery:
+            "Approximately 48–72 hours depending on training stress.",
 
-            ["01","Pull-Ups","Build upper-body pulling strength and lat width."],
-
-            ["02","Barbell Rows","Compound movement for back thickness."],
-
-            ["03","Lat Pulldowns","Accessible vertical pulling movement."],
-
-            ["04","Seated Cable Rows","Controlled horizontal pulling pattern."]
-
-        ]
+        exercises:
+            "Pull-Ups, Lat Pulldowns, Barbell Rows, Seated Rows and Romanian Deadlifts."
 
     },
 
 
     shoulders: {
 
-        number: "03",
+        title: "Shoulders",
 
-        name: "SHOULDERS",
-
-        recovery: "48 HOURS",
-
-        focus: "PRESS + RAISE",
-
-        focusDescription:
-            "Pressing develops anterior delts while lateral and rear-delt work builds complete shoulder development.",
-
-        description:
-            "The deltoids consist of anterior, lateral and rear portions. Balanced shoulder training should address all three.",
+        subtitle: "Deltoids · Pressing · Raises",
 
         growth:
-            "Overhead pressing emphasizes the front delts while lateral raises and rear-delt movements help develop width and balance.",
+            "The deltoids can be trained through pressing and controlled raising movements that challenge different portions of the shoulder.",
 
-        exercises: [
+        recovery:
+            "Approximately 48 hours, while accounting for indirect work from pressing exercises.",
 
-            ["01","Overhead Press","Primary compound shoulder press."],
-
-            ["02","Lateral Raises","Direct movement for lateral delts."],
-
-            ["03","Face Pulls","Rear-delt and upper-back focused movement."],
-
-            ["04","Arnold Press","Shoulder pressing through a larger movement path."]
-
-        ]
+        exercises:
+            "Overhead Press, Lateral Raises, Rear-Delt Flyes and controlled pressing variations."
 
     },
 
 
     arms: {
 
-        number: "04",
+        title: "Arms",
 
-        name: "ARMS",
-
-        recovery: "48 HOURS",
-
-        focus: "CURL + EXTEND",
-
-        focusDescription:
-            "Biceps perform elbow flexion while triceps contribute heavily to pressing and elbow extension.",
-
-        description:
-            "The arms include the biceps, triceps and forearms. Triceps contribute substantial upper-arm mass while the biceps perform elbow flexion and supination.",
+        subtitle: "Biceps · Triceps · Forearms",
 
         growth:
-            "Arm development benefits from both compound pressing and pulling plus direct elbow-flexion and extension work.",
+            "The triceps contribute substantial upper-arm mass and respond to pressing and extension work. The biceps are trained through elbow flexion and pulling movements.",
 
-        exercises: [
+        recovery:
+            "Approximately 48 hours.",
 
-            ["01","Barbell Curls","Classic biceps strength movement."],
-
-            ["02","Hammer Curls","Targets biceps, brachialis and forearms."],
-
-            ["03","Tricep Pushdowns","Direct triceps extension movement."],
-
-            ["04","Close-Grip Bench Press","Compound movement with strong triceps involvement."]
-
-        ]
+        exercises:
+            "Barbell Curls, Hammer Curls, Tricep Pushdowns, Skull Crushers and Close-Grip Bench Press."
 
     },
 
 
     abs: {
 
-        number: "05",
+        title: "Abs",
 
-        name: "ABS",
-
-        recovery: "24–48 HOURS",
-
-        focus: "FLEX + BRACE",
-
-        focusDescription:
-            "The core works through spinal movement and bracing against external resistance.",
-
-        description:
-            "The abdominal region includes the rectus abdominis and obliques. Training can combine controlled spinal flexion with anti-movement and bracing work.",
+        subtitle: "Rectus Abdominis · Obliques",
 
         growth:
-            "Abs can be trained through controlled spinal flexion and resistance-based bracing. Progressive overload can be applied just as with other muscles.",
+            "The abdominal muscles can be trained through controlled spinal flexion and core-bracing movements with progressive resistance.",
 
-        exercises: [
+        recovery:
+            "Approximately 24–48 hours.",
 
-            ["01","Cable Crunches","Loaded spinal-flexion movement."],
-
-            ["02","Hanging Leg Raises","Challenging core movement."],
-
-            ["03","Russian Twists","Rotational core exercise."],
-
-            ["04","Ab Wheel Rollouts","High-demand anti-extension movement."]
-
-        ]
+        exercises:
+            "Cable Crunches, Hanging Leg Raises, Russian Twists and Ab-Wheel Rollouts."
 
     },
 
 
     neck: {
 
-        number: "06",
+        title: "Neck",
 
-        name: "NECK",
-
-        recovery: "48 HOURS",
-
-        focus: "CONTROL + RESIST",
-
-        focusDescription:
-            "Neck training should prioritize controlled resistance and gradual progression.",
-
-        description:
-            "The neck involves cervical flexors and extensors. Training should be conservative, controlled and progressed gradually.",
+        subtitle: "Cervical Flexors · Extensors · Traps",
 
         growth:
-            "Direct resistance can be applied through controlled flexion, extension and isometric work while prioritizing technique.",
+            "The neck can be trained with carefully controlled resistance and isometric work. Progression should be conservative because the region is sensitive.",
 
-        exercises: [
+        recovery:
+            "Approximately 48 hours.",
 
-            ["01","Neck Harness Extensions","Controlled extension resistance."],
-
-            ["02","Plate-Resisted Flexion","Light resistance for cervical flexion."],
-
-            ["03","Isometric Holds","Static resistance and control."],
-
-            ["04","Trap Raises","Upper-trap development supporting the neck region."]
-
-        ]
+        exercises:
+            "Controlled isometric holds and appropriately supervised resistance exercises."
 
     },
 
 
     legs: {
 
-        number: "07",
+        title: "Legs",
 
-        name: "LEGS",
-
-        recovery: "72 HOURS",
-
-        focus: "SQUAT + HINGE",
-
-        focusDescription:
-            "Complete leg training combines knee-dominant and hip-dominant movements.",
-
-        description:
-            "The legs include the quadriceps, hamstrings, glutes and calves. A balanced program uses squatting, hinging, unilateral work and calf training.",
+        subtitle: "Quadriceps · Hamstrings · Glutes · Calves",
 
         growth:
-            "Lower-body development benefits from progressive overload through knee-dominant squats and presses alongside hip hinges and unilateral movements.",
+            "Lower-body development uses knee-dominant and hip-dominant patterns with progressive resistance and sufficient recovery.",
 
-        exercises: [
+        recovery:
+            "Approximately 72 hours can be appropriate after demanding sessions, depending on volume and individual recovery.",
 
-            ["01","Back Squats","Primary compound lower-body movement."],
-
-            ["02","Romanian Deadlifts","Hamstring and glute focused hip hinge."],
-
-            ["03","Leg Press","Stable compound quad movement."],
-
-            ["04","Bulgarian Split Squats","Unilateral lower-body hypertrophy movement."]
-
-        ]
+        exercises:
+            "Back Squats, Romanian Deadlifts, Leg Press and Bulgarian Split Squats."
 
     }
 
 };
 
 
-/* =====================================================
-   MUSCLE SELECTOR
-   ===================================================== */
+/* =========================================================
+   OPEN MODAL
+   ========================================================= */
 
-function selectMuscle(
-    muscle,
-    button
+function openMuscle(
+    muscle
 ) {
-
-    document
-        .querySelectorAll(".muscle-button")
-        .forEach(
-            btn =>
-                btn.classList.remove("active")
-        );
-
-
-    if (button) {
-
-        button.classList.add("active");
-
-    }
-
 
     const data =
         muscleData[muscle];
 
-
     if (!data) return;
 
 
-    document
-        .getElementById("muscleNumber")
-        .innerText =
-        data.number;
+    document.getElementById(
+        "modalKicker"
+    ).innerText =
+        data.subtitle;
 
 
-    document
-        .getElementById("muscleName")
-        .innerText =
-        data.name;
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        data.title;
 
 
-    document
-        .getElementById("muscleDescription")
-        .innerText =
-        data.description;
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div class="modal-item">
+
+            <span>
+                HOW IT GROWS
+            </span>
+
+            <p>
+                ${data.growth}
+            </p>
+
+        </div>
 
 
-    document
-        .getElementById("recoveryValue")
-        .innerText =
-        data.recovery;
+        <div class="modal-item">
+
+            <span>
+                RECOVERY
+            </span>
+
+            <p>
+                ${data.recovery}
+            </p>
+
+        </div>
 
 
-    document
-        .getElementById("focusValue")
-        .innerText =
-        data.focus;
+        <div class="modal-item">
+
+            <span>
+                BEST MOVEMENTS
+            </span>
+
+            <p>
+                ${data.exercises}
+            </p>
+
+        </div>
+
+    `;
 
 
-    document
-        .getElementById("focusDescription")
-        .innerText =
-        data.focusDescription;
+    document.getElementById(
+        "muscleModal"
+    ).classList.add(
+        "open"
+    );
 
 
-    document
-        .getElementById("growthText")
-        .innerText =
-        data.growth;
-
-
-    const list =
-        document.getElementById(
-            "movementList"
-        );
-
-
-    list.innerHTML =
-        data.exercises
-            .map(
-                exercise => `
-                    <li>
-                        <strong>
-                            ${exercise[1]}
-                        </strong>
-                        — ${exercise[2]}
-                    </li>
-                `
-            )
-            .join("");
-
-
-    const grid =
-        document.getElementById(
-            "exerciseGrid"
-        );
-
-
-    grid.innerHTML =
-        data.exercises
-            .map(
-                exercise => `
-                    <div class="exercise-card">
-
-                        <div class="exercise-index">
-                            EXERCISE ${exercise[0]}
-                        </div>
-
-                        <strong>
-                            ${exercise[1]}
-                        </strong>
-
-                        <span>
-                            ${exercise[2]}
-                        </span>
-
-                    </div>
-                `
-            )
-            .join("");
+    document.body.style.overflow =
+        "hidden";
 
 }
 
 
-/* =====================================================
-   INITIALIZE
-   ===================================================== */
+/* =========================================================
+   CLOSE MODAL
+   ========================================================= */
+
+function closeMuscle() {
+
+    document.getElementById(
+        "muscleModal"
+    ).classList.remove(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =========================================================
+   CLICK OUTSIDE MODAL
+   ========================================================= */
+
+document.getElementById(
+    "muscleModal"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target === this
+        ) {
+
+            closeMuscle();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESCAPE
+   ========================================================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+    "keydown",
+    event => {
 
-        const firstButton =
-            document.querySelector(
-                ".muscle-button.active"
-            );
+        if (
+            event.key === "Escape"
+        ) {
 
-        selectMuscle(
-            "chest",
-            firstButton
+            closeMuscle();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+
+function filterMuscles(
+    group,
+    button
+) {
+
+    document
+        .querySelectorAll(
+            ".filter-btn"
+        )
+        .forEach(
+            item =>
+                item.classList.remove(
+                    "active"
+                )
         );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    document
+        .querySelectorAll(
+            ".muscle-card"
+        )
+        .forEach(card => {
+
+            if (
+                group === "all" ||
+                card.dataset.group === group
+            ) {
+
+                card.classList.remove(
+                    "hidden"
+                );
+
+            } else {
+
+                card.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        });
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+document.getElementById(
+    "muscleSearch"
+).addEventListener(
+    "input",
+    function() {
+
+        const query =
+            this.value
+                .toLowerCase()
+                .trim();
+
+
+        document
+            .querySelectorAll(
+                ".muscle-card"
+            )
+            .forEach(card => {
+
+                const name =
+                    card.dataset.name
+                        .toLowerCase();
+
+
+                if (
+                    name.includes(query)
+                ) {
+
+                    card.classList.remove(
+                        "hidden"
+                    );
+
+                } else {
+
+                    card.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+            });
 
     }
 );
