@@ -4,435 +4,413 @@
 
 <head>
 
+```
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexfit — Myth Lab</title>
+<title>Nexfit — Fitness Myths</title>
 
 <link rel="stylesheet"
-href="{{ url_for('static', filename='style.css') }}">
+      href="{{ url_for('static', filename='style.css') }}">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-rel="stylesheet">
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet">
+```
 
 <style>
 
-/* =========================================================
-   NEXFIT MYTH LAB
-   ========================================================= */
-
-:root{
-    --bg:#070707;
-    --card:#101010;
-    --card2:#141414;
-    --text:#f5f5f5;
-    --muted:#777;
-    --border:rgba(255,255,255,.09);
-    --border2:rgba(255,255,255,.17);
-    --accent:#c8ff00;
-    --danger:#ff4d4d;
+:root {
+    --nx-bg:#060606;
+    --nx-card:#0d0d0d;
+    --nx-border:rgba(255,255,255,.08);
+    --nx-text:#f3f3f3;
+    --nx-muted:#737373;
+    --nx-accent:#c8ff00;
 }
 
-*{
+
+* {
     box-sizing:border-box;
 }
 
-html{
+
+html {
     scroll-behavior:smooth;
 }
 
-body{
+
+body {
+
     margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:Inter,sans-serif;
+
+    color:var(--nx-text);
+
+    background:
+        radial-gradient(
+            circle at 85% 0%,
+            rgba(200,255,0,.055),
+            transparent 30%
+        ),
+        var(--nx-bg);
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
 }
 
-a{
+
+a {
     text-decoration:none;
 }
 
 
-/* =========================================================
-   NAV
-   ========================================================= */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
-.nex-nav{
+.nx-nav {
+
     position:sticky;
+
     top:0;
+
     z-index:1000;
 
     min-height:76px;
+
     padding:0 max(5vw,22px);
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
-    background:rgba(7,7,7,.88);
+    gap:30px;
+
+    background:rgba(6,6,6,.92);
+
+    border-bottom:1px solid var(--nx-border);
+
     backdrop-filter:blur(18px);
-
-    border-bottom:1px solid var(--border);
 }
 
-.logo{
-    color:white;
-    font-family:"Space Grotesk";
+
+.nx-logo {
+
+    color:#fff;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
     font-size:1.45rem;
-    font-weight:800;
-    letter-spacing:-1px;
+
+    font-weight:900;
+
+    letter-spacing:-1.5px;
 }
 
-.logo span{
-    color:var(--accent);
+
+.nx-logo span {
+    color:var(--nx-accent);
 }
 
-.nav-menu{
+
+.nx-links {
+
     display:flex;
+
     align-items:center;
-    gap:28px;
-}
 
-.nav-menu a{
-    position:relative;
-    color:#707070;
-    font-size:.72rem;
-    font-weight:700;
-    transition:.2s;
-}
+    gap:27px;
 
-.nav-menu a:hover,
-.nav-menu a.active{
-    color:white;
-}
+    overflow-x:auto;
 
-.nav-menu a.active::after{
-    content:"";
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:-11px;
-    height:2px;
-    background:var(--accent);
+    scrollbar-width:none;
 }
 
 
-/* =========================================================
+.nx-links::-webkit-scrollbar {
+    display:none;
+}
+
+
+.nx-links a {
+
+    white-space:nowrap;
+
+    color:#626262;
+
+    font-size:.67rem;
+
+    font-weight:800;
+
+    transition:color .2s ease;
+}
+
+
+.nx-links a:hover,
+.nx-links a.active {
+    color:#fff;
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.nx-container {
+
+    width:min(1120px,90%);
+
+    margin:auto;
+}
+
+
+/* =====================================================
    HERO
-   ========================================================= */
+===================================================== */
 
-.hero{
-
-    min-height:520px;
+.myth-hero {
 
     position:relative;
+
+    min-height:440px;
+
+    margin-top:25px;
 
     display:flex;
+
     align-items:flex-end;
 
     overflow:hidden;
 
+    border:1px solid var(--nx-border);
+
+    border-radius:18px;
+
     background:
 
-    linear-gradient(
-        90deg,
-        rgba(0,0,0,.98) 0%,
-        rgba(0,0,0,.78) 45%,
-        rgba(0,0,0,.2) 100%
-    ),
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.97),
+            rgba(0,0,0,.76) 55%,
+            rgba(0,0,0,.25)
+        ),
 
-    linear-gradient(
-        0deg,
-        var(--bg),
-        transparent 55%
-    ),
-
-    url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2200&q=90")
-    center/cover;
+        url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=90")
+        center/cover;
 }
 
-.hero-inner{
 
-    width:min(1180px,calc(100% - 10vw));
+.myth-hero-content {
 
-    margin:auto;
+    max-width:760px;
 
-    padding:100px 0 75px;
+    padding:
+        clamp(32px,6vw,65px);
 }
 
-.hero-kicker{
 
-    color:var(--accent);
+.myth-eyebrow {
 
-    font-size:.55rem;
+    color:var(--nx-accent);
+
+    font-size:.48rem;
 
     font-weight:900;
 
     letter-spacing:2px;
 }
 
-.hero h1{
 
-    max-width:900px;
+.myth-hero h1 {
 
-    margin:18px 0 0;
+    margin:14px 0 18px;
 
-    font-family:"Space Grotesk";
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
     font-size:
-        clamp(4rem,8vw,7.5rem);
+        clamp(3rem,7vw,6.2rem);
 
-    line-height:.83;
+    line-height:.86;
 
     letter-spacing:-5px;
 }
 
-.hero h1 span{
-    display:block;
-    color:var(--accent);
+
+.myth-hero h1 span {
+    color:var(--nx-accent);
 }
 
-.hero p{
 
-    max-width:610px;
+.myth-hero p {
 
-    margin-top:28px;
+    max-width:620px;
 
-    color:#858585;
+    margin:0;
 
-    font-size:.72rem;
+    color:#888;
+
+    font-size:.65rem;
 
     line-height:1.8;
 }
 
 
-/* =========================================================
-   PAGE
-   ========================================================= */
+/* =====================================================
+   INTRO
+===================================================== */
 
-.page{
-
-    width:min(1180px,calc(100% - 10vw));
-
-    margin:auto;
-}
-
-
-/* =========================================================
-   STAT BAR
-   ========================================================= */
-
-.stats{
-
-    margin-top:-34px;
-
-    position:relative;
-    z-index:5;
+.myth-intro {
 
     display:grid;
 
     grid-template-columns:
-        repeat(4,1fr);
+        1fr 1fr;
 
-    gap:9px;
+    gap:10px;
+
+    margin:
+        30px 0 55px;
 }
 
-.stat{
 
-    padding:23px;
+.intro-card {
+
+    padding:26px;
 
     background:
-        linear-gradient(145deg,#151515,#0d0d0d);
+        linear-gradient(
+            145deg,
+            #111,
+            #0b0b0b
+        );
 
-    border:1px solid var(--border);
+    border:
+        1px solid var(--nx-border);
 
-    border-radius:11px;
+    border-radius:12px;
 }
 
-.stat small{
 
-    display:block;
+.intro-card:first-child {
 
-    color:#555;
+    border-color:
+        rgba(200,255,0,.12);
 
-    font-size:.47rem;
-
-    font-weight:900;
-
-    letter-spacing:1px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(200,255,0,.045),
+            #0c0c0c
+        );
 }
 
-.stat strong{
 
-    display:block;
+.intro-card h2 {
 
-    margin-top:10px;
+    margin:
+        0 0 10px;
 
-    font-family:"Space Grotesk";
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
     font-size:1.25rem;
 }
 
-.stat .green{
-    color:var(--accent);
-}
 
+.intro-card p {
 
-/* =========================================================
-   INTRO
-   ========================================================= */
+    margin:0;
 
-.intro{
+    color:#737373;
 
-    padding:100px 0 55px;
-}
-
-.kicker{
-
-    color:var(--accent);
-
-    font-size:.55rem;
-
-    font-weight:900;
-
-    letter-spacing:2px;
-}
-
-.title{
-
-    max-width:850px;
-
-    margin:10px 0 18px;
-
-    font-family:"Space Grotesk";
-
-    font-size:
-        clamp(2.7rem,5vw,4.7rem);
-
-    line-height:.9;
-
-    letter-spacing:-3px;
-}
-
-.title span{
-    color:#444;
-}
-
-.copy{
-
-    max-width:650px;
-
-    color:#777;
-
-    font-size:.68rem;
+    font-size:.56rem;
 
     line-height:1.8;
 }
 
 
-/* =========================================================
-   SEARCH
-   ========================================================= */
+/* =====================================================
+   SECTION HEADER
+===================================================== */
 
-.search{
+.section-heading {
 
-    margin-top:35px;
-}
-
-.search input{
-
-    width:100%;
-
-    padding:18px 20px;
-
-    background:#101010;
-
-    color:white;
-
-    border:1px solid var(--border);
-
-    border-radius:8px;
-
-    outline:none;
-
-    font-size:.68rem;
-
-    transition:.2s;
-}
-
-.search input:focus{
-
-    border-color:
-        rgba(200,255,0,.4);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(200,255,0,.04);
-}
-
-.search input::placeholder{
-    color:#4c4c4c;
+    margin-bottom:20px;
 }
 
 
-/* =========================================================
-   FILTERS
-   ========================================================= */
+.kicker {
 
-.filters{
+    display:block;
 
-    display:flex;
+    margin-bottom:7px;
 
-    flex-wrap:wrap;
+    color:var(--nx-accent);
 
-    gap:7px;
-
-    margin-top:12px;
-}
-
-.filter{
-
-    padding:10px 15px;
-
-    border:1px solid var(--border);
-
-    border-radius:6px;
-
-    background:#101010;
-
-    color:#666;
-
-    cursor:pointer;
-
-    font-size:.49rem;
+    font-size:.45rem;
 
     font-weight:900;
 
-    transition:.2s;
-}
-
-.filter:hover{
-    color:white;
-}
-
-.filter.active{
-
-    color:#000;
-
-    background:var(--accent);
-
-    border-color:var(--accent);
+    letter-spacing:1.7px;
 }
 
 
-/* =========================================================
+.section-heading h2 {
+
+    margin:0;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(1.5rem,3vw,2.2rem);
+
+    letter-spacing:-1px;
+}
+
+
+.section-heading p {
+
+    max-width:700px;
+
+    margin:8px 0 0;
+
+    color:#666;
+
+    font-size:.57rem;
+
+    line-height:1.7;
+}
+
+
+/* =====================================================
    MYTH GRID
-   ========================================================= */
+===================================================== */
 
-.myth-grid{
+.myth-section {
+
+    margin-bottom:65px;
+}
+
+
+.myth-grid {
 
     display:grid;
 
@@ -440,127 +418,179 @@ a{
         repeat(2,1fr);
 
     gap:10px;
-
-    margin-top:35px;
 }
 
-.myth-card{
+
+/* =====================================================
+   MYTH CARD
+===================================================== */
+
+.myth-card {
 
     position:relative;
 
-    padding:30px;
-
-    min-height:310px;
+    padding:26px;
 
     overflow:hidden;
 
-    background:
-        linear-gradient(145deg,#141414,#0c0c0c);
+    background:#0d0d0d;
 
-    border:1px solid var(--border);
+    border:
+        1px solid var(--nx-border);
 
-    border-radius:13px;
-
-    cursor:pointer;
+    border-radius:12px;
 
     transition:
-        transform .25s,
-        border-color .25s;
+        transform .2s ease,
+        border-color .2s ease;
 }
 
-.myth-card:hover{
 
-    transform:translateY(-5px);
+.myth-card:hover {
+
+    transform:
+        translateY(-4px);
 
     border-color:
-        rgba(200,255,0,.3);
+        rgba(200,255,0,.2);
 }
 
-.myth-card.hidden{
-    display:none;
+
+.myth-card::before {
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:3px;
+
+    height:100%;
+
+    background:var(--nx-accent);
+
+    opacity:.8;
 }
 
-.myth-number{
 
-    color:#444;
+.myth-number {
 
-    font-family:"Space Grotesk";
+    display:flex;
 
-    font-size:2.2rem;
+    align-items:center;
 
-    font-weight:700;
+    justify-content:center;
+
+    width:34px;
+
+    height:34px;
+
+    margin-bottom:17px;
+
+    color:#050505;
+
+    background:var(--nx-accent);
+
+    border-radius:7px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:.57rem;
+
+    font-weight:900;
 }
 
-.verdict{
 
-    display:inline-block;
+.myth-card h3 {
 
-    margin-top:15px;
+    margin:
+        0 0 12px;
 
-    padding:6px 9px;
+    color:#eee;
 
-    border-radius:4px;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
-    font-size:.45rem;
+    font-size:1rem;
+
+    line-height:1.25;
+}
+
+
+.myth-label {
+
+    display:block;
+
+    margin-bottom:5px;
+
+    color:#454545;
+
+    font-size:.42rem;
 
     font-weight:900;
 
     letter-spacing:1px;
 }
 
-.verdict.false{
 
-    color:#ff7777;
+.myth-card p {
 
-    background:
-        rgba(255,77,77,.08);
-
-    border:
-        1px solid rgba(255,77,77,.16);
-}
-
-.verdict.partial{
-
-    color:#ffd36a;
-
-    background:
-        rgba(255,200,70,.08);
-
-    border:
-        1px solid rgba(255,200,70,.16);
-}
-
-.myth-card h3{
-
-    max-width:580px;
-
-    margin:18px 0 10px;
-
-    font-family:"Space Grotesk";
-
-    font-size:1.45rem;
-
-    line-height:1.05;
-}
-
-.myth-card p{
+    margin:
+        0 0 17px;
 
     color:#777;
 
-    font-size:.62rem;
+    font-size:.55rem;
 
     line-height:1.75;
 }
 
-.read-more{
 
-    position:absolute;
+.myth-verdict {
 
-    bottom:25px;
+    display:flex;
 
-    color:var(--accent);
+    align-items:center;
 
-    font-size:.48rem;
+    gap:9px;
+
+    padding-top:15px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.05);
+}
+
+
+.verdict-dot {
+
+    width:7px;
+
+    height:7px;
+
+    flex-shrink:0;
+
+    background:var(--nx-accent);
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 12px
+        rgba(200,255,0,.3);
+}
+
+
+.myth-verdict span {
+
+    color:var(--nx-accent);
+
+    font-size:.44rem;
 
     font-weight:900;
 
@@ -568,105 +598,37 @@ a{
 }
 
 
-/* =========================================================
-   FACT SECTION
-   ========================================================= */
+/* =====================================================
+   FEATURED MYTH
+===================================================== */
 
-.fact-section{
+.featured-myth {
 
-    padding-top:105px;
-}
+    position:relative;
 
-.section-head{
+    min-height:270px;
 
-    padding-bottom:22px;
+    margin:
+        10px 0 65px;
 
-    border-bottom:1px solid var(--border);
-}
+    padding:
+        clamp(28px,5vw,50px);
 
-.section-head h2{
+    display:flex;
 
-    margin:8px 0 0;
+    align-items:center;
 
-    font-family:"Space Grotesk";
-
-    font-size:2rem;
-}
-
-.fact-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:9px;
-
-    margin-top:10px;
-}
-
-.fact{
-
-    padding:27px;
-
-    background:#101010;
-
-    border:1px solid var(--border);
-
-    border-radius:11px;
-}
-
-.fact-number{
-
-    color:var(--accent);
-
-    font-family:"Space Grotesk";
-
-    font-size:.52rem;
-
-    font-weight:900;
-
-    letter-spacing:1px;
-}
-
-.fact h3{
-
-    margin:15px 0 8px;
-
-    font-family:"Space Grotesk";
-
-    font-size:.95rem;
-}
-
-.fact p{
-
-    margin:0;
-
-    color:#666;
-
-    font-size:.59rem;
-
-    line-height:1.75;
-}
-
-
-/* =========================================================
-   CTA
-   ========================================================= */
-
-.cta{
-
-    margin-top:100px;
-
-    padding:55px 45px;
+    overflow:hidden;
 
     background:
 
         linear-gradient(
-            120deg,
-            rgba(200,255,0,.08),
-            rgba(200,255,0,.015)
-        );
+            90deg,
+            rgba(200,255,0,.07),
+            rgba(10,10,10,.95) 55%
+        ),
+
+        #0d0d0d;
 
     border:
         1px solid
@@ -675,324 +637,267 @@ a{
     border-radius:14px;
 }
 
-.cta h2{
 
-    max-width:760px;
+.featured-myth::after {
 
-    margin:8px 0 14px;
+    content:"?";
 
-    font-family:"Space Grotesk";
+    position:absolute;
+
+    right:5%;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        rgba(200,255,0,.035);
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:16rem;
+
+    font-weight:900;
+
+    line-height:1;
+}
+
+
+.featured-content {
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:650px;
+}
+
+
+.featured-content .kicker {
+    margin-bottom:12px;
+}
+
+
+.featured-content h2 {
+
+    margin:
+        0 0 13px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 
     font-size:
-        clamp(2.2rem,5vw,4rem);
+        clamp(1.5rem,4vw,2.5rem);
 
-    line-height:.9;
-
-    letter-spacing:-2px;
-}
-
-.cta p{
-
-    max-width:590px;
-
-    color:#666;
-
-    font-size:.64rem;
-
-    line-height:1.8;
-}
-
-.cta a{
-
-    display:inline-block;
-
-    margin-top:17px;
-
-    padding:13px 18px;
-
-    border-radius:6px;
-
-    background:var(--accent);
-
-    color:#000;
-
-    font-size:.53rem;
-
-    font-weight:900;
+    letter-spacing:-1.5px;
 }
 
 
-/* =========================================================
-   MODAL
-   ========================================================= */
+.featured-content p {
 
-.modal{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:2000;
-
-    display:none;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:20px;
-
-    background:rgba(0,0,0,.9);
-
-    backdrop-filter:blur(12px);
-}
-
-.modal.open{
-    display:flex;
-}
-
-.modal-box{
-
-    width:min(720px,100%);
-
-    max-height:90vh;
-
-    overflow-y:auto;
-
-    padding:34px;
-
-    background:
-        linear-gradient(145deg,#171717,#0b0b0b);
-
-    border:1px solid var(--border2);
-
-    border-radius:15px;
-}
-
-.modal-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:20px;
-}
-
-.modal-label{
-
-    color:var(--accent);
-
-    font-size:.49rem;
-
-    font-weight:900;
-
-    letter-spacing:1.5px;
-}
-
-.modal h2{
-
-    margin:8px 0 0;
-
-    font-family:"Space Grotesk";
-
-    font-size:2rem;
-}
-
-.close{
-
-    width:36px;
-    height:36px;
-
-    border:1px solid var(--border);
-
-    border-radius:50%;
-
-    background:#101010;
+    margin:0;
 
     color:#777;
 
-    cursor:pointer;
+    font-size:.56rem;
 
-    font-size:1.1rem;
+    line-height:1.8;
 }
 
-.close:hover{
-    color:white;
+
+/* =====================================================
+   RULES
+===================================================== */
+
+.rules {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+    margin-bottom:70px;
 }
 
-.answer{
 
-    margin-top:30px;
+.rule {
 
-    padding:22px;
+    padding:23px;
 
-    background:#101010;
+    background:#0d0d0d;
 
-    border:1px solid var(--border);
+    border:
+        1px solid var(--nx-border);
 
-    border-radius:9px;
+    border-radius:10px;
 }
 
-.answer-label{
+
+.rule strong {
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#ddd;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:.78rem;
+}
+
+
+.rule p {
+
+    margin:0;
+
+    color:#666;
+
+    font-size:.51rem;
+
+    line-height:1.7;
+}
+
+
+/* =====================================================
+   DISCLAIMER
+===================================================== */
+
+.disclaimer {
+
+    margin-bottom:60px;
+
+    padding:16px 18px;
 
     color:#555;
 
-    font-size:.47rem;
-
-    font-weight:900;
-
-    letter-spacing:1px;
-}
-
-.answer p{
-
-    color:#888;
-
-    font-size:.66rem;
-
-    line-height:1.8;
-
-    margin:10px 0 0;
-}
-
-.truth{
-
-    margin-top:10px;
-
-    padding:22px;
-
-    border-left:
-        2px solid var(--accent);
-
     background:
-        rgba(200,255,0,.035);
+        rgba(255,255,255,.015);
+
+    border:
+        1px solid var(--nx-border);
+
+    border-radius:7px;
+
+    font-size:.45rem;
+
+    line-height:1.7;
 }
 
-.truth p{
-    margin:8px 0 0;
 
-    color:#999;
-
-    font-size:.66rem;
-
-    line-height:1.8;
+.disclaimer strong {
+    color:#aaa;
 }
 
 
-/* =========================================================
+/* =====================================================
    FOOTER
-   ========================================================= */
+===================================================== */
 
-footer{
+.nx-footer {
 
-    margin-top:90px;
+    padding:
+        28px 20px;
 
-    padding:35px 20px;
+    color:#3d3d3d;
+
+    border-top:
+        1px solid var(--nx-border);
 
     text-align:center;
 
-    color:#3e3e3e;
-
-    font-size:.53rem;
-
-    border-top:1px solid var(--border);
-}
-
-footer strong{
-    color:var(--accent);
+    font-size:.46rem;
 }
 
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media(max-width:900px){
-
-    .stats{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .myth-grid{
-        grid-template-columns:1fr;
-    }
-
-    .fact-grid{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
+.nx-footer strong {
+    color:var(--nx-accent);
 }
 
-@media(max-width:700px){
 
-    .nex-nav{
+/* =====================================================
+   MOBILE
+===================================================== */
 
-        padding:15px 18px;
+@media(max-width:760px) {
+
+    .nx-nav {
+
+        padding:
+            15px 18px;
 
         flex-wrap:wrap;
-
-        gap:13px;
     }
 
-    .nav-menu{
+
+    .nx-links {
 
         width:100%;
 
-        gap:14px;
-
-        overflow-x:auto;
-
-        scrollbar-width:none;
+        gap:18px;
     }
 
-    .nav-menu::-webkit-scrollbar{
-        display:none;
-    }
 
-    .nav-menu a{
-        white-space:nowrap;
-    }
+    .myth-intro,
+    .myth-grid {
 
-    .hero{
-        min-height:550px;
-    }
-
-    .hero-inner{
-
-        width:calc(100% - 36px);
-
-        padding-bottom:55px;
-    }
-
-    .hero h1{
-
-        font-size:
-            clamp(3.4rem,15vw,5.5rem);
-
-        letter-spacing:-4px;
-    }
-
-    .page{
-
-        width:calc(100% - 32px);
-    }
-
-    .stats{
         grid-template-columns:1fr;
     }
 
-    .intro{
-        padding-top:65px;
-    }
 
-    .fact-grid{
+    .rules {
+
         grid-template-columns:1fr;
     }
 
-    .cta{
-        padding:40px 25px;
+
+    .myth-hero {
+
+        min-height:450px;
     }
+
+
+    .myth-hero h1 {
+
+        font-size:3.5rem;
+
+        letter-spacing:-3px;
+    }
+
+
+    .featured-myth::after {
+
+        font-size:10rem;
+
+        right:-20px;
+    }
+
+}
+
+
+@media(max-width:500px) {
+
+    .nx-container {
+
+        width:
+            calc(100% - 28px);
+    }
+
+
+    .myth-hero-content {
+
+        padding:
+            28px 22px;
+    }
+
 }
 
 </style>
@@ -1003,16 +908,17 @@ footer strong{
 
 <!-- =====================================================
      NAVIGATION
-     ===================================================== -->
+===================================================== -->
 
-<header class="nex-nav">
+<header class="nx-nav">
 
 ```
-<a href="/" class="logo">
+<a href="/" class="nx-logo">
     NEX<span>FIT</span>
 </a>
 
-<nav class="nav-menu">
+
+<nav class="nx-links">
 
     <a href="/">
         Home
@@ -1039,89 +945,34 @@ footer strong{
 
 </header>
 
+<main class="nx-container">
+
 <!-- =====================================================
      HERO
-     ===================================================== -->
+===================================================== -->
 
-<section class="hero">
+<section class="myth-hero">
 
 ```
-<div class="hero-inner">
+<div class="myth-hero-content">
 
-    <div class="hero-kicker">
-        NEXFIT EVIDENCE LAB
-    </div>
+    <span class="myth-eyebrow">
+        NEXFIT · FITNESS TRUTH LAB
+    </span>
+
 
     <h1>
         BREAK THE
-        <span>MYTH.</span>
+        <span>MYTHS.</span>
     </h1>
 
+
     <p>
-        Fitness is full of advice that sounds convincing.
-        Nexfit separates common gym myths from practical,
-        evidence-informed principles you can actually use.
+        Fitness is full of advice that sounds convincing,
+        gets repeated endlessly and isn't always useful.
+        Nexfit separates popular gym myths from practical
+        training principles.
     </p>
-
-</div>
-```
-
-</section>
-
-<main class="page">
-
-<!-- =====================================================
-     STATS
-     ===================================================== -->
-
-<section class="stats">
-
-```
-<div class="stat">
-
-    <small>
-        MYTHS REVIEWED
-    </small>
-
-    <strong class="green">
-        08
-    </strong>
-
-</div>
-
-<div class="stat">
-
-    <small>
-        FORMAT
-    </small>
-
-    <strong>
-        MYTH → TRUTH
-    </strong>
-
-</div>
-
-<div class="stat">
-
-    <small>
-        FOCUS
-    </small>
-
-    <strong>
-        PRACTICAL
-    </strong>
-
-</div>
-
-<div class="stat">
-
-    <small>
-        NEXFIT
-    </small>
-
-    <strong>
-        MYTH LAB
-    </strong>
 
 </div>
 ```
@@ -1130,410 +981,476 @@ footer strong{
 
 <!-- =====================================================
      INTRO
-     ===================================================== -->
+===================================================== -->
 
-<section class="intro">
-
-```
-<div class="kicker">
-    FITNESS MYTH LAB
-</div>
-
-<h2 class="title">
-
-    DON'T BELIEVE
-    <span>EVERYTHING YOU HEAR.</span>
-
-</h2>
-
-<p class="copy">
-
-    Search the library or select a myth to see the claim,
-    the reality behind it and what you should actually do.
-
-</p>
-
-
-<div class="search">
-
-    <input
-        id="mythSearch"
-        type="text"
-        placeholder="Search myths... e.g. protein, cardio, sweating">
-
-</div>
-
-
-<div class="filters">
-
-    <button
-        class="filter active"
-        onclick="filterMyths('all',this)">
-        ALL
-    </button>
-
-    <button
-        class="filter"
-        onclick="filterMyths('nutrition',this)">
-        NUTRITION
-    </button>
-
-    <button
-        class="filter"
-        onclick="filterMyths('training',this)">
-        TRAINING
-    </button>
-
-    <button
-        class="filter"
-        onclick="filterMyths('weightloss',this)">
-        WEIGHT LOSS
-    </button>
-
-    <button
-        class="filter"
-        onclick="filterMyths('recovery',this)">
-        RECOVERY
-    </button>
-
-</div>
-```
-
-<!-- =====================================================
-     MYTH CARDS
-     ===================================================== -->
-
-<div class="myth-grid">
+<section class="myth-intro">
 
 ```
-<article
-    class="myth-card"
-    data-category="nutrition"
-    data-search="protein more protein automatically more muscle">
+<article class="intro-card">
 
-    <div class="myth-number">
-        01
-    </div>
-
-    <span class="verdict partial">
-        PARTLY TRUE
-    </span>
-
-    <h3>
-        More protein automatically means more muscle.
-    </h3>
+    <h2>
+        The Problem
+    </h2>
 
     <p>
-        Protein supports muscle growth, but simply consuming
-        more and more protein does not guarantee additional
-        muscle. Training, total nutrition and recovery matter.
+        Fitness misinformation spreads quickly because
+        simple explanations are easier to remember than
+        nuanced ones. A claim being popular doesn't make
+        it correct.
     </p>
-
-    <div class="read-more"
-         onclick="openMyth(1)">
-        READ THE VERDICT →
-    </div>
 
 </article>
 
 
-<article
-    class="myth-card"
-    data-category="training"
-    data-search="lifting heavy bulky women weights">
+<article class="intro-card">
 
-    <div class="myth-number">
-        02
-    </div>
-
-    <span class="verdict false">
-        MYTH
-    </span>
-
-    <h3>
-        Lifting weights automatically makes you bulky.
-    </h3>
+    <h2>
+        The Nexfit Approach
+    </h2>
 
     <p>
-        Resistance training can produce many different
-        adaptations depending on training, nutrition,
-        genetics and overall goals.
+        Question the claim. Understand the principle.
+        Then choose an approach that fits your goal,
+        training experience and individual situation.
     </p>
-
-    <div class="read-more"
-         onclick="openMyth(2)">
-        READ THE VERDICT →
-    </div>
-
-</article>
-
-
-<article
-    class="myth-card"
-    data-category="weightloss"
-    data-search="sweat fat burning sweating weight loss">
-
-    <div class="myth-number">
-        03
-    </div>
-
-    <span class="verdict false">
-        MYTH
-    </span>
-
-    <h3>
-        The more you sweat, the more fat you burn.
-    </h3>
-
-    <p>
-        Sweat primarily helps regulate body temperature.
-        A sweaty workout is not automatically a better
-        fat-loss workout.
-    </p>
-
-    <div class="read-more"
-         onclick="openMyth(3)">
-        READ THE VERDICT →
-    </div>
-
-</article>
-
-
-<article
-    class="myth-card"
-    data-category="training"
-    data-search="spot reduction abs belly fat exercise">
-
-    <div class="myth-number">
-        04
-    </div>
-
-    <span class="verdict false">
-        MYTH
-    </span>
-
-    <h3>
-        Ab exercises directly burn belly fat.
-    </h3>
-
-    <p>
-        Training your abdominal muscles strengthens them,
-        but fat loss cannot be precisely directed to one
-        body area simply by exercising that area.
-    </p>
-
-    <div class="read-more"
-         onclick="openMyth(4)">
-        READ THE VERDICT →
-    </div>
-
-</article>
-
-
-<article
-    class="myth-card"
-    data-category="recovery"
-    data-search="muscle soreness workout effective doms pain">
-
-    <div class="myth-number">
-        05
-    </div>
-
-    <span class="verdict false">
-        MYTH
-    </span>
-
-    <h3>
-        If you're not sore, your workout didn't work.
-    </h3>
-
-    <p>
-        Muscle soreness can occur after training, especially
-        when a stimulus is new, but soreness is not a required
-        measurement of a productive workout.
-    </p>
-
-    <div class="read-more"
-         onclick="openMyth(5)">
-        READ THE VERDICT →
-    </div>
-
-</article>
-
-
-<article
-    class="myth-card"
-    data-category="training"
-    data-search="cardio kills gains muscle bodybuilding">
-
-    <div class="myth-number">
-        06
-    </div>
-
-    <span class="verdict false">
-        MYTH
-    </span>
-
-    <h3>
-        Cardio automatically kills your gains.
-    </h3>
-
-    <p>
-        Cardio and resistance training can coexist. The
-        important variables include training volume, recovery,
-        nutrition and how the sessions are structured.
-    </p>
-
-    <div class="read-more"
-         onclick="openMyth(6)">
-        READ THE VERDICT →
-    </div>
-
-</article>
-
-
-<article
-    class="myth-card"
-    data-category="nutrition"
-    data-search="carbs night fat weight gain eating late">
-
-    <div class="myth-number">
-        07
-    </div>
-
-    <span class="verdict false">
-        MYTH
-    </span>
-
-    <h3>
-        Eating carbs at night automatically makes you fat.
-    </h3>
-
-    <p>
-        Body composition is influenced by overall energy intake,
-        activity and nutrition patterns rather than a single
-        clock time at which carbohydrates are eaten.
-    </p>
-
-    <div class="read-more"
-         onclick="openMyth(7)">
-        READ THE VERDICT →
-    </div>
-
-</article>
-
-
-<article
-    class="myth-card"
-    data-category="recovery"
-    data-search="sleep muscle recovery rest growth">
-
-    <div class="myth-number">
-        08
-    </div>
-
-    <span class="verdict false">
-        MYTH
-    </span>
-
-    <h3>
-        Sleep doesn't matter if your training is good.
-    </h3>
-
-    <p>
-        Training is only one part of progress. Adequate sleep
-        supports recovery and helps you maintain consistent
-        performance over time.
-    </p>
-
-    <div class="read-more"
-         onclick="openMyth(8)">
-        READ THE VERDICT →
-    </div>
 
 </article>
 ```
-
-</div>
 
 </section>
 
 <!-- =====================================================
-     PRINCIPLES
-     ===================================================== -->
+     MYTHS
+===================================================== -->
 
-<section class="fact-section">
+<section class="myth-section">
 
 ```
-<div class="section-head">
+<div class="section-heading">
 
-    <div class="kicker">
-        THE NEXFIT RULEBOOK
-    </div>
+    <span class="kicker">
+        01 / MYTH DATABASE
+    </span>
 
     <h2>
-        WHAT ACTUALLY MATTERS
+        Popular Fitness Myths
+    </h2>
+
+    <p>
+        Common claims you will hear around gyms and fitness
+        communities — with the practical takeaway underneath.
+    </p>
+
+</div>
+
+
+<div class="myth-grid">
+
+
+    <!-- MYTH 01 -->
+
+    <article class="myth-card">
+
+        <div class="myth-number">
+            01
+        </div>
+
+
+        <h3>
+            "You must train every day to make progress."
+        </h3>
+
+
+        <span class="myth-label">
+            THE CLAIM
+        </span>
+
+
+        <p>
+            More training days automatically means faster
+            results.
+        </p>
+
+
+        <span class="myth-label">
+            THE REALITY
+        </span>
+
+
+        <p>
+            Progress depends on effective training stimulus,
+            recovery, nutrition and consistency. More sessions
+            are not automatically better if recovery suffers.
+        </p>
+
+
+        <div class="myth-verdict">
+
+            <div class="verdict-dot"></div>
+
+            <span>
+                MYTH — RECOVERY MATTERS
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- MYTH 02 -->
+
+    <article class="myth-card">
+
+        <div class="myth-number">
+            02
+        </div>
+
+
+        <h3>
+            "Lifting weights makes women bulky."
+        </h3>
+
+
+        <span class="myth-label">
+            THE CLAIM
+        </span>
+
+
+        <p>
+            Resistance training inevitably produces excessive
+            muscle size.
+        </p>
+
+
+        <span class="myth-label">
+            THE REALITY
+        </span>
+
+
+        <p>
+            Muscle gain depends on training, nutrition, genetics,
+            hormones and time. Resistance training can support
+            strength, muscle development and body composition
+            without automatically producing extreme size.
+        </p>
+
+
+        <div class="myth-verdict">
+
+            <div class="verdict-dot"></div>
+
+            <span>
+                MYTH — TRAINING IS ADAPTABLE
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- MYTH 03 -->
+
+    <article class="myth-card">
+
+        <div class="myth-number">
+            03
+        </div>
+
+
+        <h3>
+            "More sweat means more fat burned."
+        </h3>
+
+
+        <span class="myth-label">
+            THE CLAIM
+        </span>
+
+
+        <p>
+            Heavy sweating proves that a workout burned more
+            body fat.
+        </p>
+
+
+        <span class="myth-label">
+            THE REALITY
+        </span>
+
+
+        <p>
+            Sweat primarily reflects your body's effort to
+            regulate temperature. Water loss through sweating
+            is not the same thing as losing body fat.
+        </p>
+
+
+        <div class="myth-verdict">
+
+            <div class="verdict-dot"></div>
+
+            <span>
+                MYTH — SWEAT ≠ FAT LOSS
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- MYTH 04 -->
+
+    <article class="myth-card">
+
+        <div class="myth-number">
+            04
+        </div>
+
+
+        <h3>
+            "You need supplements to build muscle."
+        </h3>
+
+
+        <span class="myth-label">
+            THE CLAIM
+        </span>
+
+
+        <p>
+            Muscle growth is impossible without a large supplement
+            stack.
+        </p>
+
+
+        <span class="myth-label">
+            THE REALITY
+        </span>
+
+
+        <p>
+            Training quality, adequate calories, sufficient
+            protein, sleep and consistency form the foundation.
+            Supplements can be useful in specific situations,
+            but they don't replace the basics.
+        </p>
+
+
+        <div class="myth-verdict">
+
+            <div class="verdict-dot"></div>
+
+            <span>
+                MYTH — BASICS COME FIRST
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- MYTH 05 -->
+
+    <article class="myth-card">
+
+        <div class="myth-number">
+            05
+        </div>
+
+
+        <h3>
+            "You need to feel sore after every workout."
+        </h3>
+
+
+        <span class="myth-label">
+            THE CLAIM
+        </span>
+
+
+        <p>
+            No soreness means the workout wasn't effective.
+        </p>
+
+
+        <span class="myth-label">
+            THE REALITY
+        </span>
+
+
+        <p>
+            Delayed soreness can happen after unfamiliar or
+            demanding training, but soreness isn't a reliable
+            measurement of muscle growth or workout quality.
+        </p>
+
+
+        <div class="myth-verdict">
+
+            <div class="verdict-dot"></div>
+
+            <span>
+                MYTH — SORENESS IS NOT THE SCORE
+            </span>
+
+        </div>
+
+    </article>
+
+
+    <!-- MYTH 06 -->
+
+    <article class="myth-card">
+
+        <div class="myth-number">
+            06
+        </div>
+
+
+        <h3>
+            "Crunches alone will reveal your abs."
+        </h3>
+
+
+        <span class="myth-label">
+            THE CLAIM
+        </span>
+
+
+        <p>
+            Direct ab exercises automatically create visible
+            abdominal definition.
+        </p>
+
+
+        <span class="myth-label">
+            THE REALITY
+        </span>
+
+
+        <p>
+            Training the abdominal muscles can build them,
+            while overall body-fat levels influence how visible
+            they become. Nutrition, training and genetics all
+            play a role.
+        </p>
+
+
+        <div class="myth-verdict">
+
+            <div class="verdict-dot"></div>
+
+            <span>
+                MYTH — ABS REQUIRE MORE THAN CRUNCHES
+            </span>
+
+        </div>
+
+    </article>
+
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     FEATURED
+===================================================== -->
+
+<section class="featured-myth">
+
+```
+<div class="featured-content">
+
+    <span class="kicker">
+        02 / THE BIGGEST MISTAKE
+    </span>
+
+
+    <h2>
+        There Is No Single "Perfect" Workout.
+    </h2>
+
+
+    <p>
+        The best program is one you can perform safely,
+        progressively and consistently while recovering
+        well enough to adapt. Exercise selection matters,
+        but execution and long-term consistency matter too.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     RULES
+===================================================== -->
+
+<section class="myth-section">
+
+```
+<div class="section-heading">
+
+    <span class="kicker">
+        03 / BETTER THINKING
+    </span>
+
+    <h2>
+        Three Rules For Smarter Fitness
     </h2>
 
 </div>
 
 
-<div class="fact-grid">
+<div class="rules">
 
 
-    <div class="fact">
+    <article class="rule">
 
-        <div class="fact-number">
-            01 / CONSISTENCY
-        </div>
-
-        <h3>
-            Keep showing up.
-        </h3>
+        <strong>
+            Question Simple Claims
+        </strong>
 
         <p>
-            Sustainable training performed consistently beats
-            constantly changing programs and chasing shortcuts.
+            If a fitness claim promises dramatic results
+            with almost no effort, look deeper before
+            accepting it.
         </p>
 
-    </div>
+    </article>
 
 
-    <div class="fact">
+    <article class="rule">
 
-        <div class="fact-number">
-            02 / PROGRESSION
-        </div>
-
-        <h3>
-            Give your body a reason to adapt.
-        </h3>
+        <strong>
+            Track Real Progress
+        </strong>
 
         <p>
-            Progressively challenging your muscles over time
-            is a central principle of resistance training.
+            Use performance, body measurements, consistency
+            and recovery rather than judging progress from
+            one workout.
         </p>
 
-    </div>
+    </article>
 
 
-    <div class="fact">
+    <article class="rule">
 
-        <div class="fact-number">
-            03 / RECOVERY
-        </div>
-
-        <h3>
-            Recovery is part of the plan.
-        </h3>
+        <strong>
+            Master The Basics
+        </strong>
 
         <p>
-            Training, nutrition and recovery work together.
-            Ignoring recovery can make consistent progress harder.
+            Progressive training, nutrition, sleep and
+            recovery will usually matter more than the latest
+            fitness trend.
         </p>
 
-    </div>
-
+    </article>
 
 </div>
 ```
@@ -1541,119 +1458,34 @@ footer strong{
 </section>
 
 <!-- =====================================================
-     CTA
-     ===================================================== -->
+     DISCLAIMER
+===================================================== -->
 
-<section class="cta">
+<div class="disclaimer">
 
 ```
-<div class="kicker">
-    NEXT STEP
+<strong>
+    NEXFIT NOTE:
+</strong>
+
+Fitness information is educational and general in nature.
+Individual training and nutrition requirements can differ.
+For medical concerns or persistent pain, consult an
+appropriately qualified healthcare professional.
+```
+
 </div>
-
-<h2>
-    STOP CHASING
-    FITNESS HACKS.
-</h2>
-
-<p>
-    Build your training around fundamentals, track your
-    progress and make every session count with Nexfit.
-</p>
-
-<a href="/calculator">
-    BUILD YOUR FITNESS PLAN →
-</a>
-```
-
-</section>
 
 </main>
 
 <!-- =====================================================
-     MODAL
-     ===================================================== -->
+     FOOTER
+===================================================== -->
 
-<div
-    class="modal"
-    id="mythModal">
+<footer class="nx-footer">
 
 ```
-<div class="modal-box">
-
-    <div class="modal-top">
-
-        <div>
-
-            <div
-                class="modal-label"
-                id="modalLabel">
-
-                MYTH 01
-
-            </div>
-
-            <h2 id="modalTitle">
-                Myth
-            </h2>
-
-        </div>
-
-        <button
-            class="close"
-            onclick="closeMyth()">
-
-            ×
-
-        </button>
-
-    </div>
-
-
-    <div class="answer">
-
-        <div class="answer-label">
-            THE CLAIM
-        </div>
-
-        <p id="modalClaim">
-        </p>
-
-    </div>
-
-
-    <div class="truth">
-
-        <div class="answer-label">
-            THE NEXFIT VERDICT
-        </div>
-
-        <p id="modalTruth">
-        </p>
-
-    </div>
-
-
-    <div class="answer">
-
-        <div class="answer-label">
-            WHAT TO DO INSTEAD
-        </div>
-
-        <p id="modalAction">
-        </p>
-
-    </div>
-
-</div>
-```
-
-</div>
-
-<footer>
-
-```
-© 2026 NEXFIT · Train. Track. Transform.
+© 2026 NEXFIT · TRAIN. TRACK. TRANSFORM.
 
 <br><br>
 
@@ -1662,209 +1494,6 @@ Designed & Developed by
 ```
 
 </footer>
-
-<script>
-
-/* =========================================================
-   MYTH DATABASE
-   ========================================================= */
-
-const myths = {
-
-    1:{
-        title:"More protein automatically means more muscle.",
-        claim:"If some protein helps muscle growth, consuming much more protein should automatically produce much more muscle.",
-        truth:"Protein is important for muscle repair and growth, but increasing intake indefinitely does not guarantee proportionally greater results. Training stimulus, total nutrition and recovery all matter.",
-        action:"Prioritize an adequate protein intake, train progressively and focus on your overall diet instead of chasing extreme protein numbers."
-    },
-
-    2:{
-        title:"Lifting weights automatically makes you bulky.",
-        claim:"Resistance training inevitably causes a person to become excessively muscular.",
-        truth:"The outcome of resistance training depends on programming, nutrition, training volume, genetics and the person's goal. Strength training can support strength, muscle development and general fitness without automatically producing extreme size.",
-        action:"Choose training volume and nutrition that match your goal."
-    },
-
-    3:{
-        title:"The more you sweat, the more fat you burn.",
-        claim:"Heavy sweating proves that the body is burning more fat.",
-        truth:"Sweating is primarily a temperature-regulation mechanism. Sweat loss also changes body water temporarily, which is different from losing body fat.",
-        action:"Judge fat-loss progress using longer-term body-composition trends rather than sweat levels."
-    },
-
-    4:{
-        title:"Ab exercises directly burn belly fat.",
-        claim:"Doing large amounts of crunches will specifically remove the fat covering your abs.",
-        truth:"Ab exercises train the abdominal muscles, but they do not allow you to precisely choose where stored body fat is lost.",
-        action:"Train your core while using an overall nutrition and activity strategy appropriate for your body-composition goal."
-    },
-
-    5:{
-        title:"If you're not sore, your workout didn't work.",
-        claim:"A workout only counts when it produces significant next-day muscle soreness.",
-        truth:"Soreness is a response to training stress and novelty, not a direct score for workout quality. You can have an effective session without becoming extremely sore.",
-        action:"Track performance, technique, training volume and progression instead."
-    },
-
-    6:{
-        title:"Cardio automatically kills your gains.",
-        claim:"Doing cardio while trying to build muscle will automatically prevent muscle growth.",
-        truth:"Cardiovascular training and resistance training can coexist. The challenge is managing total workload, recovery, nutrition and session structure.",
-        action:"Use an appropriate amount of cardio and make sure your overall training and recovery can support your goal."
-    },
-
-    7:{
-        title:"Eating carbs at night automatically makes you fat.",
-        claim:"Carbohydrates consumed late in the evening are automatically stored as body fat.",
-        truth:"Body composition is not determined by a single clock time. Overall energy intake, activity and dietary patterns matter far more.",
-        action:"Look at your overall calorie intake and dietary consistency rather than fearing a particular eating time."
-    },
-
-    8:{
-        title:"Sleep doesn't matter if your training is good.",
-        claim:"Hard training is enough to guarantee progress even when sleep is poor.",
-        truth:"Recovery is part of the training process. Sleep supports physical recovery, performance and your ability to train consistently.",
-        action:"Treat sleep as part of your fitness program rather than an optional extra."
-    }
-
-};
-
-
-/* =========================================================
-   OPEN MYTH
-   ========================================================= */
-
-function openMyth(id){
-
-    const data=myths[id];
-
-    if(!data) return;
-
-    document.getElementById("modalLabel")
-        .innerText="MYTH "+String(id).padStart(2,"0");
-
-    document.getElementById("modalTitle")
-        .innerText=data.title;
-
-    document.getElementById("modalClaim")
-        .innerText=data.claim;
-
-    document.getElementById("modalTruth")
-        .innerText=data.truth;
-
-    document.getElementById("modalAction")
-        .innerText=data.action;
-
-    document.getElementById("mythModal")
-        .classList.add("open");
-
-    document.body.style.overflow="hidden";
-}
-
-
-/* =========================================================
-   CLOSE
-   ========================================================= */
-
-function closeMyth(){
-
-    document.getElementById("mythModal")
-        .classList.remove("open");
-
-    document.body.style.overflow="";
-}
-
-
-document.getElementById("mythModal")
-.addEventListener("click",function(e){
-
-    if(e.target===this){
-        closeMyth();
-    }
-
-});
-
-
-document.addEventListener("keydown",function(e){
-
-    if(e.key==="Escape"){
-        closeMyth();
-    }
-
-});
-
-
-/* =========================================================
-   FILTER
-   ========================================================= */
-
-function filterMyths(category,button){
-
-    document
-        .querySelectorAll(".filter")
-        .forEach(btn =>
-            btn.classList.remove("active")
-        );
-
-    button.classList.add("active");
-
-
-    document
-        .querySelectorAll(".myth-card")
-        .forEach(card=>{
-
-            if(
-                category==="all" ||
-                card.dataset.category===category
-            ){
-
-                card.classList.remove("hidden");
-
-            }else{
-
-                card.classList.add("hidden");
-
-            }
-
-        });
-
-}
-
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-document
-    .getElementById("mythSearch")
-    .addEventListener("input",function(){
-
-        const query=this.value
-            .toLowerCase()
-            .trim();
-
-        document
-            .querySelectorAll(".myth-card")
-            .forEach(card=>{
-
-                const searchable=
-                    card.dataset.search.toLowerCase();
-
-                if(searchable.includes(query)){
-
-                    card.classList.remove("hidden");
-
-                }else{
-
-                    card.classList.add("hidden");
-
-                }
-
-            });
-
-    });
-
-</script>
 
 </body>
 
