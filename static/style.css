@@ -2684,3 +2684,25 @@ input {
     }
 
 }
+
+
+/* =========================================================
+   NEXFIT FINAL TYPOGRAPHY POLISH
+   Keeps the existing design; improves readability.
+========================================================= */
+body { font-size: 16px; }
+.main-nav a { font-size: .78rem; }
+.section-heading p, .intro-grid p, .feature-card p, .challenge-content p,
+.workout-item-left p, .tool-card p, .final-cta p, .footer-brand p { font-size: .88rem; line-height: 1.75; }
+.section-heading h2 { font-size: clamp(2.4rem, 5vw, 4.5rem); }
+.tool-card h3 { font-size: 1.5rem; }
+@media (max-width:800px){
+  .main-nav a { font-size: .78rem; }
+  .section-heading h2, .intro-grid h2 { font-size: clamp(2.5rem, 11vw, 4rem); }
+  .feature-card p, .challenge-content p, .tool-card p, .final-cta p { font-size: .86rem; }
+}
+@media (max-width:550px){
+  .main-nav a { font-size: .76rem; }
+  .section-heading h2 { font-size: clamp(2.25rem, 11vw, 3.4rem); }
+  .feature-card p, .challenge-content p, .tool-card p, .final-cta p { font-size: .84rem; line-height: 1.7; }
+}
