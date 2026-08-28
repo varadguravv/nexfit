@@ -1139,7 +1139,7 @@ a:focus-visible{
 
 <header class="nx-nav">
 
-```
+
 <a href="/" class="nx-logo">
     NEX<span>FIT</span>
 </a>
@@ -1167,7 +1167,7 @@ a:focus-visible{
     </a>
 
 </nav>
-```
+
 
 </header>
 
@@ -1177,7 +1177,7 @@ a:focus-visible{
 
 <section class="challenge-hero">
 
-```
+
 <div class="challenge-hero-inner">
 
     <div class="eyebrow">
@@ -1196,11 +1196,60 @@ a:focus-visible{
     </p>
 
 </div>
-```
+
 
 </section>
 
 <main class="nx-main">
+
+
+<!-- =====================================================
+     WORKOUT BUILDER
+===================================================== -->
+<section class="nx-builder">
+  <div class="nx-builder-head">
+    <div>
+      <div class="eyebrow">PERSONALIZED 30-DAY PROGRAM</div>
+      <h2>CHOOSE YOUR <span>TRAINING MODE.</span></h2>
+      <p>Select the muscle group, training environment and level. Nexfit will build the workout sessions around your choices.</p>
+    </div>
+  </div>
+
+  <div class="nx-choice-group">
+    <div class="nx-choice-label">1 · MUSCLE GROUP</div>
+    <div class="nx-choice-grid" id="muscleChoices">
+      <button class="nx-choice active" data-muscle="chest">CHEST</button>
+      <button class="nx-choice" data-muscle="back">BACK</button>
+      <button class="nx-choice" data-muscle="shoulders">SHOULDERS</button>
+      <button class="nx-choice" data-muscle="arms">ARMS</button>
+      <button class="nx-choice" data-muscle="legs">LEGS</button>
+      <button class="nx-choice" data-muscle="abs">ABS</button>
+      <button class="nx-choice" data-muscle="full body">FULL BODY</button>
+    </div>
+  </div>
+
+  <div class="nx-choice-group">
+    <div class="nx-choice-label">2 · TRAINING ENVIRONMENT</div>
+    <div class="nx-choice-grid nx-two">
+      <button class="nx-choice env-choice active" data-env="gym">GYM <small>Machines · cables · free weights</small></button>
+      <button class="nx-choice env-choice" data-env="home">HOME <small>Bodyweight · minimal equipment</small></button>
+    </div>
+  </div>
+
+  <div class="nx-choice-group">
+    <div class="nx-choice-label">3 · EXPERIENCE LEVEL</div>
+    <div class="nx-choice-grid nx-three">
+      <button class="nx-choice level-choice active" data-level="beginner">BEGINNER</button>
+      <button class="nx-choice level-choice" data-level="intermediate">INTERMEDIATE</button>
+      <button class="nx-choice level-choice" data-level="advanced">ADVANCED</button>
+    </div>
+  </div>
+
+  <div class="nx-builder-result">
+    <div><span class="nx-result-label">CURRENT PROGRAM</span><strong id="programSummary">CHEST · GYM · BEGINNER</strong></div>
+    <button id="applyProgram" class="nx-apply">BUILD MY PROGRAM →</button>
+  </div>
+</section>
 
 <!-- =====================================================
      PROGRESS DASHBOARD
@@ -1208,7 +1257,7 @@ a:focus-visible{
 
 <section class="progress-dashboard">
 
-```
+
 <div>
 
     <h2 class="progress-title"
@@ -1242,7 +1291,7 @@ a:focus-visible{
     </small>
 
 </div>
-```
+
 
 </section>
 
@@ -1252,7 +1301,7 @@ a:focus-visible{
 
 <section class="nx-stats">
 
-```
+
 <div class="nx-stat">
 
     <small>
@@ -1304,7 +1353,7 @@ a:focus-visible{
     </strong>
 
 </div>
-```
+
 
 </section>
 
@@ -1314,7 +1363,7 @@ a:focus-visible{
 
 <section class="challenge-intro">
 
-```
+
 <div class="eyebrow">
     THE 30-DAY SYSTEM
 </div>
@@ -1329,7 +1378,7 @@ a:focus-visible{
     the foundation, build capacity through hypertrophy and
     finish with peak conditioning.
 </p>
-```
+
 
 </section>
 
@@ -1339,7 +1388,7 @@ a:focus-visible{
 
 <div class="tier-switcher">
 
-```
+
 <button
     id="btn-beginner"
     class="tier-button active"
@@ -1398,7 +1447,7 @@ a:focus-visible{
     </span>
 
 </button>
-```
+
 
 </div>
 
@@ -1410,7 +1459,7 @@ a:focus-visible{
     id="tier-beginner"
     class="tier-section active">
 
-```
+
 <div class="tier-heading">
 
     <div>
@@ -1489,7 +1538,7 @@ a:focus-visible{
     {% endfor %}
 
 </div>
-```
+
 
 </section>
 
@@ -1501,7 +1550,7 @@ a:focus-visible{
     id="tier-intermediate"
     class="tier-section">
 
-```
+
 <div class="tier-heading">
 
     <div>
@@ -1579,7 +1628,7 @@ a:focus-visible{
     {% endfor %}
 
 </div>
-```
+
 
 </section>
 
@@ -1591,7 +1640,7 @@ a:focus-visible{
     id="tier-advanced"
     class="tier-section">
 
-```
+
 <div class="tier-heading">
 
     <div>
@@ -1669,13 +1718,13 @@ a:focus-visible{
     {% endfor %}
 
 </div>
-```
+
 
 </section>
 
 <div class="reset-row">
 
-```
+
 <button
     class="reset-btn"
     onclick="resetChallenge()">
@@ -1683,7 +1732,7 @@ a:focus-visible{
     RESET 30-DAY PROGRESS
 
 </button>
-```
+
 
 </div>
 
@@ -1697,7 +1746,7 @@ a:focus-visible{
     id="workoutModal"
     onclick="closeOnBackdrop(event)">
 
-```
+
 <div class="workout-modal-box">
 
     <div class="modal-top">
@@ -1813,7 +1862,7 @@ a:focus-visible{
     </div>
 
 </div>
-```
+
 
 </div>
 
@@ -1823,16 +1872,29 @@ a:focus-visible{
 
 <footer class="nx-footer">
 
-```
+
 © 2026 NEXFIT · Train. Track. Transform.
 
 <br><br>
 
 Designed & Developed by
 <strong>Varad Gurav</strong>
-```
+
 
 </footer>
+
+
+<style>
+.nx-builder{max-width:1100px;margin:28px auto 10px;padding:32px;background:linear-gradient(145deg,#101010,#0a0a0a);border:1px solid var(--nx-border);border-radius:18px}
+.nx-builder-head h2{margin:8px 0 10px;font-family:"Space Grotesk";font-size:clamp(2rem,5vw,3.5rem);line-height:.95;letter-spacing:-2px}
+.nx-builder-head h2 span{color:var(--nx-accent)}
+.nx-builder-head p{max-width:700px;color:#858585;font-size:.9rem;line-height:1.7;margin:0 0 25px}
+.nx-choice-group{margin-top:22px}.nx-choice-label{color:#666;font-size:.62rem;font-weight:900;letter-spacing:1.4px;margin-bottom:10px}
+.nx-choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.nx-choice-grid.nx-two{grid-template-columns:repeat(2,1fr)}.nx-choice-grid.nx-three{grid-template-columns:repeat(3,1fr)}
+.nx-choice{min-height:48px;padding:12px 10px;border:1px solid var(--nx-border);border-radius:8px;background:#0b0b0b;color:#888;font:800 .7rem Inter;cursor:pointer;transition:.2s ease}.nx-choice:hover{border-color:rgba(200,255,0,.4);color:#eee}.nx-choice.active{background:var(--nx-accent);border-color:var(--nx-accent);color:#050505}.nx-choice small{display:block;margin-top:4px;font-size:.52rem;opacity:.65}
+.nx-builder-result{margin-top:25px;padding:17px;border:1px solid var(--nx-border);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:15px}.nx-result-label{display:block;color:#555;font-size:.52rem;font-weight:900;letter-spacing:1px;margin-bottom:5px}.nx-builder-result strong{color:#eee;font:800 .95rem "Space Grotesk"}.nx-apply{border:0;border-radius:7px;background:var(--nx-accent);color:#050505;padding:13px 18px;font:900 .6rem Inter;cursor:pointer}
+@media(max-width:700px){.nx-builder{margin:20px 14px;padding:22px}.nx-choice-grid{grid-template-columns:repeat(2,1fr)}.nx-choice-grid.nx-three{grid-template-columns:1fr}.nx-builder-result{align-items:stretch;flex-direction:column}.nx-apply{width:100%;min-height:48px}.nx-builder-head p{font-size:.86rem}}
+</style>
 
 <script>
 
@@ -1840,77 +1902,76 @@ Designed & Developed by
    WORKOUT DATABASE
 ===================================================== */
 
-const provenWorkouts = [
+const workoutLibrary = {
+  "chest": {
+    gym:["Barbell Bench Press","Incline Dumbbell Press","Cable Chest Fly","Machine Chest Press","Incline Cable Fly","Dumbbell Pullover","Chest Press Dropset","Push-Up Finisher"],
+    home:["Push-Ups","Wide Push-Ups","Decline Push-Ups","Diamond Push-Ups","Slow Tempo Push-Ups","Archer Push-Ups","Chest Squeeze Press","Push-Up Finisher"]
+  },
+  "back": {
+    gym:["Lat Pulldown","Barbell Row","Seated Cable Row","Chest-Supported Row","Single-Arm Dumbbell Row","Straight-Arm Pulldown","Face Pull","Back Extension"],
+    home:["Inverted Rows","Prone Y Raises","Reverse Snow Angels","Superman Hold","Towel Rows","Bird Dog Rows","Back Widows","Superman Pulses"]
+  },
+  "shoulders": {
+    gym:["Overhead Press","Dumbbell Shoulder Press","Cable Lateral Raise","Dumbbell Lateral Raise","Rear Delt Fly","Face Pull","Arnold Press","Cable Front Raise"],
+    home:["Pike Push-Ups","Wall Handstand Hold","Lateral Raise Isometrics","Prone Y Raises","Prone T Raises","Plank Shoulder Taps","Pike Push-Up Negatives","Arm Circles"]
+  },
+  "arms": {
+    gym:["EZ-Bar Curl","Cable Triceps Pushdown","Incline Dumbbell Curl","Overhead Triceps Extension","Hammer Curl","Cable Curl","Close-Grip Bench Press","Rope Hammer Curl"],
+    home:["Diamond Push-Ups","Chair Triceps Dips","Backpack Curls","Close-Grip Push-Ups","Towel Curls","Bodyweight Triceps Extensions","Isometric Biceps Hold","Bench Dips"]
+  },
+  "legs": {
+    gym:["Back Squat","Romanian Deadlift","Leg Press","Walking Lunges","Leg Curl","Leg Extension","Bulgarian Split Squat","Standing Calf Raise"],
+    home:["Bodyweight Squats","Reverse Lunges","Bulgarian Split Squats","Glute Bridges","Single-Leg Glute Bridge","Wall Sit","Calf Raises","Jump Squats"]
+  },
+  "abs": {
+    gym:["Cable Crunch","Hanging Knee Raise","Ab Wheel Rollout","Decline Sit-Up","Cable Wood Chop","Reverse Crunch","Weighted Plank","Pallof Press"],
+    home:["Crunches","Reverse Crunches","Leg Raises","Plank","Dead Bug","Bicycle Crunches","Mountain Climbers","Hollow Body Hold"]
+  },
+  "full body": {
+    gym:["Barbell Squat","Bench Press","Lat Pulldown","Romanian Deadlift","Shoulder Press","Cable Row","Walking Lunges","Cable Crunch"],
+    home:["Bodyweight Squats","Push-Ups","Inverted Rows","Walking Lunges","Pike Push-Ups","Glute Bridges","Mountain Climbers","Plank"]
+  }
+};
 
-    {
-        name:"Bodyweight Squats",
-        desc:"Target quads, glutes and overall lower-body strength."
-    },
+const workoutDescriptions = {
+  "Barbell Bench Press":"Build pressing strength through the chest, shoulders and triceps.","Push-Ups":"Build controlled pressing strength using your bodyweight.","Lat Pulldown":"Train the lats and upper back with a controlled vertical pull.","Inverted Rows":"Develop upper-back pulling strength with bodyweight resistance.","Back Squat":"Train the quads, glutes and overall lower-body strength.","Bodyweight Squats":"Build lower-body control, mobility and endurance.","Overhead Press":"Develop strong, controlled overhead pressing mechanics.","Pike Push-Ups":"Challenge the shoulders with a bodyweight vertical press.","EZ-Bar Curl":"Train the biceps through a stable curling pattern.","Diamond Push-Ups":"Emphasize the triceps while maintaining controlled pressing form.","Cable Crunch":"Train the abdominal muscles through loaded spinal flexion.","Crunches":"Build basic abdominal strength with controlled repetitions."
+};
 
-    {
-        name:"Push-Ups",
-        desc:"Build pressing strength across the chest, shoulders and triceps."
-    },
+let activeDay=1;
+let currentExIdx=0;
+let countdownTimer=null;
+let isPaused=false;
+let currentMuscleGroup="chest";
+let currentEnvironment="gym";
+let currentLevel="beginner";
+let provenWorkouts=[];
 
-    {
-        name:"Inverted Rows",
-        desc:"Develop upper-back and pulling strength."
-    },
-
-    {
-        name:"Romanian Deadlifts",
-        desc:"Train hamstrings, glutes and posterior-chain strength."
-    },
-
-    {
-        name:"Shoulder Press",
-        desc:"Develop shoulder strength and controlled overhead movement."
-    },
-
-    {
-        name:"Walking Lunges",
-        desc:"Build unilateral leg strength and stability."
-    },
-
-    {
-        name:"Bent-Over Rows",
-        desc:"Build mid-back strength and upper-body pulling capacity."
-    },
-
-    {
-        name:"Plank Shoulder Taps",
-        desc:"Train core stability and anti-rotation control."
-    },
-
-    {
-        name:"Bulgarian Split Squats",
-        desc:"Challenge each leg independently for strength and control."
-    },
-
-    {
-        name:"Tricep Dips",
-        desc:"Target the triceps and pressing muscles."
-    },
-
-    {
-        name:"Hammer Curls",
-        desc:"Train the biceps, brachialis and forearms."
-    },
-
-    {
-        name:"Burpees",
-        desc:"Finish with full-body conditioning and controlled intensity."
-    }
-
-];
-
-
-let activeDay = 1;
-let currentExIdx = 0;
-let countdownTimer = null;
-let isPaused = false;
-let currentMuscleGroup = "Full Body";
-
+function programKey(day){
+  return `nexfit_${currentMuscleGroup}_${currentEnvironment}_${currentLevel}_day_${day}`;
+}
+function buildWorkouts(){
+  const names=(workoutLibrary[currentMuscleGroup]||workoutLibrary["full body"])[currentEnvironment];
+  const levelMultiplier=currentLevel==="beginner"?1:currentLevel==="intermediate"?1.15:1.3;
+  provenWorkouts=names.map((name,i)=>({name,desc:workoutDescriptions[name]||`Train your ${currentMuscleGroup} with controlled technique and progressive intensity.`,sets:Math.round(3*levelMultiplier),reps:currentLevel==="beginner"?10:currentLevel==="intermediate"?12:15}));
+}
+function updateProgramSummary(){
+  const el=document.getElementById("programSummary");
+  if(el) el.innerText=`${currentMuscleGroup.toUpperCase()} · ${currentEnvironment.toUpperCase()} · ${currentLevel.toUpperCase()}`;
+}
+function updateChallengeTitles(){
+  const pretty=currentMuscleGroup.replace(/\b\w/g,c=>c.toUpperCase());
+  const env=currentEnvironment==="gym"?"Gym":"Home";
+  for(let i=1;i<=30;i++){
+    const title=document.getElementById("title-day-"+i);
+    if(title){ const phase=i<=10?"Foundation":i<=20?"Build": "Peak"; title.innerText=`Day ${i}: ${pretty} ${env} · ${phase}`; }
+  }
+  const header=document.getElementById("selectedMuscleHeader");
+  if(header) header.innerText=`${pretty} · ${env} · ${currentLevel[0].toUpperCase()+currentLevel.slice(1)} Progress`;
+}
+function applyProgram(push=true){
+  buildWorkouts(); updateProgramSummary(); updateChallengeTitles(); updateProgress();
+  if(push){ const url=new URL(window.location.href); url.searchParams.set("muscle",currentMuscleGroup); url.searchParams.set("environment",currentEnvironment); url.searchParams.set("level",currentLevel); history.replaceState({},"",url); }
+}
 
 /* =====================================================
    INITIALIZATION
@@ -1924,13 +1985,16 @@ document.addEventListener("DOMContentLoaded",()=>{
     const muscleParam =
         urlParams.get("muscle");
 
+    const environmentParam =
+        urlParams.get("environment");
+
     const levelParam =
         urlParams.get("level");
 
 
-    if(muscleParam){
+    if(muscleParam && workoutLibrary[muscleParam.toLowerCase()]){
 
-        currentMuscleGroup=muscleParam;
+        currentMuscleGroup=muscleParam.toLowerCase();
 
         document
             .getElementById("selectedMuscleHeader")
@@ -1964,7 +2028,15 @@ document.addEventListener("DOMContentLoaded",()=>{
     }
 
 
+    if(environmentParam && ["gym","home"].includes(environmentParam.toLowerCase())){
+        currentEnvironment=environmentParam.toLowerCase();
+        document.querySelectorAll(".env-choice").forEach(b=>b.classList.toggle("active",b.dataset.env===currentEnvironment));
+    }
+
+
     if(levelParam){
+
+        currentLevel=levelParam.toLowerCase();
 
         const targetTier=
             levelParam.toLowerCase();
@@ -1993,11 +2065,28 @@ document.addEventListener("DOMContentLoaded",()=>{
     }
 
 
+    document.querySelectorAll(".nx-choice").forEach(button=>{
+        button.addEventListener("click",()=>{
+            const group=button.closest(".nx-choice-grid");
+            group.querySelectorAll(".nx-choice").forEach(b=>b.classList.remove("active"));
+            button.classList.add("active");
+            if(button.dataset.muscle) currentMuscleGroup=button.dataset.muscle;
+            if(button.dataset.env) currentEnvironment=button.dataset.env;
+            if(button.dataset.level) currentLevel=button.dataset.level;
+            updateProgramSummary();
+        });
+    });
+    document.getElementById("applyProgram")?.addEventListener("click",()=>applyProgram(true));
+    document.querySelectorAll(".nx-choice[data-muscle]").forEach(b=>b.classList.toggle("active",b.dataset.muscle===currentMuscleGroup));
+    document.querySelectorAll(".level-choice").forEach(b=>b.classList.toggle("active",b.dataset.level===currentLevel));
+    buildWorkouts(); updateProgramSummary(); updateChallengeTitles();
+
+
     for(let i=1;i<=30;i++){
 
         if(
             localStorage.getItem(
-                "nexfit_challenge_day_"+i
+                programKey(i)
             ) === "true"
         ){
 
@@ -2090,7 +2179,7 @@ function updateProgress(){
 
         if(
             localStorage.getItem(
-                "nexfit_challenge_day_"+i
+                programKey(i)
             ) === "true"
         ){
 
@@ -2369,7 +2458,7 @@ function finishWorkout(){
 
 
     localStorage.setItem(
-        "nexfit_challenge_day_"+activeDay,
+        programKey(activeDay),
         "true"
     );
 
@@ -2531,7 +2620,7 @@ function resetChallenge(){
     for(let i=1;i<=30;i++){
 
         localStorage.removeItem(
-            "nexfit_challenge_day_"+i
+            programKey(i)
         );
 
 
