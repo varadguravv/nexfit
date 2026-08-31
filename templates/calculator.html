@@ -1,1779 +1,513 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Fitness Calculator | NexFit</title>
 
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nexfit — Smart Fitness Calculator</title>
-
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap"
-      rel="stylesheet">
-
-
-<style>
-
-:root {
-    --nx-bg:#060606;
-    --nx-card:#0d0d0d;
-    --nx-card2:#111;
-    --nx-border:rgba(255,255,255,.08);
-    --nx-text:#f3f3f3;
-    --nx-muted:#777;
-    --nx-accent:#c8ff00;
-}
-
-
-* {
-    box-sizing:border-box;
-}
-
-
-html {
-    scroll-behavior:smooth;
-}
-
-
-body {
-
-    margin:0;
-
-    background:
-        radial-gradient(
-            circle at 85% 0%,
-            rgba(200,255,0,.055),
-            transparent 30%
-        ),
-        var(--nx-bg);
-
-    color:var(--nx-text);
-
-    font-family:
-        Inter,
-        Arial,
-        sans-serif;
-}
-
-
-a {
-    text-decoration:none;
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-.nx-nav {
-
-    position:sticky;
-
-    top:0;
-
-    z-index:1000;
-
-    min-height:76px;
-
-    padding:0 max(5vw,22px);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:30px;
-
-    background:rgba(6,6,6,.91);
-
-    border-bottom:1px solid var(--nx-border);
-
-    backdrop-filter:blur(18px);
-}
-
-
-.nx-logo {
-
-    color:#fff;
-
-    font-family:
-        "Space Grotesk",
-        sans-serif;
-
-    font-size:1.45rem;
-
-    font-weight:900;
-
-    letter-spacing:-1.5px;
-}
-
-
-.nx-logo span {
-    color:var(--nx-accent);
-}
-
-
-.nx-links {
-
-    display:flex;
-
-    align-items:center;
-
-    gap:27px;
-
-    overflow-x:auto;
-
-    scrollbar-width:none;
-}
-
-
-.nx-links::-webkit-scrollbar {
-    display:none;
-}
-
-
-.nx-links a {
-
-    white-space:nowrap;
-
-    color:#626262;
-
-    font-size:.67rem;
-
-    font-weight:800;
-
-    transition:color .2s ease;
-}
-
-
-.nx-links a:hover,
-.nx-links a.active {
-    color:#fff;
-}
-
-
-/* =====================================================
-   MAIN
-===================================================== */
-
-.nx-container {
-
-    width:min(1120px,90%);
-
-    margin:auto;
-}
-
-
-/* =====================================================
-   HERO
-===================================================== */
-
-.calc-hero {
-
-    position:relative;
-
-    min-height:430px;
-
-    margin-top:25px;
-
-    overflow:hidden;
-
-    display:flex;
-
-    align-items:flex-end;
-
-    border:1px solid var(--nx-border);
-
-    border-radius:18px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            rgba(0,0,0,.97),
-            rgba(0,0,0,.74) 55%,
-            rgba(0,0,0,.2)
-        ),
-
-        url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=90")
-        center/cover;
-}
-
-
-.calc-hero-content {
-
-    max-width:760px;
-
-    padding:
-        clamp(32px,6vw,65px);
-}
-
-
-.calc-eyebrow {
-
-    color:var(--nx-accent);
-
-    font-size:.48rem;
-
-    font-weight:900;
-
-    letter-spacing:2px;
-}
-
-
-.calc-hero h1 {
-
-    margin:14px 0 18px;
-
-    font-family:
-        "Space Grotesk",
-        sans-serif;
-
-    font-size:
-        clamp(3rem,7vw,6.2rem);
-
-    line-height:.86;
-
-    letter-spacing:-5px;
-}
-
-
-.calc-hero h1 span {
-    color:var(--nx-accent);
-}
-
-
-.calc-hero p {
-
-    max-width:630px;
-
-    margin:0;
-
-    color:#888;
-
-    font-size:.65rem;
-
-    line-height:1.8;
-}
-
-
-/* =====================================================
-   CALCULATOR SECTION
-===================================================== */
-
-.calculator-shell {
-
-    margin:
-        30px 0 70px;
-
-    padding:
-        clamp(22px,4vw,38px);
-
-    background:
-        linear-gradient(
-            145deg,
-            #101010,
-            #0b0b0b
-        );
-
-    border:
-        1px solid var(--nx-border);
-
-    border-radius:16px;
-}
-
-
-.calc-heading {
-
-    margin-bottom:28px;
-}
-
-
-.calc-kicker {
-
-    display:block;
-
-    margin-bottom:8px;
-
-    color:var(--nx-accent);
-
-    font-size:.45rem;
-
-    font-weight:900;
-
-    letter-spacing:1.7px;
-}
-
-
-.calc-heading h2 {
-
-    margin:0;
-
-    font-family:
-        "Space Grotesk",
-        sans-serif;
-
-    font-size:
-        clamp(1.5rem,3vw,2.2rem);
-
-    letter-spacing:-1px;
-}
-
-
-.calc-heading p {
-
-    max-width:700px;
-
-    margin:8px 0 0;
-
-    color:#666;
-
-    font-size:.57rem;
-
-    line-height:1.7;
-}
-
-
-/* =====================================================
-   INPUT GRID
-===================================================== */
-
-.calc-grid {
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:12px;
-}
-
-
-.input-group {
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:8px;
-}
-
-
-.input-group label {
-
-    color:#858585;
-
-    font-size:.5rem;
-
-    font-weight:800;
-
-    letter-spacing:.3px;
-}
-
-
-.input-group input,
-.input-group select {
-
-    width:100%;
-
-    padding:
-        14px 14px;
-
-    color:#eee;
-
-    background:#080808;
-
-    border:
-        1px solid
-        rgba(255,255,255,.09);
-
-    border-radius:8px;
-
-    outline:none;
-
-    font-family:inherit;
-
-    font-size:.62rem;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease;
-}
-
-
-.input-group input::placeholder {
-    color:#444;
-}
-
-
-.input-group input:focus,
-.input-group select:focus {
-
-    border-color:
-        rgba(200,255,0,.55);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(200,255,0,.055);
-}
-
-
-.input-group select option {
-    background:#111;
-    color:#fff;
-}
-
-
-/* =====================================================
-   BUTTON
-===================================================== */
-
-.calc-submit {
-
-    width:100%;
-
-    margin-top:18px;
-
-    padding:15px;
-
-    color:#050505;
-
-    background:var(--nx-accent);
-
-    border:none;
-
-    border-radius:8px;
-
-    font-family:
-        "Space Grotesk",
-        sans-serif;
-
-    font-size:.64rem;
-
-    font-weight:900;
-
-    letter-spacing:.4px;
-
-    cursor:pointer;
-
-    transition:
-        transform .2s ease,
-        filter .2s ease;
-}
-
-
-.calc-submit:hover {
-
-    transform:
-        translateY(-2px);
-
-    filter:
-        brightness(1.08);
-}
-
-
-.calc-submit:active {
-    transform:translateY(0);
-}
-
-
-/* =====================================================
-   RESULT DASHBOARD
-===================================================== */
-
-.result-dashboard {
-
-    display:none;
-
-    margin-top:30px;
-
-    padding-top:30px;
-
-    border-top:
-        1px solid
-        var(--nx-border);
-
-    animation:
-        resultIn .45s ease;
-}
-
-
-@keyframes resultIn {
-
-    from {
-        opacity:0;
-        transform:translateY(15px);
-    }
-
-    to {
-        opacity:1;
-        transform:translateY(0);
-    }
-
-}
-
-
-.result-header {
-
-    display:flex;
-
-    align-items:flex-end;
-
-    justify-content:space-between;
-
-    gap:20px;
-
-    margin-bottom:18px;
-}
-
-
-.result-header h3 {
-
-    margin:0;
-
-    font-family:
-        "Space Grotesk",
-        sans-serif;
-
-    font-size:1.25rem;
-}
-
-
-.result-header span {
-
-    color:var(--nx-accent);
-
-    font-size:.45rem;
-
-    font-weight:900;
-
-    letter-spacing:1px;
-}
-
-
-/* =====================================================
-   RESULT CARDS
-===================================================== */
-
-.result-stats-grid {
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:10px;
-
-    margin-bottom:10px;
-}
-
-
-.stat-card {
-
-    position:relative;
-
-    overflow:hidden;
-
-    padding:22px;
-
-    min-height:145px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #121212,
-            #0c0c0c
-        );
-
-    border:
-        1px solid
-        var(--nx-border);
-
-    border-radius:10px;
-}
-
-
-.stat-card::after {
-
-    content:"";
-
-    position:absolute;
-
-    width:80px;
-
-    height:80px;
-
-    right:-30px;
-
-    bottom:-30px;
-
-    background:
-        var(--nx-accent);
-
-    opacity:.035;
-
-    border-radius:50%;
-}
-
-
-.stat-card h4 {
-
-    margin:
-        0 0 13px;
-
-    color:#666;
-
-    font-size:.44rem;
-
-    font-weight:900;
-
-    letter-spacing:1px;
-}
-
-
-.stat-card .value {
-
-    margin:0;
-
-    color:var(--nx-accent);
-
-    font-family:
-        "Space Grotesk",
-        sans-serif;
-
-    font-size:
-        clamp(1.7rem,4vw,2.4rem);
-
-    font-weight:900;
-
-    letter-spacing:-1px;
-}
-
-
-.stat-card small {
-
-    display:block;
-
-    margin-top:7px;
-
-    color:#555;
-
-    font-size:.44rem;
-
-    font-weight:600;
-}
-
-
-/* =====================================================
-   BMI SCALE
-===================================================== */
-
-.bmi-panel {
-
-    margin-top:10px;
-
-    padding:22px;
-
-    background:#0d0d0d;
-
-    border:
-        1px solid
-        var(--nx-border);
-
-    border-radius:10px;
-}
-
-
-.bmi-panel-top {
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:15px;
-
-    margin-bottom:13px;
-}
-
-
-.bmi-panel-top h4 {
-
-    margin:0;
-
-    color:#ddd;
-
-    font-family:
-        "Space Grotesk",
-        sans-serif;
-
-    font-size:.8rem;
-}
-
-
-#bmiCategory {
-
-    color:var(--nx-accent);
-
-    font-size:.47rem;
-
-    font-weight:900;
-}
-
-
-.bmi-scale {
-
-    position:relative;
-
-    height:7px;
-
-    display:flex;
-
-    overflow:hidden;
-
-    border-radius:20px;
-}
-
-
-.bmi-zone {
-    flex:1;
-}
-
-
-.bmi-zone:nth-child(1) {
-    background:#526;
-}
-
-
-.bmi-zone:nth-child(2) {
-    background:#667;
-}
-
-
-.bmi-zone:nth-child(3) {
-    background:#777;
-}
-
-
-.bmi-zone:nth-child(4) {
-    background:#555;
-}
-
-
-.bmi-marker {
-
-    position:absolute;
-
-    top:-5px;
-
-    width:4px;
-
-    height:17px;
-
-    background:#fff;
-
-    border-radius:3px;
-
-    transform:
-        translateX(-50%);
-}
-
-
-/* =====================================================
-   PLAN
-===================================================== */
-
-.plan-breakdown {
-
-    margin-top:10px;
-
-    padding:25px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(200,255,0,.045),
-            rgba(255,255,255,.015)
-        );
-
-    border:
-        1px solid
-        rgba(200,255,0,.11);
-
-    border-radius:10px;
-}
-
-
-.plan-label {
-
-    display:block;
-
-    margin-bottom:8px;
-
-    color:var(--nx-accent);
-
-    font-size:.43rem;
-
-    font-weight:900;
-
-    letter-spacing:1.4px;
-}
-
-
-.plan-breakdown h4 {
-
-    margin:
-        0 0 10px;
-
-    color:#eee;
-
-    font-family:
-        "Space Grotesk",
-        sans-serif;
-
-    font-size:1rem;
-}
-
-
-.plan-breakdown p {
-
-    margin:0;
-
-    color:#777;
-
-    font-size:.55rem;
-
-    line-height:1.8;
-}
-
-
-/* =====================================================
-   DISCLAIMER
-===================================================== */
-
-.calc-note {
-
-    margin-top:16px;
-
-    padding:14px 16px;
-
-    color:#555;
-
-    background:
-        rgba(255,255,255,.015);
-
-    border:
-        1px solid
-        var(--nx-border);
-
-    border-radius:7px;
-
-    font-size:.44rem;
-
-    line-height:1.7;
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-.nx-footer {
-
-    padding:
-        28px 20px;
-
-    color:#3d3d3d;
-
-    border-top:
-        1px solid
-        var(--nx-border);
-
-    text-align:center;
-
-    font-size:.46rem;
-}
-
-
-.nx-footer strong {
-    color:var(--nx-accent);
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:760px) {
-
-    .nx-nav {
-
-        padding:
-            15px 18px;
-
-        flex-wrap:wrap;
-    }
-
-
-    .nx-links {
-
-        width:100%;
-
-        gap:18px;
-    }
-
-
-    .calc-grid,
-    .result-stats-grid {
-
-        grid-template-columns:1fr;
-    }
-
-
-    .calc-hero {
-
-        min-height:450px;
-    }
-
-
-    .calc-hero h1 {
-
-        font-size:3.5rem;
-
-        letter-spacing:-3px;
-    }
-
-
-    .result-header {
-
-        align-items:flex-start;
-
-        flex-direction:column;
-    }
-
-}
-
-
-@media(max-width:500px) {
-
-    .nx-container {
-
-        width:
-            calc(100% - 28px);
-    }
-
-
-    .calculator-shell {
-
-        padding:20px 16px;
-    }
-
-
-    .calc-hero-content {
-
-        padding:
-            28px 22px;
-    }
-
-}
-
-</style>
-
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-<!-- =====================================================
-     NAVIGATION
-===================================================== -->
+<header class="navbar">
 
-<header class="nx-nav">
+    <div class="logo">
+        NEX<span>FIT</span>
+    </div>
 
-
-<a href="/" class="nx-logo">
-    NEX<span>FIT</span>
-</a>
-
-
-<nav class="nx-links">
-
-    <a href="/">
-        Home
-    </a>
-
-    <a href="/calculator" class="active">
-        Calculator
-    </a>
-
-    <a href="/muscle">
-        Muscle Guide
-    </a>
-
-    <a href="/challenges">
-        30-Day Challenges
-    </a>
-
-    <a href="/myths">
-        Fitness Myths
-    </a>
-
-</nav>
-
+    <nav>
+        <a href="/">Home</a>
+        <a href="/calculator" class="active">Calculator</a>
+        <a href="/muscle">Muscle Guide</a>
+        <a href="/challenges">30 Day Challenge</a>
+        <a href="/myths">Myths</a>
+    </nav>
 
 </header>
 
-<main class="nx-container">
 
-<!-- =====================================================
-     HERO
-===================================================== -->
+<main class="calculator-page">
 
-<section class="calc-hero">
+    <!-- HERO -->
 
-
-<div class="calc-hero-content">
-
-    <span class="calc-eyebrow">
-        NEXFIT SMART ANALYSIS
-    </span>
-
-
-    <h1>
-        KNOW YOUR
-        <span>NUMBERS.</span>
-    </h1>
-
-
-    <p>
-        Turn your body metrics into a practical starting point.
-        Calculate BMI, estimated daily calories and protein
-        requirements based on your selected goal.
-    </p>
-
-</div>
-
-
-</section>
-
-<!-- =====================================================
-     CALCULATOR
-===================================================== -->
-
-<section class="calculator-shell">
-
-
-<div class="calc-heading">
-
-    <span class="calc-kicker">
-        PERSONAL PROFILE
-    </span>
-
-    <h2>
-        Build Your Fitness Baseline
-    </h2>
-
-    <p>
-        Enter your details below. Nexfit will calculate your
-        BMI, estimated daily calorie target and protein target.
-    </p>
-
-</div>
-
-
-<form onsubmit="calculatePlan(event)">
-
-
-    <div class="calc-grid">
-
-
-        <!-- WEIGHT -->
-
-        <div class="input-group">
-
-            <label for="weightInput">
-                BODY WEIGHT · KG
-            </label>
-
-            <input
-                type="number"
-                id="weightInput"
-                placeholder="e.g. 70"
-                min="20"
-                max="300"
-                step="0.1"
-                required
-            >
-
-        </div>
-
-
-        <!-- HEIGHT -->
-
-        <div class="input-group">
-
-            <label for="heightInput">
-                HEIGHT · CM
-            </label>
-
-            <input
-                type="number"
-                id="heightInput"
-                placeholder="e.g. 175"
-                min="100"
-                max="250"
-                step="0.1"
-                required
-            >
-
-        </div>
-
-
-        <!-- AGE -->
-
-        <div class="input-group">
-
-            <label for="ageInput">
-                AGE
-            </label>
-
-            <input
-                type="number"
-                id="ageInput"
-                placeholder="e.g. 20"
-                min="13"
-                max="100"
-                required
-            >
-
-        </div>
-
-
-        <!-- GENDER -->
-
-        <div class="input-group">
-
-            <label for="genderInput">
-                GENDER
-            </label>
-
-            <select
-                id="genderInput"
-                required
-            >
-
-                <option value="">
-                    Select gender
-                </option>
-
-                <option value="male">
-                    Male
-                </option>
-
-                <option value="female">
-                    Female
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- GOAL -->
-
-        <div class="input-group">
-
-            <label for="goalInput">
-                PRIMARY GOAL
-            </label>
-
-            <select
-                id="goalInput"
-                required
-            >
-
-                <option value="">
-                    Select goal
-                </option>
-
-                <option value="fatloss">
-                    Fat Loss
-                </option>
-
-                <option value="maintenance">
-                    Maintain Weight
-                </option>
-
-                <option value="hypertrophy">
-                    Muscle Growth
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- DIET -->
-
-        <div class="input-group">
-
-            <label for="dietInput">
-                DIET PREFERENCE
-            </label>
-
-            <select
-                id="dietInput"
-                required
-            >
-
-                <option value="">
-                    Select diet
-                </option>
-
-                <option value="vegprotein">
-                    Vegetarian · High Protein
-                </option>
-
-                <option value="vegan">
-                    Vegan · Clean
-                </option>
-
-                <option value="keto">
-                    Keto · Performance
-                </option>
-
-            </select>
-
-        </div>
-
-
-    </div>
-
-
-    <button
-        type="submit"
-        class="calc-submit"
-    >
-        GENERATE MY FITNESS ANALYSIS
-    </button>
-
-
-</form>
-
-
-<!-- =================================================
-     RESULTS
-================================================= -->
-
-<div
-    class="result-dashboard"
-    id="resultDashboard"
->
-
-
-    <div class="result-header">
+    <section class="page-hero">
 
         <div>
 
-            <span class="calc-kicker">
-                YOUR RESULTS
+            <p class="eyebrow">SMART FITNESS PLANNING</p>
+
+            <h1>
+                Know Your Numbers.<br>
+                <span>Build Your Plan.</span>
+            </h1>
+
+            <p class="hero-text">
+                Enter your basic details and get a simple fitness
+                recommendation based on your body, goal and training setup.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CALCULATOR -->
+
+    <section class="calculator-section">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">FITNESS CALCULATOR</p>
+
+            <h2>Start With Your Basics</h2>
+
+            <p>
+                Fill in the details below to calculate your BMI and
+                understand the direction of your fitness journey.
+            </p>
+
+        </div>
+
+
+        <form method="POST" class="fitness-form">
+
+            <div class="form-grid">
+
+                <!-- WEIGHT -->
+
+                <div class="form-group">
+
+                    <label for="weight">
+                        WEIGHT
+                    </label>
+
+                    <div class="input-with-unit">
+
+                        <input
+                            type="number"
+                            id="weight"
+                            name="weight"
+                            step="0.1"
+                            min="20"
+                            max="300"
+                            placeholder="Enter weight"
+                            value="{{ request.form.get('weight', '') }}"
+                            required
+                        >
+
+                        <span>KG</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HEIGHT -->
+
+                <div class="form-group">
+
+                    <label for="height">
+                        HEIGHT
+                    </label>
+
+                    <div class="input-with-unit">
+
+                        <input
+                            type="number"
+                            id="height"
+                            name="height"
+                            step="0.1"
+                            min="100"
+                            max="250"
+                            placeholder="Enter height"
+                            value="{{ request.form.get('height', '') }}"
+                            required
+                        >
+
+                        <span>CM</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- GOAL -->
+
+                <div class="form-group">
+
+                    <label for="goal">
+                        PRIMARY GOAL
+                    </label>
+
+                    <select id="goal" name="goal" required>
+
+                        <option value="" disabled
+                            {% if not request.form.get('goal') %}
+                                selected
+                            {% endif %}>
+                            Select your goal
+                        </option>
+
+                        <option value="Build Muscle"
+                            {% if request.form.get('goal') == 'Build Muscle' %}
+                                selected
+                            {% endif %}>
+                            Build Muscle
+                        </option>
+
+                        <option value="Lose Fat"
+                            {% if request.form.get('goal') == 'Lose Fat' %}
+                                selected
+                            {% endif %}>
+                            Lose Fat
+                        </option>
+
+                        <option value="Build Muscle & Lose Fat"
+                            {% if request.form.get('goal') == 'Build Muscle & Lose Fat' %}
+                                selected
+                            {% endif %}>
+                            Build Muscle & Lose Fat
+                        </option>
+
+                        <option value="Improve Fitness"
+                            {% if request.form.get('goal') == 'Improve Fitness' %}
+                                selected
+                            {% endif %}>
+                            Improve Overall Fitness
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DIET -->
+
+                <div class="form-group">
+
+                    <label for="diet">
+                        DIET TYPE
+                    </label>
+
+                    <select id="diet" name="diet" required>
+
+                        <option value="" disabled
+                            {% if not request.form.get('diet') %}
+                                selected
+                            {% endif %}>
+                            Select diet
+                        </option>
+
+                        <option value="Vegetarian"
+                            {% if request.form.get('diet') == 'Vegetarian' %}
+                                selected
+                            {% endif %}>
+                            Vegetarian
+                        </option>
+
+                        <option value="Non-Vegetarian"
+                            {% if request.form.get('diet') == 'Non-Vegetarian' %}
+                                selected
+                            {% endif %}>
+                            Non-Vegetarian
+                        </option>
+
+                        <option value="Vegan"
+                            {% if request.form.get('diet') == 'Vegan' %}
+                                selected
+                            {% endif %}>
+                            Vegan
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label for="location">
+                        TRAINING ENVIRONMENT
+                    </label>
+
+                    <select id="location" name="location" required>
+
+                        <option value="" disabled
+                            {% if not request.form.get('location') %}
+                                selected
+                            {% endif %}>
+                            Where do you train?
+                        </option>
+
+                        <option value="Gym"
+                            {% if request.form.get('location') == 'Gym' %}
+                                selected
+                            {% endif %}>
+                            Gym
+                        </option>
+
+                        <option value="Home"
+                            {% if request.form.get('location') == 'Home' %}
+                                selected
+                            {% endif %}>
+                            Home
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- INJURY -->
+
+                <div class="form-group">
+
+                    <label for="injury">
+                        INJURY STATUS
+                    </label>
+
+                    <select id="injury" name="injury" required>
+
+                        <option value="" disabled
+                            {% if not request.form.get('injury') %}
+                                selected
+                            {% endif %}>
+                            Select option
+                        </option>
+
+                        <option value="No injury"
+                            {% if request.form.get('injury') == 'No injury' %}
+                                selected
+                            {% endif %}>
+                            No injury
+                        </option>
+
+                        <option value="Minor injury"
+                            {% if request.form.get('injury') == 'Minor injury' %}
+                                selected
+                            {% endif %}>
+                            Minor injury
+                        </option>
+
+                        <option value="Existing injury"
+                            {% if request.form.get('injury') == 'Existing injury' %}
+                                selected
+                            {% endif %}>
+                            Existing injury
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="primary-btn">
+                CALCULATE MY FITNESS PROFILE →
+            </button>
+
+        </form>
+
+    </section>
+
+
+    {% if bmi is not none %}
+
+    <!-- RESULT -->
+
+    <section class="result-section">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">YOUR RESULT</p>
+
+            <h2>Your Fitness Snapshot</h2>
+
+        </div>
+
+
+        <div class="result-grid">
+
+            <!-- BMI -->
+
+            <div class="result-card bmi-card">
+
+                <div class="result-label">
+                    BODY MASS INDEX
+                </div>
+
+                <div class="bmi-number">
+                    {{ bmi }}
+                </div>
+
+                <div class="bmi-category">
+                    {{ category }}
+                </div>
+
+                <p>
+                    BMI is a general screening measurement and does not
+                    directly measure body fat or muscle mass.
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div class="result-card profile-card">
+
+                <div class="result-label">
+                    YOUR PROFILE
+                </div>
+
+                <div class="profile-row">
+                    <span>Goal</span>
+                    <strong>{{ rec.goal }}</strong>
+                </div>
+
+                <div class="profile-row">
+                    <span>Diet</span>
+                    <strong>{{ rec.diet }}</strong>
+                </div>
+
+                <div class="profile-row">
+                    <span>Training</span>
+                    <strong>{{ rec.location }}</strong>
+                </div>
+
+                <div class="profile-row">
+                    <span>Injury</span>
+                    <strong>{{ rec.injury }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECOMMENDATION -->
+
+        <div class="recommendation-card">
+
+            <div>
+
+                <p class="eyebrow">NEXFIT RECOMMENDATION</p>
+
+                <h2>
+                    Your next step
+                </h2>
+
+            </div>
+
+
+            <div class="recommendation-content">
+
+                {% if rec.goal == "Build Muscle" %}
+
+                    <p>
+                        Focus on progressive resistance training, adequate
+                        protein and a small calorie surplus. Prioritize
+                        compound movements and consistent recovery.
+                    </p>
+
+                {% elif rec.goal == "Lose Fat" %}
+
+                    <p>
+                        Focus on resistance training, regular activity and
+                        a sustainable calorie deficit. Keep protein intake
+                        high to help preserve muscle while losing fat.
+                    </p>
+
+                {% elif rec.goal == "Build Muscle & Lose Fat" %}
+
+                    <p>
+                        Aim for a balanced training routine combining
+                        resistance training with appropriate cardio.
+                        Prioritize protein, recovery and consistent nutrition.
+                    </p>
+
+                {% else %}
+
+                    <p>
+                        Build a consistent routine combining strength training,
+                        cardiovascular activity, mobility and recovery.
+                        Progress gradually instead of chasing quick results.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- SAFETY NOTE -->
+
+        <div class="calculator-note">
+
+            <strong>Important:</strong>
+
+            <span>
+                This calculator provides general fitness guidance and is not
+                a medical diagnosis. If you have an injury or medical
+                condition, consult an appropriately qualified professional
+                before starting or changing your training program.
             </span>
 
-            <h3>
-                Personalized Fitness Analysis
-            </h3>
-
         </div>
 
-        <span>
-            NEXFIT ANALYSIS
-        </span>
+    </section>
 
-    </div>
+    {% endif %}
 
 
-    <div class="result-stats-grid">
+    <!-- CTA -->
 
+    <section class="calculator-cta">
 
-        <!-- BMI -->
+        <p class="eyebrow">READY TO TRAIN?</p>
 
-        <div class="stat-card">
+        <h2>
+            Turn Your Numbers<br>
+            Into Action.
+        </h2>
 
-            <h4>
-                BODY MASS INDEX
-            </h4>
-
-            <p
-                class="value"
-                id="bmiVal"
-            >
-                —
-            </p>
-
-            <small>
-                BMI estimate
-            </small>
-
-        </div>
-
-
-        <!-- TDEE -->
-
-        <div class="stat-card">
-
-            <h4>
-                DAILY CALORIES
-            </h4>
-
-            <p
-                class="value"
-                id="tdeeVal"
-            >
-                —
-            </p>
-
-            <small>
-                Estimated target
-            </small>
-
-        </div>
-
-
-        <!-- PROTEIN -->
-
-        <div class="stat-card">
-
-            <h4>
-                DAILY PROTEIN
-            </h4>
-
-            <p
-                class="value"
-                id="proteinVal"
-            >
-                —
-            </p>
-
-            <small>
-                Target intake
-            </small>
-
-        </div>
-
-
-    </div>
-
-
-    <!-- BMI SCALE -->
-
-    <div class="bmi-panel">
-
-        <div class="bmi-panel-top">
-
-            <h4>
-                BMI Classification
-            </h4>
-
-            <span id="bmiCategory">
-                —
-            </span>
-
-        </div>
-
-
-        <div class="bmi-scale">
-
-            <div class="bmi-zone"></div>
-
-            <div class="bmi-zone"></div>
-
-            <div class="bmi-zone"></div>
-
-            <div class="bmi-zone"></div>
-
-            <div
-                class="bmi-marker"
-                id="bmiMarker"
-            ></div>
-
-        </div>
-
-    </div>
-
-
-    <!-- PLAN -->
-
-    <div class="plan-breakdown">
-
-        <span class="plan-label">
-            RECOMMENDED STRATEGY
-        </span>
-
-        <h4 id="planTitleHeader">
-            Your Nexfit Plan
-        </h4>
-
-        <p id="planDescText">
-            Your personalized recommendation will appear here.
+        <p>
+            Explore the muscle guide or start your personalized
+            30-day challenge.
         </p>
 
-    </div>
+        <div class="cta-buttons">
 
+            <a href="/muscle" class="secondary-btn">
+                EXPLORE MUSCLE GUIDE
+            </a>
 
-    <div class="calc-note">
+            <a href="/challenges" class="primary-btn">
+                START 30 DAY CHALLENGE →
+            </a>
 
-        Nexfit calculations are estimates intended for
-        educational fitness planning. Individual energy
-        requirements can vary based on activity, body
-        composition, training volume and other factors.
+        </div>
 
-    </div>
-
-
-</div>
-
-
-</section>
+    </section>
 
 </main>
 
-<footer class="nx-footer">
 
+<footer>
 
-© 2026 NEXFIT · TRAIN. TRACK. TRANSFORM.
-
-<br><br>
-
-Designed & Developed by
-<strong>Varad Gurav</strong>
-
+    <p>
+        © 2026 NEXFIT — TRAIN SMART. LIVE STRONG.
+    </p>
 
 </footer>
 
-<script>
-
-
-function calculatePlan(e) {
-
-    e.preventDefault();
-
-
-    /* ==============================================
-       GET INPUTS
-    ============================================== */
-
-    const weight =
-        parseFloat(
-            document.getElementById("weightInput").value
-        );
-
-
-    const height =
-        parseFloat(
-            document.getElementById("heightInput").value
-        );
-
-
-    const age =
-        parseInt(
-            document.getElementById("ageInput").value
-        );
-
-
-    const gender =
-        document.getElementById("genderInput").value;
-
-
-    const goal =
-        document.getElementById("goalInput").value;
-
-
-    const diet =
-        document.getElementById("dietInput").value;
-
-
-    /* ==============================================
-       BMI
-    ============================================== */
-
-    const heightM =
-        height / 100;
-
-
-    const bmi =
-        weight /
-        (heightM * heightM);
-
-
-    /* ==============================================
-       BMR
-       Mifflin-St Jeor
-    ============================================== */
-
-    let bmr =
-        (10 * weight) +
-        (6.25 * height) -
-        (5 * age);
-
-
-    if (gender === "male") {
-
-        bmr += 5;
-
-    } else {
-
-        bmr -= 161;
-
-    }
-
-
-    /* ==============================================
-       TDEE
-    ============================================== */
-
-    let tdee =
-        Math.round(
-            bmr * 1.55
-        );
-
-
-    if (goal === "fatloss") {
-
-        tdee -= 400;
-
-    }
-
-
-    if (goal === "hypertrophy") {
-
-        tdee += 300;
-
-    }
-
-
-    /* ==============================================
-       PROTEIN
-    ============================================== */
-
-    const protein =
-        Math.round(
-            weight * 2
-        );
-
-
-    /* ==============================================
-       BMI CATEGORY
-    ============================================== */
-
-    let category =
-        "Normal Weight";
-
-
-    if (bmi < 18.5) {
-
-        category =
-            "Underweight";
-
-    }
-
-    else if (bmi >= 25 && bmi < 30) {
-
-        category =
-            "Overweight";
-
-    }
-
-    else if (bmi >= 30) {
-
-        category =
-            "Obese";
-
-    }
-
-
-    /* ==============================================
-       DISPLAY RESULTS
-    ============================================== */
-
-    document.getElementById("bmiVal")
-        .innerText =
-        bmi.toFixed(1);
-
-
-    document.getElementById("bmiCategory")
-        .innerText =
-        category;
-
-
-    document.getElementById("tdeeVal")
-        .innerText =
-        `${tdee.toLocaleString()} kcal`;
-
-
-    document.getElementById("proteinVal")
-        .innerText =
-        `${protein}g`;
-
-
-    /* ==============================================
-       BMI MARKER
-    ============================================== */
-
-    let marker =
-        ((bmi - 15) / 25) * 100;
-
-
-    marker =
-        Math.max(
-            2,
-            Math.min(98, marker)
-        );
-
-
-    document.getElementById("bmiMarker")
-        .style.left =
-        `${marker}%`;
-
-
-    /* ==============================================
-       PLAN TITLE
-    ============================================== */
-
-    let planTitle =
-        "Balanced Fitness Strategy";
-
-
-    if (goal === "fatloss") {
-
-        planTitle =
-            "Fat Loss Strategy";
-
-    }
-
-    else if (goal === "hypertrophy") {
-
-        planTitle =
-            "Muscle Growth Strategy";
-
-    }
-
-    else if (goal === "maintenance") {
-
-        planTitle =
-            "Maintenance Strategy";
-
-    }
-
-
-    document.getElementById("planTitleHeader")
-        .innerText =
-        planTitle;
-
-
-    /* ==============================================
-       DIET LABEL
-    ============================================== */
-
-    let dietLabel =
-        "your selected diet preference";
-
-
-    if (diet === "vegprotein") {
-
-        dietLabel =
-            "a high-protein vegetarian approach";
-
-    }
-
-    else if (diet === "vegan") {
-
-        dietLabel =
-            "a clean vegan approach";
-
-    }
-
-    else if (diet === "keto") {
-
-        dietLabel =
-            "a keto performance approach";
-
-    }
-
-
-    /* ==============================================
-       SUMMARY
-    ============================================== */
-
-    let summary = "";
-
-
-    if (goal === "fatloss") {
-
-        summary =
-            `Your estimated daily target is approximately ${tdee.toLocaleString()} kcal with ${protein}g of protein. Focus on consistent resistance training, sufficient protein and a sustainable calorie deficit while following ${dietLabel}.`;
-
-    }
-
-    else if (goal === "hypertrophy") {
-
-        summary =
-            `Your estimated daily target is approximately ${tdee.toLocaleString()} kcal with ${protein}g of protein. Prioritize progressive overload, recovery and consistent nutrition while following ${dietLabel}.`;
-
-    }
-
-    else {
-
-        summary =
-            `Your estimated daily target is approximately ${tdee.toLocaleString()} kcal with ${protein}g of protein. Focus on maintaining consistent training, recovery and nutrition while following ${dietLabel}.`;
-
-    }
-
-
-    document.getElementById("planDescText")
-        .innerText =
-        summary;
-
-
-    /* ==============================================
-       SHOW RESULTS
-    ============================================== */
-
-    const dashboard =
-        document.getElementById(
-            "resultDashboard"
-        );
-
-
-    dashboard.style.display =
-        "block";
-
-
-    setTimeout(() => {
-
-        dashboard.scrollIntoView({
-            behavior:"smooth",
-            block:"start"
-        });
-
-    }, 80);
-
-}
-
-</script>
 
 </body>
-
 </html>
