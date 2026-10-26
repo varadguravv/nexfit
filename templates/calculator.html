@@ -6,15 +6,242 @@
 
     <title>Fitness Calculator | NexFit</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        :root {
+            --c-bg: #070707;
+            --c-panel: #0f0f10;
+            --c-field: #151516;
+            --c-line: rgba(255,255,255,.09);
+            --c-text: #f3f3f3;
+            --c-muted: #8b8b90;
+            --c-accent: #c8ff00;
+        }
+
+        body {
+            margin: 0;
+            background: var(--c-bg);
+            color: var(--c-text);
+            font-family: Inter, system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .cx-wrap { width: min(1080px, 100% - 40px); margin: 0 auto; }
+
+        /* NAV */
+        .cx-nav {
+            position: sticky; top: 0; z-index: 50;
+            min-height: 72px; padding: 0 max(5vw, 20px);
+            display: flex; align-items: center; justify-content: space-between; gap: 24px;
+            background: rgba(7,7,7,.92);
+            border-bottom: 1px solid var(--c-line);
+            backdrop-filter: blur(16px);
+        }
+        .cx-logo {
+            font-family: "Space Grotesk", sans-serif; font-weight: 700;
+            font-size: 24px; letter-spacing: -1px; color: #fff;
+        }
+        .cx-logo span { color: var(--c-accent); }
+        .cx-nav nav { display: flex; gap: 26px; overflow-x: auto; scrollbar-width: none; }
+        .cx-nav nav::-webkit-scrollbar { display: none; }
+        .cx-nav nav a {
+            color: #70707a; text-decoration: none; font-size: 13px; font-weight: 600;
+            white-space: nowrap; padding: 6px 0; border-bottom: 2px solid transparent;
+            transition: color .2s, border-color .2s;
+        }
+        .cx-nav nav a:hover { color: #fff; }
+        .cx-nav nav a.active { color: #fff; border-bottom-color: var(--c-accent); }
+
+        /* HERO */
+        .cx-hero { padding: 76px 0 44px; }
+        .cx-kicker {
+            display: inline-flex; align-items: center; gap: 10px;
+            color: var(--c-accent); font-size: 13px; font-weight: 600; margin: 0 0 20px;
+        }
+        .cx-kicker::before { content: ""; width: 28px; height: 2px; background: var(--c-accent); }
+        .cx-hero h1 {
+            margin: 0 0 20px;
+            font-family: "Space Grotesk", sans-serif; font-weight: 700;
+            font-size: clamp(42px, 7vw, 78px); line-height: .98; letter-spacing: -.045em;
+        }
+        .cx-hero h1 span { color: var(--c-muted); }
+        .cx-hero p.cx-lead { max-width: 520px; margin: 0; color: var(--c-muted); font-size: 17px; line-height: 1.65; }
+
+        /* FORM PANEL */
+        .cx-panel {
+            background: var(--c-panel);
+            border: 1px solid var(--c-line);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .cx-panel-grid { display: grid; grid-template-columns: 5fr 7fr; }
+        .cx-panel-intro {
+            padding: 40px;
+            border-right: 1px solid var(--c-line);
+            background:
+                radial-gradient(circle at 0% 0%, rgba(200,255,0,.10), transparent 55%),
+                var(--c-panel);
+        }
+        .cx-panel-intro h2 {
+            margin: 0 0 14px; font-family: "Space Grotesk", sans-serif;
+            font-size: 32px; line-height: 1.1; letter-spacing: -.03em;
+        }
+        .cx-panel-intro p { margin: 0; color: var(--c-muted); font-size: 15px; line-height: 1.7; }
+        .cx-panel-intro .cx-kicker { margin-bottom: 16px; }
+
+        .cx-form { padding: 40px; }
+        .cx-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 18px; }
+        .cx-field label {
+            display: block; margin-bottom: 9px;
+            color: #b9b9bf; font-size: 13px; font-weight: 600;
+        }
+        .cx-unit { position: relative; }
+        .cx-unit span {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            color: var(--c-muted); font-size: 12px; font-weight: 700; pointer-events: none;
+        }
+        .cx-field input, .cx-field select {
+            width: 100%; box-sizing: border-box; height: 52px; padding: 0 16px;
+            color: var(--c-text); background: var(--c-field);
+            border: 1px solid var(--c-line); border-radius: 12px;
+            font: 500 15px Inter, sans-serif; outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .cx-unit input { padding-right: 52px; }
+        .cx-field input::placeholder { color: #5a5a60; }
+        .cx-field select {
+            appearance: none; -webkit-appearance: none; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%238b8b90' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px;
+        }
+        .cx-field input:focus, .cx-field select:focus {
+            border-color: var(--c-accent);
+            box-shadow: 0 0 0 3px rgba(200,255,0,.14);
+        }
+
+        .cx-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-height: 54px; padding: 0 28px; border-radius: 12px;
+            font: 700 15px Inter, sans-serif; text-decoration: none; cursor: pointer;
+            transition: transform .2s, background .2s, border-color .2s, color .2s;
+        }
+        .cx-btn:hover { transform: translateY(-2px); }
+        .cx-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+        .cx-btn-primary { color: #080808; background: var(--c-accent); border: 1px solid var(--c-accent); }
+        .cx-btn-ghost { color: var(--c-text); background: transparent; border: 1px solid rgba(255,255,255,.18); }
+        .cx-btn-ghost:hover { border-color: var(--c-accent); color: var(--c-accent); }
+        .cx-form .cx-btn { width: 100%; margin-top: 28px; }
+
+        /* RESULT */
+        .cx-result { padding: 72px 0 0; }
+        .cx-result-head h2, .cx-cta h2 {
+            margin: 0; font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(30px, 4.5vw, 46px); letter-spacing: -.035em; line-height: 1.05;
+        }
+        .cx-result-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 16px; margin-top: 28px; }
+        .cx-card {
+            padding: 32px; background: var(--c-panel);
+            border: 1px solid var(--c-line); border-radius: 18px;
+        }
+        .cx-card-label { color: var(--c-muted); font-size: 13px; font-weight: 600; margin-bottom: 18px; }
+
+        .cx-bmi-row { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+        .cx-bmi-num {
+            font-family: "Space Grotesk", sans-serif; font-weight: 700;
+            font-size: clamp(64px, 9vw, 96px); line-height: .9; letter-spacing: -.05em;
+            color: var(--c-accent);
+        }
+        .cx-bmi-cat {
+            padding: 7px 14px; border-radius: 99px; font-size: 14px; font-weight: 700;
+            color: var(--c-accent); background: rgba(200,255,0,.09);
+            border: 1px solid rgba(200,255,0,.22);
+        }
+
+        .cx-scale { margin: 34px 0 10px; position: relative; }
+        .cx-scale-bar {
+            display: grid; grid-template-columns: 14fr 6.4fr 5fr 14.6fr; gap: 3px; height: 8px;
+        }
+        .cx-scale-bar i { border-radius: 99px; background: #26262a; }
+        .cx-scale-bar i:nth-child(2) { background: rgba(200,255,0,.55); }
+        .cx-marker {
+            position: absolute; top: -6px; width: 4px; height: 20px; margin-left: -2px;
+            background: #fff; border-radius: 2px; box-shadow: 0 0 0 4px rgba(255,255,255,.14);
+        }
+        .cx-scale-ticks {
+            display: flex; justify-content: space-between; margin-top: 12px;
+            color: #66666c; font-size: 12px; font-weight: 600;
+        }
+        .cx-card p.cx-note-text { margin: 20px 0 0; color: var(--c-muted); font-size: 14px; line-height: 1.65; }
+
+        .cx-profile-row {
+            display: flex; justify-content: space-between; gap: 16px; padding: 16px 0;
+            border-top: 1px solid var(--c-line); font-size: 15px;
+        }
+        .cx-profile-row:first-of-type { border-top: 0; padding-top: 0; }
+        .cx-profile-row span { color: var(--c-muted); }
+        .cx-profile-row strong { text-align: right; font-weight: 600; }
+
+        .cx-reco {
+            display: grid; grid-template-columns: 5fr 7fr; gap: 32px; margin-top: 16px;
+            padding: 36px; border-radius: 18px;
+            border: 1px solid rgba(200,255,0,.2);
+            background: linear-gradient(120deg, rgba(200,255,0,.08), rgba(200,255,0,.01) 60%);
+        }
+        .cx-reco h2 {
+            margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 30px; letter-spacing: -.03em;
+        }
+        .cx-reco .cx-kicker { margin-bottom: 14px; }
+        .cx-reco p { margin: 0; color: #cfcfd4; font-size: 17px; line-height: 1.7; }
+
+        .cx-safety {
+            margin-top: 16px; padding: 18px 22px; border-radius: 14px;
+            background: var(--c-field); border: 1px solid var(--c-line);
+            color: var(--c-muted); font-size: 13.5px; line-height: 1.7;
+        }
+        .cx-safety strong { color: var(--c-text); margin-right: 6px; }
+
+        /* CTA */
+        .cx-cta { margin: 84px 0 0; padding: 56px 40px; text-align: center; border: 1px solid var(--c-line); border-radius: 22px;
+            background: radial-gradient(circle at 50% 0%, rgba(200,255,0,.10), transparent 60%), var(--c-panel); }
+        .cx-cta .cx-kicker { justify-content: center; }
+        .cx-cta .cx-kicker::before { display: none; }
+        .cx-cta p.cx-lead { max-width: 440px; margin: 18px auto 30px; color: var(--c-muted); font-size: 16px; line-height: 1.65; }
+        .cx-cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+        footer.cx-footer {
+            margin-top: 80px; padding: 30px 20px; text-align: center;
+            color: #55555b; font-size: 12px; letter-spacing: .04em;
+            border-top: 1px solid var(--c-line);
+        }
+        footer.cx-footer p { margin: 0; }
+
+        @media (max-width: 860px) {
+            .cx-panel-grid, .cx-result-grid, .cx-reco { grid-template-columns: 1fr; }
+            .cx-panel-intro { border-right: 0; border-bottom: 1px solid var(--c-line); padding: 30px 26px; }
+            .cx-form { padding: 30px 26px; }
+            .cx-hero { padding: 52px 0 32px; }
+            .cx-reco { padding: 28px 24px; gap: 18px; }
+        }
+        @media (max-width: 560px) {
+            .cx-fields { grid-template-columns: 1fr; }
+            .cx-card { padding: 26px 22px; }
+            .cx-cta { padding: 44px 22px; }
+            .cx-cta-buttons .cx-btn { width: 100%; }
+        }
+    </style>
 </head>
 
 <body>
 
-<header class="navbar">
+<header class="cx-nav">
 
-    <div class="logo">
+    <div class="cx-logo">
         NEX<span>FIT</span>
     </div>
 
@@ -29,290 +256,278 @@
 </header>
 
 
-<main class="calculator-page">
+<main class="cx-wrap">
 
     <!-- HERO -->
 
-    <section class="page-hero">
+    <section class="cx-hero">
 
-        <div>
+        <p class="cx-kicker">Smart fitness planning</p>
 
-            <p class="eyebrow">SMART FITNESS PLANNING</p>
+        <h1>
+            Know Your Numbers.<br>
+            <span>Build Your Plan.</span>
+        </h1>
 
-            <h1>
-                Know Your Numbers.<br>
-                <span>Build Your Plan.</span>
-            </h1>
-
-            <p class="hero-text">
-                Enter your basic details and get a simple fitness
-                recommendation based on your body, goal and training setup.
-            </p>
-
-        </div>
+        <p class="cx-lead">
+            Enter your basic details and get a simple fitness
+            recommendation based on your body, goal and training setup.
+        </p>
 
     </section>
 
 
     <!-- CALCULATOR -->
 
-    <section class="calculator-section">
+    <section class="cx-panel">
 
-        <div class="section-heading">
+        <div class="cx-panel-grid">
 
-            <p class="eyebrow">FITNESS CALCULATOR</p>
+            <div class="cx-panel-intro">
 
-            <h2>Start With Your Basics</h2>
+                <p class="cx-kicker">Fitness calculator</p>
 
-            <p>
-                Fill in the details below to calculate your BMI and
-                understand the direction of your fitness journey.
-            </p>
+                <h2>Start With Your Basics</h2>
 
-        </div>
-
-
-        <form method="POST" class="fitness-form">
-
-            <div class="form-grid">
-
-                <!-- WEIGHT -->
-
-                <div class="form-group">
-
-                    <label for="weight">
-                        WEIGHT
-                    </label>
-
-                    <div class="input-with-unit">
-
-                        <input
-                            type="number"
-                            id="weight"
-                            name="weight"
-                            step="0.1"
-                            min="20"
-                            max="300"
-                            placeholder="Enter weight"
-                            value="{{ request.form.get('weight', '') }}"
-                            required
-                        >
-
-                        <span>KG</span>
-
-                    </div>
-
-                </div>
-
-
-                <!-- HEIGHT -->
-
-                <div class="form-group">
-
-                    <label for="height">
-                        HEIGHT
-                    </label>
-
-                    <div class="input-with-unit">
-
-                        <input
-                            type="number"
-                            id="height"
-                            name="height"
-                            step="0.1"
-                            min="100"
-                            max="250"
-                            placeholder="Enter height"
-                            value="{{ request.form.get('height', '') }}"
-                            required
-                        >
-
-                        <span>CM</span>
-
-                    </div>
-
-                </div>
-
-
-                <!-- GOAL -->
-
-                <div class="form-group">
-
-                    <label for="goal">
-                        PRIMARY GOAL
-                    </label>
-
-                    <select id="goal" name="goal" required>
-
-                        <option value="" disabled
-                            {% if not request.form.get('goal') %}
-                                selected
-                            {% endif %}>
-                            Select your goal
-                        </option>
-
-                        <option value="Build Muscle"
-                            {% if request.form.get('goal') == 'Build Muscle' %}
-                                selected
-                            {% endif %}>
-                            Build Muscle
-                        </option>
-
-                        <option value="Lose Fat"
-                            {% if request.form.get('goal') == 'Lose Fat' %}
-                                selected
-                            {% endif %}>
-                            Lose Fat
-                        </option>
-
-                        <option value="Build Muscle & Lose Fat"
-                            {% if request.form.get('goal') == 'Build Muscle & Lose Fat' %}
-                                selected
-                            {% endif %}>
-                            Build Muscle & Lose Fat
-                        </option>
-
-                        <option value="Improve Fitness"
-                            {% if request.form.get('goal') == 'Improve Fitness' %}
-                                selected
-                            {% endif %}>
-                            Improve Overall Fitness
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- DIET -->
-
-                <div class="form-group">
-
-                    <label for="diet">
-                        DIET TYPE
-                    </label>
-
-                    <select id="diet" name="diet" required>
-
-                        <option value="" disabled
-                            {% if not request.form.get('diet') %}
-                                selected
-                            {% endif %}>
-                            Select diet
-                        </option>
-
-                        <option value="Vegetarian"
-                            {% if request.form.get('diet') == 'Vegetarian' %}
-                                selected
-                            {% endif %}>
-                            Vegetarian
-                        </option>
-
-                        <option value="Non-Vegetarian"
-                            {% if request.form.get('diet') == 'Non-Vegetarian' %}
-                                selected
-                            {% endif %}>
-                            Non-Vegetarian
-                        </option>
-
-                        <option value="Vegan"
-                            {% if request.form.get('diet') == 'Vegan' %}
-                                selected
-                            {% endif %}>
-                            Vegan
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- LOCATION -->
-
-                <div class="form-group">
-
-                    <label for="location">
-                        TRAINING ENVIRONMENT
-                    </label>
-
-                    <select id="location" name="location" required>
-
-                        <option value="" disabled
-                            {% if not request.form.get('location') %}
-                                selected
-                            {% endif %}>
-                            Where do you train?
-                        </option>
-
-                        <option value="Gym"
-                            {% if request.form.get('location') == 'Gym' %}
-                                selected
-                            {% endif %}>
-                            Gym
-                        </option>
-
-                        <option value="Home"
-                            {% if request.form.get('location') == 'Home' %}
-                                selected
-                            {% endif %}>
-                            Home
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- INJURY -->
-
-                <div class="form-group">
-
-                    <label for="injury">
-                        INJURY STATUS
-                    </label>
-
-                    <select id="injury" name="injury" required>
-
-                        <option value="" disabled
-                            {% if not request.form.get('injury') %}
-                                selected
-                            {% endif %}>
-                            Select option
-                        </option>
-
-                        <option value="No injury"
-                            {% if request.form.get('injury') == 'No injury' %}
-                                selected
-                            {% endif %}>
-                            No injury
-                        </option>
-
-                        <option value="Minor injury"
-                            {% if request.form.get('injury') == 'Minor injury' %}
-                                selected
-                            {% endif %}>
-                            Minor injury
-                        </option>
-
-                        <option value="Existing injury"
-                            {% if request.form.get('injury') == 'Existing injury' %}
-                                selected
-                            {% endif %}>
-                            Existing injury
-                        </option>
-
-                    </select>
-
-                </div>
+                <p>
+                    Fill in the details below to calculate your BMI and
+                    understand the direction of your fitness journey.
+                </p>
 
             </div>
 
 
-            <button type="submit" class="primary-btn">
-                CALCULATE MY FITNESS PROFILE →
-            </button>
+            <form method="POST" class="cx-form">
 
-        </form>
+                <div class="cx-fields">
+
+                    <!-- WEIGHT -->
+
+                    <div class="cx-field">
+
+                        <label for="weight">Weight</label>
+
+                        <div class="cx-unit">
+
+                            <input
+                                type="number"
+                                id="weight"
+                                name="weight"
+                                step="0.1"
+                                min="20"
+                                max="300"
+                                placeholder="Enter weight"
+                                value="{{ request.form.get('weight', '') }}"
+                                required
+                            >
+
+                            <span>KG</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- HEIGHT -->
+
+                    <div class="cx-field">
+
+                        <label for="height">Height</label>
+
+                        <div class="cx-unit">
+
+                            <input
+                                type="number"
+                                id="height"
+                                name="height"
+                                step="0.1"
+                                min="100"
+                                max="250"
+                                placeholder="Enter height"
+                                value="{{ request.form.get('height', '') }}"
+                                required
+                            >
+
+                            <span>CM</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- GOAL -->
+
+                    <div class="cx-field">
+
+                        <label for="goal">Primary goal</label>
+
+                        <select id="goal" name="goal" required>
+
+                            <option value="" disabled
+                                {% if not request.form.get('goal') %}
+                                    selected
+                                {% endif %}>
+                                Select your goal
+                            </option>
+
+                            <option value="Build Muscle"
+                                {% if request.form.get('goal') == 'Build Muscle' %}
+                                    selected
+                                {% endif %}>
+                                Build Muscle
+                            </option>
+
+                            <option value="Lose Fat"
+                                {% if request.form.get('goal') == 'Lose Fat' %}
+                                    selected
+                                {% endif %}>
+                                Lose Fat
+                            </option>
+
+                            <option value="Build Muscle & Lose Fat"
+                                {% if request.form.get('goal') == 'Build Muscle & Lose Fat' %}
+                                    selected
+                                {% endif %}>
+                                Build Muscle & Lose Fat
+                            </option>
+
+                            <option value="Improve Fitness"
+                                {% if request.form.get('goal') == 'Improve Fitness' %}
+                                    selected
+                                {% endif %}>
+                                Improve Overall Fitness
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- DIET -->
+
+                    <div class="cx-field">
+
+                        <label for="diet">Diet type</label>
+
+                        <select id="diet" name="diet" required>
+
+                            <option value="" disabled
+                                {% if not request.form.get('diet') %}
+                                    selected
+                                {% endif %}>
+                                Select diet
+                            </option>
+
+                            <option value="Vegetarian"
+                                {% if request.form.get('diet') == 'Vegetarian' %}
+                                    selected
+                                {% endif %}>
+                                Vegetarian
+                            </option>
+
+                            <option value="Non-Vegetarian"
+                                {% if request.form.get('diet') == 'Non-Vegetarian' %}
+                                    selected
+                                {% endif %}>
+                                Non-Vegetarian
+                            </option>
+
+                            <option value="Vegan"
+                                {% if request.form.get('diet') == 'Vegan' %}
+                                    selected
+                                {% endif %}>
+                                Vegan
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="cx-field">
+
+                        <label for="location">Training environment</label>
+
+                        <select id="location" name="location" required>
+
+                            <option value="" disabled
+                                {% if not request.form.get('location') %}
+                                    selected
+                                {% endif %}>
+                                Where do you train?
+                            </option>
+
+                            <option value="Gym"
+                                {% if request.form.get('location') == 'Gym' %}
+                                    selected
+                                {% endif %}>
+                                Gym
+                            </option>
+
+                            <option value="Home"
+                                {% if request.form.get('location') == 'Home' %}
+                                    selected
+                                {% endif %}>
+                                Home
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- INJURY -->
+
+                    <div class="cx-field">
+
+                        <label for="injury">Injury status</label>
+
+                        <select id="injury" name="injury" required>
+
+                            <option value="" disabled
+                                {% if not request.form.get('injury') %}
+                                    selected
+                                {% endif %}>
+                                Select option
+                            </option>
+
+                            <option value="No injury"
+                                {% if request.form.get('injury') == 'No injury' %}
+                                    selected
+                                {% endif %}>
+                                No injury
+                            </option>
+
+                            <option value="Minor injury"
+                                {% if request.form.get('injury') == 'Minor injury' %}
+                                    selected
+                                {% endif %}>
+                                Minor injury
+                            </option>
+
+                            <option value="Existing injury"
+                                {% if request.form.get('injury') == 'Existing injury' %}
+                                    selected
+                                {% endif %}>
+                                Existing injury
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="cx-btn cx-btn-primary">
+                    Calculate my fitness profile
+                </button>
+
+            </form>
+
+        </div>
 
     </section>
 
@@ -321,36 +536,53 @@
 
     <!-- RESULT -->
 
-    <section class="result-section">
+    <section class="cx-result">
 
-        <div class="section-heading">
+        <div class="cx-result-head">
 
-            <p class="eyebrow">YOUR RESULT</p>
+            <p class="cx-kicker">Your result</p>
 
             <h2>Your Fitness Snapshot</h2>
 
         </div>
 
 
-        <div class="result-grid">
+        <div class="cx-result-grid">
 
             <!-- BMI -->
 
-            <div class="result-card bmi-card">
+            <div class="cx-card">
 
-                <div class="result-label">
-                    BODY MASS INDEX
+                <div class="cx-card-label">Body mass index</div>
+
+                <div class="cx-bmi-row">
+
+                    <div class="cx-bmi-num">{{ bmi }}</div>
+
+                    <div class="cx-bmi-cat">{{ category }}</div>
+
                 </div>
 
-                <div class="bmi-number">
-                    {{ bmi }}
+                <div class="cx-scale">
+
+                    <div class="cx-scale-bar">
+                        <i></i><i></i><i></i><i></i>
+                    </div>
+
+                    <div class="cx-marker"
+                         style="left: {{ [[((bmi|float - 15) / 25 * 100), 0]|max, 100]|min }}%;"></div>
+
+                    <div class="cx-scale-ticks">
+                        <span>15</span>
+                        <span>18.5</span>
+                        <span>25</span>
+                        <span>30</span>
+                        <span>40</span>
+                    </div>
+
                 </div>
 
-                <div class="bmi-category">
-                    {{ category }}
-                </div>
-
-                <p>
+                <p class="cx-note-text">
                     BMI is a general screening measurement and does not
                     directly measure body fat or muscle mass.
                 </p>
@@ -360,28 +592,26 @@
 
             <!-- PROFILE -->
 
-            <div class="result-card profile-card">
+            <div class="cx-card">
 
-                <div class="result-label">
-                    YOUR PROFILE
-                </div>
+                <div class="cx-card-label">Your profile</div>
 
-                <div class="profile-row">
+                <div class="cx-profile-row">
                     <span>Goal</span>
                     <strong>{{ rec.goal }}</strong>
                 </div>
 
-                <div class="profile-row">
+                <div class="cx-profile-row">
                     <span>Diet</span>
                     <strong>{{ rec.diet }}</strong>
                 </div>
 
-                <div class="profile-row">
+                <div class="cx-profile-row">
                     <span>Training</span>
                     <strong>{{ rec.location }}</strong>
                 </div>
 
-                <div class="profile-row">
+                <div class="cx-profile-row">
                     <span>Injury</span>
                     <strong>{{ rec.injury }}</strong>
                 </div>
@@ -393,20 +623,18 @@
 
         <!-- RECOMMENDATION -->
 
-        <div class="recommendation-card">
+        <div class="cx-reco">
 
             <div>
 
-                <p class="eyebrow">NEXFIT RECOMMENDATION</p>
+                <p class="cx-kicker">NexFit recommendation</p>
 
-                <h2>
-                    Your next step
-                </h2>
+                <h2>Your next step</h2>
 
             </div>
 
 
-            <div class="recommendation-content">
+            <div>
 
                 {% if rec.goal == "Build Muscle" %}
 
@@ -449,7 +677,7 @@
 
         <!-- SAFETY NOTE -->
 
-        <div class="calculator-note">
+        <div class="cx-safety">
 
             <strong>Important:</strong>
 
@@ -469,28 +697,28 @@
 
     <!-- CTA -->
 
-    <section class="calculator-cta">
+    <section class="cx-cta">
 
-        <p class="eyebrow">READY TO TRAIN?</p>
+        <p class="cx-kicker">Ready to train?</p>
 
         <h2>
             Turn Your Numbers<br>
             Into Action.
         </h2>
 
-        <p>
+        <p class="cx-lead">
             Explore the muscle guide or start your personalized
             30-day challenge.
         </p>
 
-        <div class="cta-buttons">
+        <div class="cx-cta-buttons">
 
-            <a href="/muscle" class="secondary-btn">
-                EXPLORE MUSCLE GUIDE
+            <a href="/muscle" class="cx-btn cx-btn-ghost">
+                Explore muscle guide
             </a>
 
-            <a href="/challenges" class="primary-btn">
-                START 30 DAY CHALLENGE →
+            <a href="/challenges" class="cx-btn cx-btn-primary">
+                Start 30 day challenge
             </a>
 
         </div>
@@ -500,7 +728,7 @@
 </main>
 
 
-<footer>
+<footer class="cx-footer">
 
     <p>
         © 2026 NEXFIT — TRAIN SMART. LIVE STRONG.
